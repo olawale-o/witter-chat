@@ -5,6 +5,7 @@ import ChatArea from "../../components/ChatArea";
 import { getUnfollowedUsers } from '../../services/friendService';
 
 const Chat = () => {
+  const currentUser = JSON.parse(localStorage.getItem('user')).user;
   const [socket] = useOutletContext();
   const [user, setUser] = React.useState({});
   const [messages, setMessages] = React.useState([]);
@@ -26,7 +27,7 @@ const Chat = () => {
           userId: message.from,
           text: message.text,
           username: message.username,
-          _id: message.from,
+          id: message.from,
           from: message.from,
           to: message.to
         }
@@ -61,7 +62,7 @@ const Chat = () => {
         const users = await getUnfollowedUsers(user.username);
         const list = {};
         for (let user of users) {
-          list[`${user._id}`] = user;
+          list[`${user.id}`] = user;
         }
         setOnlineUsers(list);
       } catch (error) {
@@ -80,56 +81,74 @@ const Chat = () => {
         const users = await getUnfollowedUsers(user.username);
         const list = {};
         for (let user of users) {
-          list[`${user._id}`] = user;
+          list[`${user.id}`] = user;
         }
         setOnlineUsers(list);
       } catch (error) {
         console.log(error);
       }
     }
-    getUsers();
+    // getUsers();
 
     socket.on('session', async({ sessionId, userId, username }) => {
+      console.log('session');
+      console.log(sessionId, userId, username)
       if (sessionId && userId && username) {
         socket.auth = { sessionId: sessionId };
         localStorage.setItem('sessionId', sessionId);
-        setUser({ sessionId, _id: userId, username, userId })
+        setUser({ sessionId, id: userId, username, userId })
       }
     });
 
     socket.on("users", (data) => {
-      async function getUsers() {
-        try {
-          const users = await getUnfollowedUsers(user.username);
-          const list = {};
-          for (let user of users) {
-            list[`${user._id}`] = user;
-          }
-          setOnlineUsers(list);
-        } catch (error) {
-          console.log(error);
-        }
+      console.log(data);
+      const list = {};
+      for (let user of data) {
+        list[`${user._id}`] = user;
       }
-      getUsers();
+      setOnlineUsers(list);
     });
+
     socket.on('private message', (message) => {
       handlePrivateChat(message);
     });
     socket.on('user messages', (messages) => userMessages(messages));
 
     return () => {
-      socket.off('session');
-      socket.off('users');
-      socket.off('private message');
-      socket.off('user messages');
+      //socket.off('session');
+      //socket.off('users');
+      //socket.off('private message');
+      //socket.off('user messages');
     }
   }, [socket, checkIfUserExist, userMessages, handlePrivateChat, user.username]);
 
+  React.useEffect(() => {
+    // socket.on('session', async({ sessionId, userId, username }) => {
+    //   console.log('session');
+    //   console.log(sessionId, userId, username)
+    //   if (sessionId && userId && username) {
+    //     socket.auth = { sessionId: sessionId };
+    //     localStorage.setItem('sessionId', sessionId);
+    //     setUser({ sessionId, id: userId, username, userId })
+    //   }
+    // });
+  }, [socket]);
+
+  React.useEffect(() => {
+    // socket.on("users", (data) => {
+    //   console.log('users');
+    //   const list = {};
+    //   for (let user of data) {
+    //     list[`${user.id}`] = user;
+    //   }
+    //   setOnlineUsers(list);
+    // });
+  }, [socket]);
   const onUserSelected = async (user) => {
     setSelectedUser(user);
     selectedCurrentUser.current = user;
     await socket.emit('user messages', user);
-    handleNewMessageStatus(user._id, false)
+    handleNewMessageStatus(user.id, false)
   };
 
   return (
@@ -144,7 +163,7 @@ const Chat = () => {
       />
       <div className="chat-area">
         {
-          selectedUser._id ?
+          selectedUser.id ?
           (<ChatArea
             socket={socket}
             selectedUser={selectedUser}

@@ -20,10 +20,10 @@ export async function action({ request }) {
     username: formDataEntries.username,
     password: formDataEntries.password,
     email: formDataEntries.email,
-    fullname: formDataEntries.fullname,
+    name: formDataEntries.fullname,
   });
   localStorage.setItem('user', JSON.stringify(data));
-  return redirect('/');
+  return redirect('/register');
 }
 
 const Register = () => {
@@ -39,8 +39,8 @@ const Register = () => {
 
   React.useEffect(() => {    
     if (data !== null) {
-      const { user: { username, _id, name } } = data;
-      socket.auth = { user: { username, _id, name } }
+      const { user: { username, id, name } } = data;
+      socket.auth = { user: { username, id, name } }
       socket.connect();
       navigate('/chat');
     }
