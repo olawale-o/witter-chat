@@ -15,16 +15,16 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newMessage = {
-      userId: user._id,
+      userId: user.id,
       username: user.username,
       text: message,
-      _id: user._id,
-      to: contact._id,
-      from: user._id,
+      id: user.id,
+      to: contact.id,
+      from: user.id,
     }
     socket.emit('private message', {
       text: message,
-      to: contact._id
+      to: contact.id
     });
     setMessages([...messages, newMessage])
     setMessage('');
@@ -62,7 +62,7 @@ const ChatMessage = ({
     <div>
       {
         messages?.map((message, i) => (
-          message.from === JSON.parse(localStorage.getItem('user')).user._id ? (
+          message.from === JSON.parse(localStorage.getItem('user')).user.id ? (
             <div className="chat-message-container chat-sender" key={i}>
               <div className="avatar-container" />
               <div className="message-area">

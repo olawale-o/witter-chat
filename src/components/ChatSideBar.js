@@ -32,21 +32,19 @@ const ChatSideBar = ({ socket, user, setSelectedUser, onlineUsers, setOnlineUser
   }, [onlineUsers]);
 
   const handleConnectionStatus = React.useCallback((userId, status) => {
-  
-    const userExists = findUser(userId);
-    if (userExists) {
-      user.online = status;
+    const connectedUser = findUser(userId);
+    if (connectedUser) {
+      connectedUser.online = status;
       setOnlineUsers({ ...onlineUsers });
     }
 
-  },  [setOnlineUsers, findUser, user, onlineUsers]);
+  },  [setOnlineUsers, findUser, onlineUsers]);
 
   const onUserConnected = React.useCallback((userId, username) => {
     console.log('on user connected');
-    if (user._id !== userId) {
+    if (user.id !== userId) {
         const userExists = findUser(userId);
         if (userExists) {
-          console.log('userExists', userExists);
           handleConnectionStatus(userId, true);
         } else {
           console.log('user does not exist');
@@ -58,7 +56,7 @@ const ChatSideBar = ({ socket, user, setSelectedUser, onlineUsers, setOnlineUser
           }
         }
     }
-  }, [handleConnectionStatus, findUser, onlineUsers, setOnlineUsers, user._id]);
+  }, [handleConnectionStatus, findUser, onlineUsers, setOnlineUsers, user.id]);
 
   const userDisconnected = React.useCallback(({ userId }) => {
     handleConnectionStatus(userId, false)
