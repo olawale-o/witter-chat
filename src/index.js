@@ -1,13 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
+import Chat from './pages/Chat';
 import reportWebVitals from './reportWebVitals';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+import socket from './socket';
+import Home, { action as loginAction, loader as homeLoader } from './pages/Home';
+import Register from './pages/Home/Register';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App socket={socket} />,
+    children: [
+      { index: true, element: <Home />, action: loginAction, loader: homeLoader },
+      { path: 'register', element: <Register />, action: loginAction, loader: homeLoader },
+      { path: 'chat', element: <Chat /> },
+    ]
+  },
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 );
 
