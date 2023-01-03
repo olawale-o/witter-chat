@@ -19,12 +19,12 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
       username: user.username,
       text: message,
       id: user.id,
-      to: contact.id,
+      to: contact._id,
       from: user.id,
     }
     socket.emit('private message', {
       text: message,
-      to: contact.id
+      to: contact._id
     });
     setMessages([...messages, newMessage])
     setMessage('');

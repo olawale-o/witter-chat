@@ -15,14 +15,16 @@ const Chat = () => {
 
   const handleNewMessageStatus = React.useCallback((userId, status) => {
     const user = onlineUsers[userId]
-    user.hasNewMessage = status;
+    user['hasNewMessage'] = status;
     setOnlineUsers({...onlineUsers});
     
   }, [onlineUsers, setOnlineUsers]);
 
   const handlePrivateChat = React.useCallback((message) => {
     if (selectedCurrentUser.current._id) {
+      console.log('b')
       if (selectedCurrentUser.current._id === message.from) {
+        console.log('c')
         const newMessage = {
           userId: message.from,
           text: message.text,
@@ -34,9 +36,11 @@ const Chat = () => {
         setMessages([...messages, newMessage]);
         // handleNewMessageStatus(message.from, false)
       } else {
+        console.log('d')
         handleNewMessageStatus(message.from, true)
       }
     } else {
+      console.log('e')
       handleNewMessageStatus(message.from, true)
     }
   }, [handleNewMessageStatus, messages, selectedCurrentUser])
@@ -109,6 +113,7 @@ const Chat = () => {
     });
 
     socket.on('private message', (message) => {
+      console.log(message);
       handlePrivateChat(message);
     });
     socket.on('user messages', (messages) => userMessages(messages));
@@ -125,7 +130,7 @@ const Chat = () => {
     setSelectedUser(user);
     selectedCurrentUser.current = user;
     await socket.emit('user messages', user);
-    handleNewMessageStatus(user.id, false)
+    handleNewMessageStatus(user._id, false)
   };
 
   return (
@@ -140,7 +145,7 @@ const Chat = () => {
       />
       <div className="chat-area">
         {
-          selectedUser.id ?
+          selectedUser._id ?
           (<ChatArea
             socket={socket}
             selectedUser={selectedUser}
