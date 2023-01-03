@@ -62,7 +62,7 @@ const Chat = () => {
         const users = await getUnfollowedUsers(user.username);
         const list = {};
         for (let user of users) {
-          list[`${user.id}`] = user;
+          list[`${user._id}`] = user;
         }
         setOnlineUsers(list);
       } catch (error) {
@@ -91,8 +91,6 @@ const Chat = () => {
     // getUsers();
 
     socket.on('session', async({ sessionId, userId, username }) => {
-      console.log('session');
-      console.log(sessionId, userId, username)
       if (sessionId && userId && username) {
         socket.auth = { sessionId: sessionId };
         localStorage.setItem('sessionId', sessionId);
@@ -101,12 +99,13 @@ const Chat = () => {
     });
 
     socket.on("users", (data) => {
-      console.log(data);
+      // console.log(data);
       const list = {};
       for (let user of data) {
         list[`${user._id}`] = user;
       }
-      setOnlineUsers(list);
+      // console.log(list);
+      // setOnlineUsers(list);
     });
 
     socket.on('private message', (message) => {
@@ -122,28 +121,6 @@ const Chat = () => {
     }
   }, [socket, checkIfUserExist, userMessages, handlePrivateChat, user.username]);
 
-  React.useEffect(() => {
-    // socket.on('session', async({ sessionId, userId, username }) => {
-    //   console.log('session');
-    //   console.log(sessionId, userId, username)
-    //   if (sessionId && userId && username) {
-    //     socket.auth = { sessionId: sessionId };
-    //     localStorage.setItem('sessionId', sessionId);
-    //     setUser({ sessionId, id: userId, username, userId })
-    //   }
-    // });
-  }, [socket]);
-
-  React.useEffect(() => {
-    // socket.on("users", (data) => {
-    //   console.log('users');
-    //   const list = {};
-    //   for (let user of data) {
-    //     list[`${user.id}`] = user;
-    //   }
-    //   setOnlineUsers(list);
-    // });
-  }, [socket]);
   const onUserSelected = async (user) => {
     setSelectedUser(user);
     selectedCurrentUser.current = user;
