@@ -1,5 +1,12 @@
 import React from 'react';
-import { useNavigate, Form, redirect, useLoaderData, useOutletContext } from 'react-router-dom';
+import {
+  useNavigate,
+  Form,
+  redirect,
+  useLoaderData,
+  useOutletContext,
+  Link,
+} from 'react-router-dom';
 import { registerService } from '../../services/authService';
 
 export async function loader() {
@@ -47,7 +54,9 @@ const Register = () => {
     <div className="container login_container">
       <div className="login_container-header">
         <h2 className="heading heading_2">Register</h2>
+        <Link to="/login">
           <span>or Login</span>
+        </Link>
         </div>
       <Form method="post" className="form login_form">
         <div className="login_form-content">

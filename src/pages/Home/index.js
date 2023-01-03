@@ -1,5 +1,12 @@
 import React from 'react';
-import { useNavigate, Form, redirect, useLoaderData, useOutletContext } from 'react-router-dom';
+import {
+  useNavigate,
+  Form,
+  redirect,
+  useLoaderData,
+  useOutletContext,
+  Link,
+} from 'react-router-dom';
 import { loginService } from '../../services/authService';
 
 export async function loader() {
@@ -28,8 +35,8 @@ const Home = () => {
 
   React.useEffect(() => {    
     if (data !== null) {
-      const { user: { username, _id, name } } = data;
-      socket.auth = { user: { username, _id, name } }
+      const { user: { username, id, name } } = data;
+      socket.auth = { user: { username, id, name } }
       socket.connect();
       navigate('/chat');
     }
@@ -43,7 +50,9 @@ const Home = () => {
     <div className="container login_container">
       <div className="login_container-header">
         <h2 className="heading heading_2">Log in</h2>
+        <Link to="/register">
           <span>or register</span>
+        </Link>
         </div>
       <Form method="post" className="form login_form">
         <div className="login_form-content">
