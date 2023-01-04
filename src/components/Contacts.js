@@ -12,9 +12,9 @@ const Contact = ({
           <div className="last-message">
             <div className="username-container">
               <span>{user.username}</span>
-              {user.hasNewMessage && (<div className="new-message" />)}
+              {user?.hasNewMessage && (<div className="new-message" />)}
             </div>
-            <span className="text">text</span>
+            <span className="text">{user?.lastMessage}</span>
           </div>
           <div className="chat-state">
             <span>16:45</span>

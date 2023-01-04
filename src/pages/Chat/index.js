@@ -5,7 +5,6 @@ import ChatArea from "../../components/ChatArea";
 import { getUnfollowedUsers } from '../../services/friendService';
 
 const Chat = () => {
-  const currentUser = JSON.parse(localStorage.getItem('user')).user;
   const [socket] = useOutletContext();
   const [user, setUser] = React.useState({});
   const [messages, setMessages] = React.useState([]);
@@ -13,16 +12,18 @@ const Chat = () => {
   const selectedCurrentUser = React.useRef({});
   const [onlineUsers, setOnlineUsers] = React.useState({});
 
-  const handleNewMessageStatus = React.useCallback((userId, status) => {
-    const user = onlineUsers[userId]
-    user['hasNewMessage'] = status;
-    setOnlineUsers({...onlineUsers});
+  const handleNewMessageStatus = React.useCallback((userId, status, message) => {
+    const user = onlineUsers[userId];
+    if (user) {
+      user['hasNewMessage'] = status;
+      user['lastMessage'] = message;
+      setOnlineUsers({...onlineUsers});
+    }
     
   }, [onlineUsers, setOnlineUsers]);
 
   const handlePrivateChat = React.useCallback((message) => {
     if (selectedCurrentUser.current._id) {
-      console.log('b')
       if (selectedCurrentUser.current._id === message.from) {
         console.log('c')
         const newMessage = {
@@ -36,12 +37,10 @@ const Chat = () => {
         setMessages([...messages, newMessage]);
         // handleNewMessageStatus(message.from, false)
       } else {
-        console.log('d')
-        handleNewMessageStatus(message.from, true)
+        handleNewMessageStatus(message.from, true, message.text)
       }
     } else {
-      console.log('e')
-      handleNewMessageStatus(message.from, true)
+      handleNewMessageStatus(message.from, true, message.text)
     }
   }, [handleNewMessageStatus, messages, selectedCurrentUser])
 
@@ -54,7 +53,6 @@ const Chat = () => {
   }, [socket])
 
   const userMessages = React.useCallback(({ messages }) => {
-    console.log('chatMessages', messages);
     const chatMessages = [];
     messages.forEach(({ text, from, to, username }) => chatMessages.push({ to, from, text, username }))
     setMessages([...chatMessages])
@@ -108,8 +106,6 @@ const Chat = () => {
       for (let user of data) {
         list[`${user._id}`] = user;
       }
-      // console.log(list);
-      // setOnlineUsers(list);
     });
 
     socket.on('private message', (message) => {
@@ -119,10 +115,11 @@ const Chat = () => {
     socket.on('user messages', (messages) => userMessages(messages));
 
     return () => {
-      //socket.off('session');
-      //socket.off('users');
-      //socket.off('private message');
-      //socket.off('user messages');
+      socket.off('connect');
+      socket.off('session');
+      socket.off('users');
+      socket.off('private message');
+      socket.off('user messages');
     }
   }, [socket, checkIfUserExist, userMessages, handlePrivateChat, user.username]);
 
@@ -130,7 +127,7 @@ const Chat = () => {
     setSelectedUser(user);
     selectedCurrentUser.current = user;
     await socket.emit('user messages', user);
-    handleNewMessageStatus(user._id, false)
+    handleNewMessageStatus(user._id, false, '')
   };
 
   return (
