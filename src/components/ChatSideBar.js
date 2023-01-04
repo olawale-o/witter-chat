@@ -1,14 +1,17 @@
 import React from "react";
 import { BiCog, BiChevronRightSquare, BiSearch } from "react-icons/bi";
+import { Link } from "react-router-dom";
 import Contacts from "./Contacts";
 
 const ChatSideBarHeader = ({ user }) => {
   return (
     <div className="chatsidebard-header">
       <div className="header-nav">
-        <span className="icon">
-          <BiCog />
-        </span>
+        <Link to="/profile">
+          <span className="icon">
+            <BiCog />
+          </span>
+        </Link>
         <span className="icon">
           <BiChevronRightSquare />
         </span>

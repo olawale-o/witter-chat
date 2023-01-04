@@ -10,3 +10,8 @@ export const registerService = async (body) => {
   const data = await post('http://localhost:5000/api/v1/users/new', body);
   return data;
 };
+
+export const profileService = async (body) => {
+  const data = await post('http://localhost:5000/api/v1/users/update', body);
+  return data;
+};

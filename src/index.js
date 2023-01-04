@@ -10,6 +10,7 @@ import {
 import socket from './socket';
 import Home, { action as loginAction, loader as homeLoader } from './pages/Home';
 import Register, { action as registerAction } from './pages/Home/Register';
+import Profile, { action as profileAction } from './pages/Profile';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: 'register', element: <Register />, action: registerAction, loader: homeLoader },
       { path: 'login', element: <Home />, action: loginAction, loader: homeLoader },
       { path: 'chat', element: <Chat /> },
+      { path: 'profile', element: <Profile />, action: profileAction },
     ]
   },
 ]);

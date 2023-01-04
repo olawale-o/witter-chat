@@ -27,6 +27,9 @@ body {
   width: 400px;
   margin-inline: auto;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login_form {
@@ -378,4 +381,35 @@ body {
   border-radius: 50%;
   background-color: blue;
   margin-left: 5px;
+}
+
+.buttons {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-inline: auto;
+}
+
+.profile-img-container {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #f7f7f7;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.upload-btn {
+  position: absolute;
+  bottom: 0;
+  right: 15px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #fff;
+  outline: none;
+  border: 1px solid #eee;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
 }
