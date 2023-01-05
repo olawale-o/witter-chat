@@ -56,7 +56,8 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
 };
 
 const ChatMessage = ({
-  messages
+  messages,
+  lastMessageRef,
 }) => {
   return (
     <div>
@@ -96,10 +97,11 @@ const ChatMessage = ({
   )
 };
 
-const ChatBody = ({ messages }) => {
+const ChatBody = ({ messages, lastMessageRef }) => {
  return (
     <div className="chat-body">
       <ChatMessage messages={messages} />
+      <div ref={lastMessageRef} />
     </div>
  )
 };
@@ -115,6 +117,7 @@ const ChatArea = ({
   const [typingStatus, setTypingStatus] = React.useState('');
 
   React.useEffect(() => {
+    console.log('oops');
     lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 

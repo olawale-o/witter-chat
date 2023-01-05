@@ -13,6 +13,7 @@ const Chat = () => {
   const [selectedUser, setSelectedUser] = React.useState({});
   const selectedCurrentUser = React.useRef({});
   const [onlineUsers, setOnlineUsers] = React.useState({});
+  const lastMessageRef = React.useRef(null);
 
   const handleNewMessageStatus = React.useCallback((userId, status, message) => {
     const user = onlineUsers[userId];
@@ -55,11 +56,8 @@ const Chat = () => {
   }, [socket])
   
   const handleProfileUpdate = React.useCallback((userId, username) => {
-    console.log('profile update', userId);
-    console.log(onlineUsers);
     const user = onlineUsers[userId];
     if (user) {
-      console.log('user found', user);
       user.username = username;
       setOnlineUsers({ ...onlineUsers });
     }
@@ -178,6 +176,7 @@ const Chat = () => {
             selectedUser={selectedUser}
             messages={messages}
             setMessages={setMessages}
+            lastMessageRef={lastMessageRef}
           />)
            :
           (<div>Please select a user to chat with</div>)
