@@ -24,6 +24,8 @@ const Profile = () => {
   });
 
   const fileInputRef = React.useRef(null);
+  const imgRef = React.useRef(null);
+  const [image, setImage] = React.useState('');
 
   const onFormChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
@@ -39,17 +41,28 @@ const Profile = () => {
     fileInputRef.current.click();
   };
 
+  const onFileChange = (e) => {
+    const fileUploaded = URL.createObjectURL(e.target.files[0]);
+    setImage(fileUploaded);
+  };
+
   return (
     <div className="container login_container">
       <div className="login_container-header">
         <div className="profile-img-container">
+          {image && (<img src={image} ref={imgRef} alt="avatar" />)}
           <button
             className="upload-btn"
             onClick={handleFileClick}
           >
             <span><BiPencil /></span>
           </button>
-          <input type="file" className="file" ref={fileInputRef} />
+          <input
+            type="file"
+            className="file"
+            ref={fileInputRef}
+            onChange={onFileChange}
+          />
         </div>
         <h2 className="heading heading_2">{profile.username}</h2>
       </div>
