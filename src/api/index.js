@@ -11,4 +11,13 @@ export const post = async (url, body) => {
   });
   const data = await response.json();
   return data;
+};
+
+export const put = async (url, body) => {
+  const response = await fetch(url, {
+    method: 'PUT',
+    body: body,
+  });
+  const data = await response.json();
+  return data;
 }

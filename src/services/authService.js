@@ -1,4 +1,4 @@
-import { post } from "../api";
+import { post, put } from "../api";
 
 export const loginService = async (body) => {
   const data = await post('http://localhost:5000/api/v1/users/login', body);
@@ -12,6 +12,6 @@ export const registerService = async (body) => {
 };
 
 export const profileService = async (body) => {
-  const data = await post('http://localhost:5000/api/v1/users/update', body);
+  const data = await put('http://localhost:5000/api/v1/users', body);
   return data;
 };
