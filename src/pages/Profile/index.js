@@ -34,14 +34,22 @@ const Profile = () => {
     email: '',
     fullname: '',
   })
+
+  const handleFileClick = () => {
+    fileInputRef.current.click();
+  };
+
   return (
     <div className="container login_container">
       <div className="login_container-header">
         <div className="profile-img-container">
-          <button className="upload-btn">
+          <button
+            className="upload-btn"
+            onClick={handleFileClick}
+          >
             <span><BiPencil /></span>
           </button>
-          <input type="file" />
+          <input type="file" className="file" ref={fileInputRef} />
         </div>
         <h2 className="heading heading_2">{profile.username}</h2>
       </div>

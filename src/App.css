@@ -413,3 +413,7 @@ body {
   display: grid;
   place-items: center;
 }
+
+.file {
+  display: none;
+}
