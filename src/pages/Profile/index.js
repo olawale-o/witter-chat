@@ -23,6 +23,8 @@ const Profile = () => {
     fullname: profile.name,
   });
 
+  const fileInputRef = React.useRef(null);
+
   const onFormChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
@@ -39,6 +41,7 @@ const Profile = () => {
           <button className="upload-btn">
             <span><BiPencil /></span>
           </button>
+          <input type="file" />
         </div>
         <h2 className="heading heading_2">{profile.username}</h2>
       </div>
