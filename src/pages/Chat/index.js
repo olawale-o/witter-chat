@@ -5,6 +5,8 @@ import ChatArea from "../../components/ChatArea";
 import { getUnfollowedUsers } from '../../services/friendService';
 
 const Chat = () => {
+  localStorage.removeItem('profile');
+  const savedUser = JSON.parse(localStorage.getItem('user')).user;
   const [socket] = useOutletContext();
   const [user, setUser] = React.useState({});
   const [messages, setMessages] = React.useState([]);
@@ -51,7 +53,17 @@ const Chat = () => {
       socket.connect();
     }
   }, [socket])
-
+  
+  const handleProfileUpdate = React.useCallback((userId, username) => {
+    console.log('profile update', userId);
+    console.log(onlineUsers);
+    const user = onlineUsers[userId];
+    if (user) {
+      console.log('user found', user);
+      user.username = username;
+      setOnlineUsers({ ...onlineUsers });
+    }
+  }, [onlineUsers]);
   const userMessages = React.useCallback(({ messages }) => {
     const chatMessages = [];
     messages.forEach(({ text, from, to, username }) => chatMessages.push({ to, from, text, username }))
@@ -61,7 +73,7 @@ const Chat = () => {
   React.useEffect(() => {
     async function getUsers() {
       try {
-        const users = await getUnfollowedUsers(user.username);
+        const users = await getUnfollowedUsers(savedUser.username);
         const list = {};
         for (let user of users) {
           list[`${user._id}`] = user;
@@ -72,7 +84,7 @@ const Chat = () => {
       }
     }
     getUsers();
-  }, [user.username]);
+  }, [savedUser.username]);
 
   React.useEffect(() => {
     socket.on('connect', () => console.log('connected'));
@@ -96,9 +108,20 @@ const Chat = () => {
       if (sessionId && userId && username) {
         socket.auth = { sessionId: sessionId };
         localStorage.setItem('sessionId', sessionId);
-        setUser({ sessionId, id: userId, username, userId })
+        setUser({ sessionId, id: userId, username, userId, avatar: savedUser.avatar })
       }
     });
+
+    socket.on('profile change', ({ sessionId, userId, username }) => {
+      if (sessionId && userId && username) {
+        socket.auth = { sessionId: sessionId };
+        localStorage.setItem('sessionId', sessionId);
+        handleProfileUpdate(userId, username);
+        if (savedUser.id === userId) {
+          setUser({ sessionId, id: userId, username, userId, avatar: savedUser.avatar });
+        }
+      }
+    })
 
     socket.on("users", (data) => {
       // console.log(data);
@@ -121,7 +144,14 @@ const Chat = () => {
       socket.off('private message');
       socket.off('user messages');
     }
-  }, [socket, checkIfUserExist, userMessages, handlePrivateChat, user.username]);
+  }, [socket,
+      checkIfUserExist,
+      userMessages,
+      handlePrivateChat,
+      user.username,
+      savedUser,
+      handleProfileUpdate
+   ]);
 
   const onUserSelected = async (user) => {
     setSelectedUser(user);

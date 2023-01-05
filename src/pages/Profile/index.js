@@ -1,16 +1,27 @@
 import React from "react";
-import { Form, redirect } from "react-router-dom";
+import { Form, redirect, useNavigate, useLoaderData, useOutletContext } from "react-router-dom";
 import { BiPencil } from "react-icons/bi";
 import { profileService } from '../../services/authService';
+
+export async function loader() {
+  return { 
+    data: JSON.parse(localStorage.getItem('user')),
+    newProfile: JSON.parse(localStorage.getItem('profile')),
+  }
+}
 
 export async function action({ request }) {
   const formData = await request.formData();
   const data = await profileService(formData);
   localStorage.setItem('user', JSON.stringify(data));
-  return redirect('/chat');
+  localStorage.setItem('profile', true);
+  return redirect('/profile');
 }
   
 const Profile = () => {
+  const navigate = useNavigate();
+  const [socket] = useOutletContext();
+  const { newProfile, data } = useLoaderData();
   const profile = JSON.parse(localStorage.getItem('user')).user
   const [formValues, setFormValues] = React.useState({
     id: profile.id,
@@ -22,7 +33,7 @@ const Profile = () => {
 
   const fileInputRef = React.useRef(null);
   const imgRef = React.useRef(null);
-  const [image, setImage] = React.useState('');
+  const [image, setImage] = React.useState(profile.avatar || '');
 
   const onFormChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
@@ -45,11 +56,19 @@ const Profile = () => {
     setImage(fileUploaded);
   };
 
+  React.useEffect(() => {
+    if (newProfile) {
+      socket.emit('profile change', { user: data.user });
+      navigate('/chat');
+    }
+  }, [data, navigate, socket, newProfile]);
+
+
   return (
     <div className="container login_container">
       <div className="login_container-header">
         <div className="profile-img-container">
-          {image && (<img src={image} ref={imgRef} alt="avatar" />)}
+          <img src={image} ref={imgRef} alt="avatar" />
           <button
             className="upload-btn"
             onClick={handleFileClick}
