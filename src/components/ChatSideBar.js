@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Contacts from "./Contacts";
 
 const ChatSideBarHeader = ({ user }) => {
+  if (!user) return null
   return (
     <div className="chatsidebard-header">
       <div className="header-nav">
@@ -16,7 +17,9 @@ const ChatSideBarHeader = ({ user }) => {
           <BiChevronRightSquare />
         </span>
       </div>
-      <div className="img-container" />
+      <div className="img-container">
+        {user && (<img src={user?.avatar} alt="avatar" />)}
+      </div>
       <span className="profile-name">{user.username}</span>
       <div className="search">
         <input className="search-input" type="text" placeholder="Search" />

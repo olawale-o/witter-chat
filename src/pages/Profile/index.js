@@ -5,12 +5,7 @@ import { profileService } from '../../services/authService';
 
 export async function action({ request }) {
   const formData = await request.formData();
-  const formDataEntries = Object.fromEntries(formData);
-  const data = await profileService({
-    username: formDataEntries.username,
-    email: formDataEntries.email,
-    name: formDataEntries.fullname,
-  });
+  const data = await profileService(formData);
   localStorage.setItem('user', JSON.stringify(data));
   return redirect('/chat');
 }
@@ -18,9 +13,11 @@ export async function action({ request }) {
 const Profile = () => {
   const profile = JSON.parse(localStorage.getItem('user')).user
   const [formValues, setFormValues] = React.useState({
+    id: profile.id,
     username: profile.username,
     email: profile.email,
-    fullname: profile.name,
+    name: profile.name,
+    avatar: profile.avatar
   });
 
   const fileInputRef = React.useRef(null);
@@ -34,7 +31,9 @@ const Profile = () => {
   const resetForm = () => setFormValues({
     username: '',
     email: '',
-    fullname: '',
+    name: '',
+    avatar: profile.avatar,
+    id: profile.id,
   })
 
   const handleFileClick = () => {
@@ -57,16 +56,10 @@ const Profile = () => {
           >
             <span><BiPencil /></span>
           </button>
-          <input
-            type="file"
-            className="file"
-            ref={fileInputRef}
-            onChange={onFileChange}
-          />
         </div>
         <h2 className="heading heading_2">{profile.username}</h2>
       </div>
-      <Form method="post" className="form login_form">
+      <Form method="post" className="form login_form" encType="multipart/form-data">
         <div className="login_form-content">
           <input
            type="email"
@@ -86,11 +79,31 @@ const Profile = () => {
           />
           <input
            type="text"
-           name="fullname"
+           name="name"
            className="input"
-           value={formValues.fullname}
+           value={formValues.name}
            onChange={onFormChange}
            placeholder="Full name"
+          />
+          <input
+           type="hidden"
+           name="avatar"
+           className="input"
+           value={formValues.avatar}
+          />
+          <input
+           type="hidden"
+           name="id"
+           className="input"
+           value={formValues.id}
+          />
+          <input
+            type="file"
+            className="file"
+            ref={fileInputRef}
+            onChange={onFileChange}
+            accept="image/png, image/jpeg"
+            name="profile"
           />
           <div className="buttons">
             <button type="button" className="btn btn_login" onClick={resetForm}>Reset</button>
