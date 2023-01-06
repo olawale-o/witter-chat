@@ -97,7 +97,7 @@ const Map = () => {
     }
   };
   return (
-    <Wrapper apiKey="" render={render} />
+    <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAP_KEY} render={render} />
   );
 };
 
