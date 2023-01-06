@@ -2,6 +2,28 @@ import React from "react";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import useDeepCompareEffect from 'use-deep-compare-effect'
 
+const Marker = (options) => {
+  const [marker, setMarker] = React.useState();
+  
+  React.useEffect(() => {
+    if (!marker) {
+      setMarker(new window.google.maps.Marker());
+    }
+    // remove marker from map on unmount
+    return () => {
+      if (marker) {
+        marker.setMap(null);
+      }
+    };
+  }, [marker]);
+  React.useEffect(() => {
+    if (marker) {
+      marker.setOptions(options);
+    }
+  }, [marker, options]);
+  return null;
+};
+
 const Spinner = () => {
   return (<div>Spinner</div>)
 };
@@ -59,9 +81,8 @@ function MyMapComponent({ center, zoom, onClick, onIdle, children, ...options}) 
 }
 
 const Map = () => {
-  // const center = { lat: -34.397, lng: 150.644 };
   const [clicks, setClicks] = React.useState([]);
-  const [zoom, setZoom] = React.useState(3);
+  const [zoom, setZoom] = React.useState(5);
   const [center, setCenter] = React.useState({
     lat: 0,
     lng: 0,
@@ -78,7 +99,6 @@ const Map = () => {
     setCenter(m.getCenter().toJSON());
   };
   
-
   const render = (status) => {
     switch (status) {
       case Status.LOADING:
@@ -91,11 +111,31 @@ const Map = () => {
             center={center} zoom={zoom}
             onClick={onClick}
             onIdle={onIdle}
-          />);
+          >
+            <Marker position={{ lat: center.lat, lng: center.lng }} />
+          </MyMapComponent>);
       default:
         return null;
     }
   };
+
+  React.useEffect(() => {
+    navigator.geolocation.getCurrentPosition((pos) => {
+        const crd = pos.coords;
+
+        console.log('Your current position is:');
+        console.log(`Latitude : ${crd.latitude}`);
+        console.log(`Longitude: ${crd.longitude}`);
+        console.log(`More or less ${crd.accuracy} meters.`);
+        setCenter((center) => ({ ...center , lat: crd.latitude, lng: crd.longitude }))
+    }, (err) => {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+    }, {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+    } );
+  }, []);
   return (
     <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAP_KEY} render={render} />
   );
