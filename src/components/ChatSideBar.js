@@ -18,7 +18,7 @@ const ChatSideBarHeader = ({ user }) => {
         </span>
       </div>
       <div className="img-container">
-        {user && (<img src={user?.avatar} alt="avatar" />)}
+        {user?.avatar && (<img src={user.avatar} alt="avatar" />)}
       </div>
       <span className="profile-name">{user.username}</span>
       <div className="search">
