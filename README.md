@@ -14,7 +14,7 @@
 - Authenticated users can only chat with each other
 - The online status of loggedin users is indicated
 - User can update there profile while the update is reflected immediately
-- New messages from other users if not chatting with the currently
+- New messages status from other users if not chatting with the currently
 
 # Getting started
 ## To get a local copy of this repository kindly follow the steps below.

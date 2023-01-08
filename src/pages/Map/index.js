@@ -82,10 +82,10 @@ function MyMapComponent({ center, zoom, onClick, onIdle, children, ...options}) 
 
 const Map = () => {
   const [clicks, setClicks] = React.useState([]);
-  const [zoom, setZoom] = React.useState(5);
+  const [zoom, setZoom] = React.useState(13);
   const [center, setCenter] = React.useState({
-    lat: 0,
-    lng: 0,
+    lat: 6.6018,
+    lng: 3.3515,
   });
 
   const onClick = (e) => {
@@ -97,26 +97,6 @@ const Map = () => {
     console.log("onIdle");
     setZoom(m.getZoom());
     setCenter(m.getCenter().toJSON());
-  };
-  
-  const render = (status) => {
-    switch (status) {
-      case Status.LOADING:
-        return <Spinner />;
-      case Status.FAILURE:
-        return <ErrorComponent />;
-      case Status.SUCCESS:
-        return (
-          <MyMapComponent
-            center={center} zoom={zoom}
-            onClick={onClick}
-            onIdle={onIdle}
-          >
-            <Marker position={{ lat: center.lat, lng: center.lng }} />
-          </MyMapComponent>);
-      default:
-        return null;
-    }
   };
 
   React.useEffect(() => {
@@ -136,6 +116,35 @@ const Map = () => {
         maximumAge: 0
     } );
   }, []);
+  
+  const render = (status) => {
+    switch (status) {
+      case Status.LOADING:
+        return <Spinner />;
+      case Status.FAILURE:
+        return <ErrorComponent />;
+      case Status.SUCCESS:
+        return (
+          <MyMapComponent
+            center={center} zoom={zoom}
+            onClick={onClick}
+            onIdle={onIdle}
+            mapTypeControlOptions={{
+                mapTypeIds: ['roadmap', 'terrain']
+             }}
+             mapTypeId={'terrain'}
+          >
+            <Marker
+              position={{ lat: center.lat, lng: center.lng }}
+              title="my location"
+              optimize={true}
+            />
+          </MyMapComponent>);
+      default:
+        return null;
+    }
+  };
+
   return (
     <Wrapper apiKey={process.env.REACT_APP_GOOGLE_MAP_KEY} render={render} />
   );
