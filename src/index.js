@@ -13,6 +13,7 @@ import Register, { action as registerAction } from './pages/Home/Register';
 import Profile, { action as profileAction, loader as profileLoader } from './pages/Profile/Profile';
 import Map from './pages/Map';
 import NewPassword from './pages/Profile/NewPassword';
+import Friends from './pages/Friends';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { path: 'register', element: <Register />, action: registerAction, loader: homeLoader },
       { path: 'login', element: <Home />, action: loginAction, loader: homeLoader },
       { path: 'chat', element: <Chat /> },
+      { path: 'friends', element: <Friends /> },
       { 
         path: 'profile',
         children: [
