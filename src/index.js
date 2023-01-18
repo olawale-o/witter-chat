@@ -10,8 +10,9 @@ import {
 import socket from './socket';
 import Home, { action as loginAction, loader as homeLoader } from './pages/Home';
 import Register, { action as registerAction } from './pages/Home/Register';
-import Profile, { action as profileAction, loader as profileLoader } from './pages/Profile';
+import Profile, { action as profileAction, loader as profileLoader } from './pages/Profile/Profile';
 import Map from './pages/Map';
+import NewPassword from './pages/Profile/NewPassword';
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,13 @@ const router = createBrowserRouter([
       { path: 'register', element: <Register />, action: registerAction, loader: homeLoader },
       { path: 'login', element: <Home />, action: loginAction, loader: homeLoader },
       { path: 'chat', element: <Chat /> },
-      { path: 'profile', element: <Profile />, action: profileAction, loader: profileLoader },
+      { 
+        path: 'profile',
+        children: [
+          { index: true, element: <Profile />, action: profileAction, loader: profileLoader },
+          { path: 'password', element: <NewPassword />, action: profileAction, loader: profileLoader },
+        ],
+      },
       { path: 'map', element: <Map /> },
     ]
   },
