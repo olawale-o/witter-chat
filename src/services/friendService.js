@@ -23,8 +23,8 @@ export const acceptFriendRequestService = async (body) => {
 };
 
 export const getFriendSuggestionService = async (query) => {
-  const data = await get(`http://localhost:5000/api/v1/users/suggestion?q=${query}`);
-  return data.suggestions;
+  const data = await get(`http://localhost:5000/api/v1/friends/suggestions?q=${query}`);
+  return data;
 };
 
 export const getContactService = async (id) => {
