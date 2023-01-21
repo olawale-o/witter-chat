@@ -3,12 +3,15 @@ import { useOutletContext } from "react-router";
 import ChatSideBar from "../../components/ChatSideBar";
 import ChatArea from "../../components/ChatArea";
 import { getUnfollowedUsers } from '../../services/friendService';
+import { useUser, useUserDispatch } from "../../hooks/useUser";
 
 const Chat = () => {
   localStorage.removeItem('profile');
+  const { user } = useUser();
+  const { setUser } = useUserDispatch();
   const savedUser = JSON.parse(localStorage.getItem('user')).user;
   const [socket] = useOutletContext();
-  const [user, setUser] = React.useState({});
+  // const [user, setUser] = React.useState({});
   const [messages, setMessages] = React.useState([]);
   const [selectedUser, setSelectedUser] = React.useState({});
   const selectedCurrentUser = React.useRef({});
@@ -148,7 +151,8 @@ const Chat = () => {
       handlePrivateChat,
       user.username,
       savedUser,
-      handleProfileUpdate
+      handleProfileUpdate,
+      setUser
    ]);
 
   const onUserSelected = async (user) => {
