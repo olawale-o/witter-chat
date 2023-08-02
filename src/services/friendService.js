@@ -1,7 +1,6 @@
 import { get, post } from "../api";
 
 export const getUnfollowedUsers = async (username) => {
-  console.log(username);
   const data = await get(`http://localhost:5000/api/v1/users?q=${username}`);
   return data.users;
 };
@@ -30,4 +29,9 @@ export const getFriendSuggestionService = async (query) => {
 export const getContactService = async (id) => {
   const data = await get(`http://localhost:5000/api/v1/users/${id}`);
   return data.user;
+};
+
+export const getFriendRequestService = async (query) => {
+  const data = await get(`http://localhost:5000/api/v1/friends/requests?q=${query}`);
+  return data;
 };

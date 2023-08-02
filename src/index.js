@@ -14,6 +14,8 @@ import Profile, { action as profileAction, loader as profileLoader } from './pag
 import Map from './pages/Map';
 import NewPassword from './pages/Profile/NewPassword';
 import Friends from './pages/Friends';
+import FriendRequest from './pages/Friends/Request';
+import FriendSuggestion from './pages/Friends/Suggestion';
 
 const router = createBrowserRouter([
   {
@@ -24,7 +26,15 @@ const router = createBrowserRouter([
       { path: 'register', element: <Register />, action: registerAction, loader: homeLoader },
       { path: 'login', element: <Home />, action: loginAction, loader: homeLoader },
       { path: 'chat', element: <Chat /> },
-      { path: 'friends', element: <Friends /> },
+      {
+        path: 'friends',
+        element: <Friends />,
+        children: [
+          { index: true, element: <FriendSuggestion /> },
+          { path: 'suggestions', element: <FriendSuggestion /> },
+          { path: 'request', element: <FriendRequest /> },
+        ],
+      },
       { 
         path: 'profile',
         children: [

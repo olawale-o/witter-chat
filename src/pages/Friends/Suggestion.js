@@ -2,18 +2,18 @@ import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { getFriendSuggestionService } from '../../services/friendService';
 
-const profileId = JSON.parse(localStorage.getItem('user'))?.user.id;
+// const profileId = JSON.parse(localStorage.getItem('user'))?.user.id;
 const FriendSuggestion = () => {
+  const profileId = JSON.parse(localStorage.getItem('user'))?.user.id;
   const [socket] = useOutletContext();
   const [suggestions, setSuggestions] = useState([]);
   useEffect(() => {
-    const profileId = JSON.parse(localStorage.getItem('user'))?.user.id;
     const getSuggestions = async () => {
       const suggestions = await getFriendSuggestionService(profileId);
       setSuggestions(suggestions);
     };
     getSuggestions();
-  }, []);
+  }, [profileId]);
 
   useEffect(() => {
     socket.on('add friend', (data) => {

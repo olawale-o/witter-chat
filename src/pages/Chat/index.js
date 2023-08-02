@@ -2,16 +2,13 @@ import React from "react";
 import { useOutletContext } from "react-router";
 import ChatSideBar from "../../components/ChatSideBar";
 import ChatArea from "../../components/ChatArea";
-import { getUnfollowedUsers } from '../../services/friendService';
 import { useUser, useUserDispatch } from "../../hooks/useUser";
 
 const Chat = () => {
   localStorage.removeItem('profile');
   const { user } = useUser();
   const { setUser } = useUserDispatch();
-  const savedUser = JSON.parse(localStorage.getItem('user')).user;
   const [socket] = useOutletContext();
-  // const [user, setUser] = React.useState({});
   const [messages, setMessages] = React.useState([]);
   const [selectedUser, setSelectedUser] = React.useState({});
   const selectedCurrentUser = React.useRef({});
@@ -72,44 +69,14 @@ const Chat = () => {
   }, []);
 
   React.useEffect(() => {
-    async function getUsers() {
-      try {
-        const users = await getUnfollowedUsers(savedUser.username);
-        const list = {};
-        for (let user of users) {
-          list[`${user._id}`] = user;
-        }
-        setOnlineUsers(list);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    getUsers();
-  }, [savedUser.username]);
-
-  React.useEffect(() => {
     socket.on('connect', () => console.log('connected'));
     checkIfUserExist();
-
-    async function getUsers() {
-      try {
-        const users = await getUnfollowedUsers(user.username);
-        const list = {};
-        for (let user of users) {
-          list[`${user.id}`] = user;
-        }
-        setOnlineUsers(list);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    // getUsers();
 
     socket.on('session', async({ sessionId, userId, username }) => {
       if (sessionId && userId && username) {
         socket.auth = { sessionId: sessionId };
         localStorage.setItem('sessionId', sessionId);
-        setUser({ sessionId, id: userId, username, userId, avatar: savedUser.avatar })
+        setUser({ sessionId, id: userId, username, userId, avatar: user.avatar })
       }
     });
 
@@ -118,17 +85,21 @@ const Chat = () => {
         socket.auth = { sessionId: sessionId };
         localStorage.setItem('sessionId', sessionId);
         handleProfileUpdate(userId, username);
-        if (savedUser.id === userId) {
-          setUser({ sessionId, id: userId, username, userId, avatar: savedUser.avatar });
+        if (user.id === userId) {
+          setUser({ sessionId, id: userId, username, userId, avatar: user.avatar });
         }
       }
     })
 
     socket.on("users", (data) => {
-      // console.log(data);
-      const list = {};
-      for (let user of data) {
-        list[`${user._id}`] = user;
+      // indicate/show users that are online to loggedin user 
+      if (data.length > 0) {
+        console.log("users"); 
+        const list = {};
+        for (let user of data) {
+          list[`${user._id}`] = user;
+        }
+        setOnlineUsers(list);
       }
     });
 
@@ -137,7 +108,6 @@ const Chat = () => {
       handlePrivateChat(message);
     });
     socket.on('user messages', (messages) => userMessages(messages));
-
     return () => {
       socket.off('connect');
       socket.off('session');
@@ -150,9 +120,11 @@ const Chat = () => {
       userMessages,
       handlePrivateChat,
       user.username,
-      savedUser,
+      user.username,
       handleProfileUpdate,
-      setUser
+      setUser,
+      user.avatar,
+      user.id,
    ]);
 
   const onUserSelected = async (user) => {
@@ -161,7 +133,7 @@ const Chat = () => {
     await socket.emit('user messages', user);
     handleNewMessageStatus(user._id, false, '')
   };
-
+ 
   return (
     <div className="chat">
       <ChatSideBar

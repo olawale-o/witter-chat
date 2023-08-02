@@ -13,9 +13,11 @@ const ChatSideBarHeader = ({ user }) => {
             <BiCog />
           </span>
         </Link>
-        <span className="icon">
-          <BiChevronRightSquare />
-        </span>
+        <Link to="/friends">
+          <span className="icon">
+            <BiChevronRightSquare />
+          </span>
+        </Link>
       </div>
       <div className="img-container">
         {user?.avatar && (<img src={user.avatar} alt="avatar" />)}
@@ -78,7 +80,7 @@ const ChatSideBar = ({ socket, user, setSelectedUser, onlineUsers, setOnlineUser
       console.log(user, 'disconnected')
       userDisconnected(user)
     })
-  }, [socket, onUserConnected, userDisconnected])
+  }, [socket, onUserConnected, userDisconnected, onlineUsers])
   return (
     <div className="chatsidebar">
       <ChatSideBarHeader user={user} />

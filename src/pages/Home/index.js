@@ -8,10 +8,11 @@ import {
   Link,
 } from 'react-router-dom';
 import { loginService } from '../../services/authService';
+import { useUserDispatch } from '../../hooks/useUser';
 
 export async function loader() {
-  return JSON.parse(localStorage.getItem('user'));
-}
+  return JSON.parse(localStorage.getItem('user'))
+};
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -25,6 +26,7 @@ export async function action({ request }) {
 }
 
 const Home = () => {
+  const { setUser } = useUserDispatch();
   const [socket] = useOutletContext();
   const data = useLoaderData();
   const navigate = useNavigate();
@@ -35,9 +37,10 @@ const Home = () => {
 
   React.useEffect(() => {    
     if (data !== null) {
-      const { user: { username, id, name } } = data;
-      socket.auth = { user: { username, id, name } }
+      const { user: { username, _id, name } } = data;
+      socket.auth = { user: { username, _id, name } }
       socket.connect();
+      setUser(data)
       navigate('/chat');
     }
   }, [data, navigate, socket]);
