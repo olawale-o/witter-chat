@@ -29,7 +29,6 @@ const Chat = () => {
   const handlePrivateChat = React.useCallback((message) => {
     if (selectedCurrentUser.current._id) {
       if (selectedCurrentUser.current._id === message.from) {
-        console.log('c')
         const newMessage = {
           userId: message.from,
           text: message.text,
