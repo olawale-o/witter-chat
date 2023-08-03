@@ -15,12 +15,12 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newMessage = {
-      userId: user.id,
+      userId: user._id,
       username: user.username,
       text: message,
-      id: user.id,
+      id: user._id,
       to: contact._id,
-      from: user.id,
+      from: user._id,
     }
     socket.emit('private message', {
       text: message,
@@ -76,21 +76,23 @@ const ChatMessage = ({
                   <div className="online-state online small-circle" />
                 </div>
               </div>
-            </div>) : (
-              <div className="chat-message-container chat-recipient" key={i}>
-                <div className="avatar-container" />
-                  <div className="message-area">
-                    <div className="chat-message-content">
-                      <span className="chat-profile-name">{message.username}</span>
-                      <p className="chat-message text-sm">{message.text}</p>
-                    </div>
-                  <div className="chat-message-timestamp">
-                    <span className="timestamp text-sm">16:45</span>
-                    <div className="online-state online small-circle" />
+            </div>
+          ) : 
+          (
+            <div className="chat-message-container chat-recipient" key={i}>
+              <div className="avatar-container" />
+                <div className="message-area">
+                  <div className="chat-message-content">
+                    <span className="chat-profile-name">{message.username}</span>
+                    <p className="chat-message text-sm">{message.text}</p>
                   </div>
+                <div className="chat-message-timestamp">
+                  <span className="timestamp text-sm">16:45</span>
+                  <div className="online-state online small-circle" />
                 </div>
               </div>
-            )
+            </div>
+          )
         ))
       }
     </div>
