@@ -1,4 +1,5 @@
 import React from "react";
+import { BiX } from 'react-icons/bi'
 import { useOutletContext } from "react-router";
 import ChatSideBar from "../../components/ChatSideBar";
 import ChatArea from "../../components/ChatArea";
@@ -128,10 +129,15 @@ const Chat = () => {
    ]);
 
   const onUserSelected = async (user) => {
-    setSelectedUser(user);
-    selectedCurrentUser.current = user;
-    await socket.emit('user messages', user);
-    handleNewMessageStatus(user._id, false, '')
+    if (!user) {
+      setSelectedUser({});
+      selectedCurrentUser.current = null;
+    } else {
+      setSelectedUser(user);
+      selectedCurrentUser.current = user;
+      await socket.emit('user messages', user);
+      handleNewMessageStatus(user._id, false, '')
+    }
   };
  
   return (
@@ -158,6 +164,15 @@ const Chat = () => {
           (<div>Please select a user to chat with</div>)
         }
       </div>
+      {selectedUser._id && (
+        <button
+          type="button"
+          className="close"
+          onClick={onUserSelected}
+        >
+          <BiX />
+        </button>)
+     }
     </div>
   );
 };
