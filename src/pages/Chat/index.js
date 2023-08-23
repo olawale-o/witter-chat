@@ -93,8 +93,9 @@ const Chat = () => {
 
     socket.on("users", (data) => {
       // indicate/show users that are online to loggedin user 
+      console.log({data})
       if (data.length > 0) {
-        console.log("users"); 
+        console.log(data); 
         const list = {};
         for (let user of data) {
           list[`${user._id}`] = user;
@@ -128,6 +129,7 @@ const Chat = () => {
    ]);
 
   const onUserSelected = async (user) => {
+    console.log(user);
     if (!user) {
       setSelectedUser({});
       selectedCurrentUser.current = null;
@@ -167,7 +169,7 @@ const Chat = () => {
         <button
           type="button"
           className="close"
-          onClick={onUserSelected}
+          onClick={() => onUserSelected(null)}
         >
           <BiX />
         </button>)

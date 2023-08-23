@@ -57,11 +57,10 @@ const ChatSideBar = ({ socket, user, setSelectedUser, onlineUsers, setOnlineUser
         } else {
           console.log('user does not exist');
           console.log(onlineUsers);
-          const newUser = onlineUsers[userId];
-          if (newUser) {
-            newUser.online = true;
-            setOnlineUsers({ ...onlineUsers });
-          }
+          const newUser = { userId, username, _id: userId, online: true } 
+          onlineUsers[userId] = newUser
+          newUser.online = true;
+          setOnlineUsers({ ...onlineUsers });
         }
     }
   }, [handleConnectionStatus, findUser, onlineUsers, setOnlineUsers, user.id]);
