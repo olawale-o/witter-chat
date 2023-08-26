@@ -1,0 +1,33 @@
+.chat-sidebar__header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.8em;
+  font-size: 1.8em;
+}
+
+.chat-sidebar__detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chat-sidebar__detail-img {
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
+  background-color: var(--black-color);
+}
+
+.chat-sidebar__detail__img {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.chat-sidebar__detail__name {
+  font-size: 1.4em;
+  text-transform: capitalize;
+  color: var(--black-color);
+}

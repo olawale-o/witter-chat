@@ -1,0 +1,29 @@
+.chat-input-container {
+  display: flex;
+  width: 100%;
+}
+  
+.chat-input-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 0.8em;
+}
+  
+.user-icon {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: var(--black-color);
+}
+  
+.chat-input {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid var(--sea-salt);
+  flex-grow: 1;
+  padding-block: 1em;
+  word-spacing: 3px;
+  letter-spacing: 2px;
+}

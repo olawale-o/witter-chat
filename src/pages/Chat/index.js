@@ -1,9 +1,11 @@
 import React from "react";
 import { BiX } from 'react-icons/bi'
 import { useOutletContext } from "react-router";
-import ChatSideBar from "../../components/ChatSideBar";
-import ChatArea from "../../components/ChatArea";
+import ChatSideBar from "../../components/ChatSideBar/ChatSideBar";
+import ChatArea from "../../components/ChatArea/ChatArea";
 import { useUser, useUserDispatch } from "../../hooks/useUser";
+
+import './Chat.css'
 
 const Chat = () => {
   localStorage.removeItem('profile');
@@ -93,9 +95,7 @@ const Chat = () => {
 
     socket.on("users", (data) => {
       // indicate/show users that are online to loggedin user 
-      console.log({data})
       if (data.length > 0) {
-        console.log(data); 
         const list = {};
         for (let user of data) {
           list[`${user._id}`] = user;
@@ -142,7 +142,8 @@ const Chat = () => {
   };
  
   return (
-    <div className="chat">
+    <div className="chat-container">
+      <nav className="nav">nav</nav>
       <ChatSideBar
         socket={socket}
         user={user}
@@ -152,28 +153,34 @@ const Chat = () => {
         setOnlineUsers={setOnlineUsers}
       />
       <div className="chat-area">
-        {
-          selectedUser._id ?
-          (<ChatArea
-            socket={socket}
-            selectedUser={selectedUser}
-            messages={messages}
-            setMessages={setMessages}
-            lastMessageRef={lastMessageRef}
-          />)
-           :
-          (<div>Please select a user to chat with</div>)
-        }
+        <nav className="chat-area__nav">
+          <div className="chat-area__nav--left">
+            <input type="text" className="input input--bg-grey" placeholder="Search for a message" />
+            <div className="theme-buttons">
+              <button type="button" className="btn btn__square btn--green btn--light">o</button>
+              <button type="button" className="btn btn__square btn--dark">f</button>
+            </div>
+          </div>
+          <div className="chat-area__nav--right">
+            <span className="text-gray text-lg f-600">21, October 2023</span>
+          </div>
+        </nav>
+        <div className="chat-area__content">
+          {
+            selectedUser._id ?
+            (<ChatArea
+              socket={socket}
+              selectedUser={selectedUser}
+              messages={messages}
+              setMessages={setMessages}
+              lastMessageRef={lastMessageRef}
+            />)
+            :
+            (<div className="no-chat">Please select a user to chat with</div>)
+          }
+          <div className="profile">profile</div>
+        </div>
       </div>
-      {selectedUser._id && (
-        <button
-          type="button"
-          className="close"
-          onClick={() => onUserSelected(null)}
-        >
-          <BiX />
-        </button>)
-     }
     </div>
   );
 };

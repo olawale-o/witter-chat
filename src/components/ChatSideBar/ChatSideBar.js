@@ -1,37 +1,8 @@
 import React from "react";
-import { BiCog, BiChevronRightSquare, BiSearch } from "react-icons/bi";
-import { Link } from "react-router-dom";
-import Contacts from "./Contacts";
-
-const ChatSideBarHeader = ({ user }) => {
-  if (!user) return null
-  return (
-    <div className="chatsidebard-header">
-      <div className="header-nav">
-        <Link to="/profile">
-          <span className="icon">
-            <BiCog />
-          </span>
-        </Link>
-        <Link to="/friends">
-          <span className="icon">
-            <BiChevronRightSquare />
-          </span>
-        </Link>
-      </div>
-      <div className="img-container">
-        {user?.avatar && (<img src={user.avatar} alt="avatar" />)}
-      </div>
-      <span className="profile-name">{user.username}</span>
-      <div className="search">
-        <input className="search-input" type="text" placeholder="Search" />
-        <span className="icon">
-          <BiSearch />
-        </span>
-      </div>
-    </div>
-  );
-};
+import ChatSideBarHeader from "./ChatSidebarHeader";
+import Contacts from "../Contacts/Contacts";
+import OnlineContacts from "../Contacts/Online";
+import './ChatSidebar.css';
 
 const ChatSideBar = ({ socket, user, setSelectedUser, onlineUsers, setOnlineUsers }) => {
   const findUser = React.useCallback((userId) => {
@@ -83,6 +54,9 @@ const ChatSideBar = ({ socket, user, setSelectedUser, onlineUsers, setOnlineUser
   return (
     <div className="chatsidebar">
       <ChatSideBarHeader user={user} />
+      <div className="divider" />
+      <OnlineContacts users={onlineUsers} />
+      <div className="divider" />
       <Contacts
         setSelectedUser={setSelectedUser}
         user={user}
