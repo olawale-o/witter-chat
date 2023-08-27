@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;700;800&display=swap');
+
+:root {
+  --sea-green: #1F8C5F;
+  --white-color: #FFFFFF;  
+  --sea-salt: #F9F9F9;
+  --platinum: #EAE6E1;
+  --isabeline: #F2EDE7;
+  --black-color: #000814;
+}
+
+*,
+*::after,
+*::before{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-size: 1em;
+  display: flex;
+  flex-grow: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  outline: none;
+  border: none;
+  background: none;
+}
+
+.App {
+  font-family: 'Open Sans';
+}
+
+.icon {
+  color: var(--black-color);
+  font-size: 1.4em;
+}
+
+.icon--green {
+  color: var(--sea-green)
+}
+
+.icon--white {
+  color: var(--white-color)
+}
+
+.text-sm {
+  font-size: 1.4em;
+}
+
+.text-lg {
+  font-size: 1.6em;
+}
+
+.text-xl {
+  font-size: 3em;
+}
+
+.text-gray {
+  color: #eaeaea;
+}
+
+.text-orange {
+  color: orangered;
+}
+
+.bg-grey {
+  background: var(--sea-salt)
+}
+
+.text-black {
+  color: var(--black-color);
+}
+
+.w--100 {
+  width: 100%;
+}
+
+.input {
+  width: 100%;
+  padding: 1em;
+  outline: none;
+  border: none;
+  background: none;
+}
+
+.input--bg-grey {
+  background: var(--sea-salt);
+  border-radius: 5px;
+}
+
+.f-600 {
+  font-weight: 600;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #eaeaea;
+}
+
+.login_container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50px;
+}
+
+.login_container-header {
+  width: 400px;
+  margin-inline: auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login_form {
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  background-color: #f7f7f7;
+  justify-content: center;
+  align-items: center;
+}
+
+.login_form-content {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+}
+
+.field {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn_login {
+  width: 20%;
+  padding: 18px;
+}

@@ -4,7 +4,10 @@ import Contacts from "../Contacts/Contacts";
 import OnlineContacts from "../Contacts/Online";
 import './ChatSidebar.css';
 
-const ChatSideBar = ({ socket, user, setSelectedUser, onlineUsers, setOnlineUsers }) => {
+const ChatSideBar = ({
+  socket, user, setSelectedUser, onlineUsers, setOnlineUsers, selectedCurrentUser
+}) => {
+  console.log({sidebar: selectedCurrentUser});
   const findUser = React.useCallback((userId) => {
     const user = onlineUsers[userId];
     return user
@@ -42,15 +45,16 @@ const ChatSideBar = ({ socket, user, setSelectedUser, onlineUsers, setOnlineUser
 
   React.useEffect(() => {
     socket.on('user connected', ({ userId, username }) => {
-      console.log('user connected', userId, username)
+      // console.log('user connected', userId, username)
       onUserConnected(userId, username)
     })
 
     socket.on("user disconnected", (user) => {
-      console.log(user, 'disconnected')
+      // console.log(user, 'disconnected')
       userDisconnected(user)
     })
   }, [socket, onUserConnected, userDisconnected, onlineUsers])
+
   return (
     <div className="chatsidebar">
       <ChatSideBarHeader user={user} />
@@ -63,6 +67,7 @@ const ChatSideBar = ({ socket, user, setSelectedUser, onlineUsers, setOnlineUser
         socket={socket}
         onlineUsers={onlineUsers}
         setOnlineUsers={setOnlineUsers}
+        selectedCurrentUser={selectedCurrentUser}
       />
     </div>
   )

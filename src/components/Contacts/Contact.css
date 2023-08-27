@@ -15,7 +15,19 @@
 .contact-item {
   display: flex;
   width: 100%;
-  padding-block: 0.8em;
+  padding-block: 1em;
+  border-bottom: 1px solid #eaeaea;
+  background: none;
+  transition: 450ms background linear;
+}
+
+.contact-item:hover {
+  background: var(--sea-salt);
+}
+
+.contact-item.active {
+  border-bottom: none;
+  background: var(--sea-salt);
 }
 
 .contact-button {

@@ -4,35 +4,33 @@ import './Contact.css';
 const Contact = ({
   user,
   setSelectedUser,
+  selectedCurrentUser
 }) => {
   return (
-    <>
-      <li className="contact-item">
-        <button className="contact-button" onClick={() => setSelectedUser(user)}>
-          <div className="contact-item__container">
-            <div className="contact-item__left">
-              <span className="text-sm text-orange">{user.username[0].toUpperCase()}</span>
+    <li className={`contact-item ${selectedCurrentUser?.username === user.username && 'active'}`}>
+      <button className="contact-button" onClick={() => setSelectedUser(user)}>
+        <div className="contact-item__container">
+          <div className="contact-item__left">
+            <span className="text-sm text-orange">{user.username[0].toUpperCase()}</span>
+          </div>
+          <div className="contact-item__right">
+            <div className="last-chat">
+              <span className="last-chat__username">{user.username}</span>
+              <span className="last-chat__message">{user?.hasMessage}</span>
+              {/* {user?.hasNewMessage && (<div className="new-message" />)} */}
             </div>
-            <div className="contact-item__right">
-              <div className="last-chat">
-                <span className="last-chat__username">{user.username}</span>
-                <span className="last-chat__message">{user?.hasMessage}</span>
-                {/* {user?.hasNewMessage && (<div className="new-message" />)} */}
-              </div>
-              <div className="chat-state">
-                <span>16:45</span>
-                <div className={`online-state ${user.online ? 'online' : user.idle ? 'idle' : user.busy ? 'busy' : null}` }/>
-              </div>
+            <div className="chat-state">
+              <span>16:45</span>
+              <div className={`online-state ${user.online ? 'online' : user.idle ? 'idle' : user.busy ? 'busy' : null}` }/>
             </div>
           </div>
-        </button>
-      </li>
-      <div className="divider" />
-    </>
-  )
+        </div>
+      </button>
+    </li>
+  );
 }
 
-const Contacts = ({ setSelectedUser, onlineUsers }) => {
+const Contacts = ({ setSelectedUser, onlineUsers, selectedCurrentUser }) => {
   return (
     <div className="chats">
       <span className="text-lg text-black">Chats</span>
@@ -44,6 +42,7 @@ const Contacts = ({ setSelectedUser, onlineUsers }) => {
               key={k}
               user={v}
               setSelectedUser={setSelectedUser}
+              selectedCurrentUser={selectedCurrentUser}
             />
           )
         })}

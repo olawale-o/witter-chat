@@ -1,5 +1,5 @@
 import React from "react";
-import { BiX } from 'react-icons/bi'
+import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md'
 import { useOutletContext } from "react-router";
 import ChatSideBar from "../../components/ChatSideBar/ChatSideBar";
 import ChatArea from "../../components/ChatArea/ChatArea";
@@ -129,26 +129,25 @@ const Chat = () => {
    ]);
 
   const onUserSelected = async (user) => {
-    console.log(user);
-    if (!user) {
-      setSelectedUser({});
-      selectedCurrentUser.current = null;
-    } else {
+    // console.log(user);
+    // if (user === null) {
+    //   setSelectedUser({});
+    //   selectedCurrentUser.current = null;
+    // } else {
       setSelectedUser(user);
       selectedCurrentUser.current = user;
       await socket.emit('user messages', user);
       handleNewMessageStatus(user._id, false, '')
-    }
+    //}
   };
  
   return (
     <div className="chat-container">
-      <nav className="nav">nav</nav>
       <ChatSideBar
         socket={socket}
         user={user}
         setSelectedUser={onUserSelected}
-        selectedCurrentUser={selectedCurrentUser}
+        selectedCurrentUser={selectedUser}
         onlineUsers={onlineUsers}
         setOnlineUsers={setOnlineUsers}
       />
@@ -157,8 +156,16 @@ const Chat = () => {
           <div className="chat-area__nav--left">
             <input type="text" className="input input--bg-grey" placeholder="Search for a message" />
             <div className="theme-buttons">
-              <button type="button" className="btn btn__square btn--green btn--light">o</button>
-              <button type="button" className="btn btn__square btn--dark">f</button>
+              <button type="button" className="btn btn__square btn--green btn--light">
+                <span className="icon icon--white">
+                  <MdOutlineLightMode />
+                </span>
+              </button>
+              <button type="button" className="btn btn__square btn--dark">
+                <span className="icon icon--green">
+                  <MdOutlineDarkMode />
+                </span>
+              </button>
             </div>
           </div>
           <div className="chat-area__nav--right">
@@ -186,3 +193,4 @@ const Chat = () => {
 };
 
 export default Chat;
+ 

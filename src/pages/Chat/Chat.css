@@ -2,11 +2,7 @@
   background: var(--white-color);
   display: grid;
   width: 100%;
-  grid-template-columns: 4em 30em auto;
-}
-
-.nav {
-  background: var(--sea-green);
+  grid-template-columns: 30em auto;
 }
 
 .chat-area {

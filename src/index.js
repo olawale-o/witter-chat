@@ -16,6 +16,7 @@ import NewPassword from './pages/Profile/NewPassword';
 import Friends from './pages/Friends';
 import FriendRequest from './pages/Friends/Request';
 import FriendSuggestion from './pages/Friends/Suggestion';
+import './index.css';
 
 const router = createBrowserRouter([
   {
