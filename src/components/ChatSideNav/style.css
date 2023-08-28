@@ -1,0 +1,17 @@
+.nav {
+  background: var(--sea-green);
+  padding-block: 2.5em;
+  padding-inline: 1.8em;
+}
+  
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  overflow-y: scroll;
+}
+  
+.nav-list__item {
+    
+}
