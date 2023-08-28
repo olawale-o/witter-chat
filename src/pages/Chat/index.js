@@ -5,7 +5,10 @@ import ChatSideBar from "../../components/ChatSideBar/ChatSideBar";
 import ChatArea from "../../components/ChatArea/ChatArea";
 import { useUser, useUserDispatch } from "../../hooks/useUser";
 
+import {HiOutlineUserGroup} from 'react-icons/hi';
+
 import './Chat.css'
+import ChatSideNav from "../../components/ChatSideNav";
 
 const Chat = () => {
   localStorage.removeItem('profile');
@@ -129,20 +132,20 @@ const Chat = () => {
    ]);
 
   const onUserSelected = async (user) => {
-    // console.log(user);
-    // if (user === null) {
-    //   setSelectedUser({});
-    //   selectedCurrentUser.current = null;
-    // } else {
+    if (user === null) {
+      setSelectedUser({});
+      selectedCurrentUser.current = null;
+    } else {
       setSelectedUser(user);
       selectedCurrentUser.current = user;
       await socket.emit('user messages', user);
       handleNewMessageStatus(user._id, false, '')
-    //}
+    }
   };
  
   return (
     <div className="chat-container">
+      <ChatSideNav />
       <ChatSideBar
         socket={socket}
         user={user}

@@ -59,17 +59,6 @@ function App({ socket }) {
   return (
     <UserProvider>
       <div className="App">
-        <nav className="nav">
-          <ul className="nav-list">
-            <li className="nav-list__item">
-              <button type="button">
-                <span className="icon icon--white">
-                  <HiOutlineUserGroup fill='white' />
-                </span>
-              </button>
-            </li>
-          </ul>
-        </nav>
         <Outlet context={[socket]} />
       </div>
     </UserProvider>

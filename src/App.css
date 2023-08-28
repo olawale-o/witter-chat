@@ -1,20 +1,5 @@
 .App {
   background: var(--white-color);
-  display: grid;
-  width: 100%;
-  grid-template-columns: 6em auto;
-}
-
-.nav {
-  background: var(--sea-green);
-  padding-block: 2.5em;
-  padding-inline: 1.8em;
-}
-
-.nav-list {
-
-}
-
-.nav-list__item {
-  
+  height: 100%;
+  overflow-y: scroll;
 }
