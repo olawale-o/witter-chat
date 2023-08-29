@@ -62,8 +62,12 @@ button {
   font-size: 1.4em;
 }
 
-.text-lg {
+.text-md {
   font-size: 1.6em;
+}
+
+.text-lg {
+  font-size: 1.8em;
 }
 
 .text-xl {

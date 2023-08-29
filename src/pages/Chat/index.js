@@ -9,6 +9,7 @@ import {HiOutlineUserGroup} from 'react-icons/hi';
 
 import './Chat.css'
 import ChatSideNav from "../../components/ChatSideNav";
+import Profile from "../../components/Profile";
 
 const Chat = () => {
   localStorage.removeItem('profile');
@@ -188,7 +189,7 @@ const Chat = () => {
             :
             (<div className="no-chat">Please select a user to chat with</div>)
           }
-          <div className="profile">profile</div>
+          <Profile />
         </div>
       </div>
     </div>
