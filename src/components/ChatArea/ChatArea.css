@@ -1,7 +1,6 @@
 .chat-content {
   border-right: 1px solid var(--sea-salt);
   padding-right: 2.5em;
-  height: calc(100vh - 11em);
   display: flex;
   flex-direction: column;
 }
@@ -9,5 +8,5 @@
 .chat-with {
   display: flex;
   flex-direction: column;
-  margin-bottom: 4em;
+  margin-bottom: 3em;
 }

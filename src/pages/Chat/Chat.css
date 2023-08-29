@@ -3,11 +3,13 @@
   display: grid;
   width: 100%;
   grid-template-columns: 6em 30em auto;
+  height: 100%;
 }
 
 .chat-area {
   padding: 2.5em;
   background-color: var(--white-color);
+  height: 100%;
 }
 
 .chat-area__nav {
@@ -57,8 +59,16 @@
 }
 
 .chat-area__content {
+  width: 100%;
+}
+
+.box {
   display: grid;
   grid-template-columns: auto 30em;
+  height: 100%;
+}
+
+.no-chat {
 }
 
 .profile {

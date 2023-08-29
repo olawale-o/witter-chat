@@ -19,15 +19,18 @@
 
 html {
   font-size: 10px;
+  height: 100%;
 }
 
 body {
   font-size: 1em;
   display: flex;
-  flex-grow: 1;
-  flex: 1;
   display: flex;
   flex-direction: column;
+  background: indianred;
+  flex-grow: 1;
+  flex: 1;
+  height: 100%;
 }
 
 li {

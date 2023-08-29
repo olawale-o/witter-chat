@@ -1,6 +1,5 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import {HiOutlineUserGroup} from 'react-icons/hi';
 import UserProvider from './provider/userProvider';
 
 import './App.css';

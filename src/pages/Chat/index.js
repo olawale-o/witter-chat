@@ -5,8 +5,6 @@ import ChatSideBar from "../../components/ChatSideBar/ChatSideBar";
 import ChatArea from "../../components/ChatArea/ChatArea";
 import { useUser, useUserDispatch } from "../../hooks/useUser";
 
-import {HiOutlineUserGroup} from 'react-icons/hi';
-
 import './Chat.css'
 import ChatSideNav from "../../components/ChatSideNav";
 import Profile from "../../components/Profile";
@@ -156,41 +154,43 @@ const Chat = () => {
         setOnlineUsers={setOnlineUsers}
       />
       <div className="chat-area">
-        <nav className="chat-area__nav">
-          <div className="chat-area__nav--left">
-            <input type="text" className="input input--bg-grey" placeholder="Search for a message" />
-            <div className="theme-buttons">
-              <button type="button" className="btn btn__square btn--green btn--light">
-                <span className="icon icon--white">
-                  <MdOutlineLightMode />
-                </span>
-              </button>
-              <button type="button" className="btn btn__square btn--dark">
-                <span className="icon icon--green">
-                  <MdOutlineDarkMode />
-                </span>
-              </button>
+        {
+          selectedUser._id ? (
+            <div className="chat-area__content">     
+              <nav className="chat-area__nav">
+                  <div className="chat-area__nav--left">
+                    <input type="text" className="input input--bg-grey" placeholder="Search for a message" />
+                    <div className="theme-buttons">
+                      <button type="button" className="btn btn__square btn--green btn--light">
+                        <span className="icon icon--white">
+                          <MdOutlineLightMode />
+                        </span>
+                      </button>
+                      <button type="button" className="btn btn__square btn--dark">
+                        <span className="icon icon--green">
+                          <MdOutlineDarkMode />
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="chat-area__nav--right">
+                    <span className="text-gray text-lg f-600">21, October 2023</span>
+                  </div>
+              </nav>    
+              <div className="box">
+                <ChatArea
+                  socket={socket}
+                  selectedUser={selectedUser}
+                  messages={messages}
+                  setMessages={setMessages}
+                  lastMessageRef={lastMessageRef}
+                />
+                <Profile user={selectedUser} />
+              </div>
             </div>
-          </div>
-          <div className="chat-area__nav--right">
-            <span className="text-gray text-lg f-600">21, October 2023</span>
-          </div>
-        </nav>
-        <div className="chat-area__content">
-          {
-            selectedUser._id ?
-            (<ChatArea
-              socket={socket}
-              selectedUser={selectedUser}
-              messages={messages}
-              setMessages={setMessages}
-              lastMessageRef={lastMessageRef}
-            />)
-            :
-            (<div className="no-chat">Please select a user to chat with</div>)
-          }
-          <Profile />
-        </div>
+          ) :
+          (<div className="no-chat">Please select a user to chat with</div>)
+        }
       </div>
     </div>
   );
