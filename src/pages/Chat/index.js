@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate, useLoaderData } from "react-router-dom";
 import { MdOutlineDarkMode, MdOutlineLightMode } from 'react-icons/md'
 import { useOutletContext } from "react-router";
 import ChatSideBar from "../../components/ChatSideBar/ChatSideBar";
@@ -9,7 +10,14 @@ import './Chat.css'
 import ChatSideNav from "../../components/ChatSideNav";
 import Profile from "../../components/Profile";
 
+
+export async function loader() {
+  return JSON.parse(localStorage.getItem('user'));
+}
+
 const Chat = () => {
+  const data = useLoaderData();
+  const navigate = useNavigate();
   localStorage.removeItem('profile');
   const { user } = useUser();
   const { setUser } = useUserDispatch();
@@ -73,6 +81,12 @@ const Chat = () => {
   }, []);
 
   React.useEffect(() => {
+    if (data === null || data === undefined) {
+      navigate('/');
+    } 
+  }, [data]);
+
+  React.useEffect(() => {
     socket.on('connect', () => console.log('connected'));
     checkIfUserExist();
 
@@ -111,6 +125,10 @@ const Chat = () => {
       handlePrivateChat(message);
     });
     socket.on('user messages', (messages) => userMessages(messages));
+
+    socket.on('disconnect', (data) => {
+      console.log('disconnect', data)
+    })
     return () => {
       socket.off('connect');
       socket.off('session');
@@ -144,7 +162,7 @@ const Chat = () => {
  
   return (
     <div className="chat-container">
-      <ChatSideNav />
+      <ChatSideNav socket={socket} />
       <ChatSideBar
         socket={socket}
         user={user}

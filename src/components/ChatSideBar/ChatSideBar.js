@@ -7,7 +7,6 @@ import './ChatSidebar.css';
 const ChatSideBar = ({
   socket, user, setSelectedUser, onlineUsers, setOnlineUsers, selectedCurrentUser
 }) => {
-  console.log({sidebar: selectedCurrentUser});
   const findUser = React.useCallback((userId) => {
     const user = onlineUsers[userId];
     return user

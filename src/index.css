@@ -27,7 +27,6 @@ body {
   display: flex;
   display: flex;
   flex-direction: column;
-  background: indianred;
   flex-grow: 1;
   flex: 1;
   height: 100%;

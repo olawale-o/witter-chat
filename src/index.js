@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-import Chat from './pages/Chat';
+import Chat, { loader as chatLoader } from './pages/Chat';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home />, action: loginAction, loader: homeLoader },
       { path: 'register', element: <Register />, action: registerAction, loader: homeLoader },
       { path: 'login', element: <Home />, action: loginAction, loader: homeLoader },
-      { path: 'chat', element: <Chat /> },
+      { path: 'chat', element: <Chat />, loader: chatLoader },
       {
         path: 'friends',
         element: <Friends />,
