@@ -4,15 +4,13 @@ import ChatBody from '../ChatBody';
 import ChatInput from '../ChatInput'
 import './ChatArea.css';
 
-
-
 const ChatArea = ({
   socket,
   messages,
   setMessages,
   selectedUser,
 }) => {
-  const userData = JSON.parse(localStorage.getItem('user')).user;
+  const userData = JSON.parse(localStorage.getItem('user'))?.user;
   const lastMessageRef = React.useRef(null);
   const [typingStatus, setTypingStatus] = React.useState('');
 

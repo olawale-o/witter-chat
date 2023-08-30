@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import Chat, { loader as chatLoader } from './pages/Chat';
+import App, { loader as appLoader } from './App';
+import Chat from './pages/Chat';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
@@ -17,16 +17,32 @@ import Friends from './pages/Friends';
 import FriendRequest from './pages/Friends/Request';
 import FriendSuggestion from './pages/Friends/Suggestion';
 import './index.css';
+import PublicRoute, { loader as publicLoader } from './pages/PublicRoute';
+import PrivateRoute, { loader as privateLoader } from './pages/PrivateRoute';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App socket={socket} />,
+    id: "root",
+    loader: appLoader,
     children: [
-      { index: true, element: <Home />, action: loginAction, loader: homeLoader },
-      { path: 'register', element: <Register />, action: registerAction, loader: homeLoader },
-      { path: 'login', element: <Home />, action: loginAction, loader: homeLoader },
-      { path: 'chat', element: <Chat />, loader: chatLoader },
+      // { index: true, element: <Home />, action: loginAction, loader: homeLoader },
+      {
+        element: <PublicRoute />,
+        loader: publicLoader,
+        children: [
+          { path: 'register', element: <Register />, action: registerAction, loader: homeLoader },
+          { path: 'login', element: <Home />, action: loginAction, loader: homeLoader },
+        ]
+      },
+      {
+        element: <PrivateRoute />,
+        loader: privateLoader,
+        children: [
+          { path: 'chat', element: <Chat />, },
+        ]
+      },
       {
         path: 'friends',
         element: <Friends />,

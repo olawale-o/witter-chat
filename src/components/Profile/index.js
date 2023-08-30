@@ -1,7 +1,10 @@
 import {BsFileEarmarkMinus} from 'react-icons/bs';
+import { useSocketContext } from '../../context/socket';
+
 import './style.css';
 
-export default function Profile({ user }) {
+export default function Profile() {
+  const { selectedUser } = useSocketContext();
   return (
     <div className="profile">
       <div className="profile__content">
@@ -9,8 +12,8 @@ export default function Profile({ user }) {
           <div className="profile__avatar">
             
           </div>
-          <span className="text-lg text-black">{user.username}</span>
-          <span className="text-gray text-sm">@{user.username}</span>
+          <span className="text-lg text-black">{selectedUser.username}</span>
+          <span className="text-gray text-sm">@{selectedUser.username}</span>
         </div>
         <div className="divider" />
         <div className="shared-files">

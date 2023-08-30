@@ -2,11 +2,11 @@ import React from "react";
 import ChatSideBarHeader from "./ChatSidebarHeader";
 import Contacts from "../Contacts/Contacts";
 import OnlineContacts from "../Contacts/Online";
+import { useSocketContext } from "../../context/socket";
 import './ChatSidebar.css';
 
-const ChatSideBar = ({
-  socket, user, setSelectedUser, onlineUsers, setOnlineUsers, selectedCurrentUser
-}) => {
+const ChatSideBar = () => {
+  const { socket, user, onlineUsers, setOnlineUsers, selectedUser, onUserSelected } = useSocketContext();
   const findUser = React.useCallback((userId) => {
     const user = onlineUsers[userId];
     return user
@@ -61,12 +61,12 @@ const ChatSideBar = ({
       <OnlineContacts users={onlineUsers} />
       <div className="divider" />
       <Contacts
-        setSelectedUser={setSelectedUser}
+        setSelectedUser={onUserSelected}
         user={user}
         socket={socket}
         onlineUsers={onlineUsers}
         setOnlineUsers={setOnlineUsers}
-        selectedCurrentUser={selectedCurrentUser}
+        selectedCurrentUser={selectedUser}
       />
     </div>
   )

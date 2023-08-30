@@ -1,0 +1,63 @@
+.home {
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.login-card {
+  width: 300px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #e8e8e8;
+  box-shadow: 2px 2px 10px #ccc;
+}
+  
+.card-header {
+  text-align: center;
+  margin-bottom: 20px
+}
+  
+.card-header .log {
+  margin: 0;
+  font-size: 24px;
+  color: black;
+}
+  
+.form-group {
+  margin-bottom: 15px;
+}
+  
+label {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+  
+.auth-input {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: 0.5s;
+}
+  
+input[type="submit"] {
+  width: 100%;
+  background-color: var(--sea-green);
+  opacity: 1;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 450ms all linear;
+}
+  
+input[type="submit"]:hover {
+  opacity: 0.4;
+}
+  

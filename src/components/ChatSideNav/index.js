@@ -1,17 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { AiOutlineLogout } from 'react-icons/ai';
+import { useSocketContext } from "../../context/socket";
 
 import './style.css';
 
-export default function ChatSideNav({ socket }) {
+export default function ChatSideNav() {
+  const { onDisconnect } = useSocketContext();
   const navigate = useNavigate();
-  const onDisconnect = async () => {
-    localStorage.removeItem('sessionId')
-    localStorage.removeItem('user');
-    await socket.disconnect();
-   navigate('/', { replace: true });
-  }
+
   return (
     <nav className="nav">
       <ul className="nav-list">

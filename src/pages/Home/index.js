@@ -3,16 +3,21 @@ import {
   useNavigate,
   Form,
   redirect,
-  useLoaderData,
   useOutletContext,
+  useRouteLoaderData,
   Link,
+  Navigate,
+  useLoaderData,
 } from 'react-router-dom';
 import { loginService } from '../../services/authService';
 import { useUserDispatch } from '../../hooks/useUser';
 
+import { useAuthContext } from '../../context/auth';
+import './style.css';
+
 export async function loader() {
-  return JSON.parse(localStorage.getItem('user'))
-};
+  return JSON.parse(localStorage.getItem("user"));
+}
 
 export async function action({ request }) {
   const formData = await request.formData();
@@ -22,12 +27,12 @@ export async function action({ request }) {
     password: formDataEntries.password,
   });
   localStorage.setItem('user', JSON.stringify(data));
-  return redirect('/');
+  return redirect('/login');
 }
 
 const Home = () => {
+  const { startSocket } = useAuthContext();
   const { setUser } = useUserDispatch();
-  const [socket] = useOutletContext();
   const data = useLoaderData();
   const navigate = useNavigate();
   const [formValues, setFormValues] = React.useState({
@@ -36,48 +41,54 @@ const Home = () => {
   });
 
   React.useEffect(() => {    
-    if (data !== null) {
-      const { user: { username, _id, name } } = data;
-      socket.auth = { user: { username, _id, name } }
-      socket.connect();
-      setUser(data)
+    if (data !== null && data.user !== null) {
+      console.log({login: data});
+      startSocket(data?.user)
+      setUser((prevState) => ({ ...prevState, ...data?.user }));
       navigate('/chat');
     }
-  }, [data, navigate, socket]);
+  }, [data, navigate]);
 
   const onFormChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
 
   return (
-    <div className="container login_container">
-      <div className="login_container-header">
-        <h2 className="heading heading_2">Log in</h2>
-        <Link to="/register">
-          <span>or register</span>
-        </Link>
+    <div className="home">
+      <div className="login-card">
+        <div className="card-header">
+          <div className="log">Login</div>
         </div>
-      <Form method="post" className="form login_form">
-        <div className="login_form-content">
-          <input
-            type="text"
-            name="username"
-            className="input"
-            value={formValues.username}
-            onChange={onFormChange}
-            placeholder="Email or username"
-          />
-          <input
-            type="password"
-            name="password"
-            className="input"
-            value={formValues.password}
-            onChange={onFormChange}
-            placeholder="Password"
-          />
-          <button type="submit" className="btn btn_login">Log in</button>
-        </div>
-      </Form>
+        <Form method="post">
+          <div className="form-group">
+            <label htmlFor="username">Username:</label>
+            <input
+              required=""
+              name="username"
+              id="username"
+              type="text"
+              value={formValues.username}
+              onChange={onFormChange}
+              className="auth-input"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password:</label>
+            <input
+              required=""
+              name="password"
+              id="password"
+              type="password"
+              value={formValues.password}
+              onChange={onFormChange}
+              className="auth-input"
+            />
+          </div>
+          <div className="form-group">
+            <input value="Login" type="submit" />
+          </div>
+        </Form>
+      </div>
     </div>
   )
 }

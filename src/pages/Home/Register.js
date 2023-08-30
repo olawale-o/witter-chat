@@ -4,13 +4,13 @@ import {
   Form,
   redirect,
   useLoaderData,
-  useOutletContext,
-  Link,
 } from 'react-router-dom';
 import { registerService } from '../../services/authService';
+import './style.css';
+import { useAuthContext } from '../../context/auth';
 
 export async function loader() {
-  return JSON.parse(localStorage.getItem('user'));
+  return JSON.parse(localStorage.getItem("user"));
 }
 
 export async function action({ request }) {
@@ -27,7 +27,7 @@ export async function action({ request }) {
 }
 
 const Register = () => {
-  const [socket] = useOutletContext();
+  const { startSocket } = useAuthContext();
   const data = useLoaderData();
   const navigate = useNavigate();
   const [formValues, setFormValues] = React.useState({
@@ -38,65 +38,73 @@ const Register = () => {
   });
 
   React.useEffect(() => {    
-    if (data !== null) {
-      const { user: { username, id, name } } = data;
-      socket.auth = { user: { username, id, name } }
-      socket.connect();
+    if (data !== null && data.user !== null) {
+      startSocket(data?.user);
       navigate('/chat');
     }
-  }, [data, navigate, socket]);
+  }, [data, navigate]);
 
   const onFormChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });
   };
 
   return (
-    <div className="container login_container">
-      <div className="login_container-header">
-        <h2 className="heading heading_2">Register</h2>
-        <Link to="/login">
-          <span>or Login</span>
-        </Link>
-        </div>
-      <Form method="post" className="form login_form">
-        <div className="login_form-content">
-          <input
-            type="email"
-            name="email"
-            className="input"
-            value={formValues.email}
-            onChange={onFormChange}
-            placeholder="Email"
-          />
-          <input
-            type="text"
-            name="username"
-            className="input"
-            value={formValues.username}
-            onChange={onFormChange}
-            placeholder="Username"
-          />
-          <input
-            type="text"
-            name="fullname"
-            className="input"
-            value={formValues.fullname}
-            onChange={onFormChange}
-            placeholder="Full name"
-          />
-          <input
-            type="password"
-            name="password"
-            className="input"
-            value={formValues.password}
-            onChange={onFormChange}
-            placeholder="Password"
-          />
-          <button type="submit" className="btn btn_login">Create</button>
-        </div>
-      </Form>
-    </div>
-  )
+    <div className="home">
+    <Form method="post">
+      <div className="form-group">
+        <label htmlFor="username">Username:</label>
+        <input
+          required=""
+          name="username"
+          id="username"
+          type="text"
+          value={formValues.username}
+          onChange={onFormChange}
+          className="auth-input"
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="password">Password:</label>
+        <input
+          required=""
+          name="password"
+          id="password"
+          type="password"
+          value={formValues.password}
+          onChange={onFormChange}
+          className="auth-input"
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="email">Email:</label>
+        <input
+          required=""
+          name="email"
+          id="email"
+          type="email"
+          value={formValues.email}
+          onChange={onFormChange}
+          className="auth-input"
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="fullname">Full name:</label>
+        <input
+          required=""
+          name="fullname"
+          id="password"
+          type="text"
+          value={formValues.fullname}
+          onChange={onFormChange}
+          className="auth-input"
+        />
+      </div>
+      <div className="form-group">
+        <input value="Create" type="submit" />
+      </div>
+    </Form>
+  </div>
+  );
 }
 
 export default Register;

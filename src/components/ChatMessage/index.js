@@ -7,7 +7,7 @@ const ChatMessage = ({
     <div>
       {
         messages?.map((message, i) => (
-          message.from === JSON.parse(localStorage.getItem('user')).user._id ? (
+          message.from === JSON.parse(localStorage.getItem('user'))?.user._id ? (
             <div className="chat-message-container chat-sender" key={i}>
               <div className="avatar-container" />
               <div className="message-area">
