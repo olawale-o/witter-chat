@@ -11,7 +11,13 @@ export default function OnlineContacts({users}) {;
         {Object.entries(users).filter(([_,v]) => v.online === true).map(([k, user], i) => (
           <li key={k} className="online-contact__list-item">
             <div className="online-contact__list-item__img-container">
-              <span className="text-sm text-orange">{user.username[0].toUpperCase()}</span>
+              {user?.avatar ? (<img
+                  src={user.avatar}
+                  alt="avatar"
+                  className="chat-sidebar__detail__img"
+                />) :
+                (<span className="text-sm text-orange">{user.username[0].toUpperCase()}</span>)
+              }
               <div className="online" />
             </div>
           </li>

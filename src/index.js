@@ -41,16 +41,16 @@ const router = createBrowserRouter([
         loader: privateLoader,
         children: [
           { path: 'chat', element: <Chat />, },
+          {
+            path: 'friends',
+            element: <Friends />,
+            children: [
+              { index: true, element: <FriendSuggestion /> },
+              { path: 'suggestions', element: <FriendSuggestion /> },
+              { path: 'request', element: <FriendRequest /> },
+            ],
+          },
         ]
-      },
-      {
-        path: 'friends',
-        element: <Friends />,
-        children: [
-          { index: true, element: <FriendSuggestion /> },
-          { path: 'suggestions', element: <FriendSuggestion /> },
-          { path: 'request', element: <FriendRequest /> },
-        ],
       },
       { 
         path: 'profile',

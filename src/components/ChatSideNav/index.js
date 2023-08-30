@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { HiOutlineUserGroup } from "react-icons/hi";
+import { FaUserFriends } from 'react-icons/fa';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { useSocketContext } from "../../context/socket";
 
@@ -13,11 +14,18 @@ export default function ChatSideNav() {
     <nav className="nav">
       <ul className="nav-list">
         <li className="nav-list__item">
-          <button type="button">
+          <Link to={"/"}>
             <span className="icon icon--white">
               <HiOutlineUserGroup fill='white' />
             </span>
-          </button>
+          </Link>
+        </li>
+        <li className="nav-list__item">
+          <Link to="/friends">
+            <span className="icon icon--white">
+              <FaUserFriends fill='white' />
+            </span>
+          </Link>
         </li>
         <li className="nav-list__item">
           <button

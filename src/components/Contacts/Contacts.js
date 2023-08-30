@@ -11,7 +11,16 @@ const Contact = ({
       <button className="contact-button" onClick={() => setSelectedUser(user)}>
         <div className="contact-item__container">
           <div className="contact-item__left">
-            <span className="text-sm text-orange">{user.username[0].toUpperCase()}</span>
+            {
+              user?.avatar ? (<img
+                  src={user.avatar}
+                  alt="avatar"
+                  className="chat-sidebar__detail__img"
+                />
+              ) : (
+                <span className="text-sm text-orange">{user.username[0].toUpperCase()}</span>
+              )
+            }
           </div>
           <div className="contact-item__right">
             <div className="last-chat">
