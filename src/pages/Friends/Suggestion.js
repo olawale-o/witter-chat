@@ -7,7 +7,6 @@ export async function loader() {
 
 const FriendSuggestion = () => {
   const followers = useLoaderData();
-  console.log(followers);
   return (
     <ul className="friend-list">
       {

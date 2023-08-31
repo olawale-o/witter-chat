@@ -68,6 +68,7 @@ export default function SocketProvider({ children, socket }) {
 
   useEffect(() => {
     socket.on('connect', () => console.log('connected'));
+    socket.on('disconnect', () => console.log('disconnected'));
     checkIfUserExist();
     socket.on('session', async({ sessionId, userId, username }) => {
       if (sessionId && userId && username) {
