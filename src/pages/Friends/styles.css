@@ -1,0 +1,79 @@
+.friends-container {
+  width: 100%;
+}
+
+.friends {
+  width: 30%;
+  margin: 0 auto;
+}
+
+.tab-bar {
+  width: 100%;
+}
+
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8em;
+}
+
+.tab-item {
+  width: 100%;
+  padding-block: 1.8em;
+  text-align: left;
+}
+
+.tab-link {
+  font-size: 1.6em;
+  text-decoration: none;
+  color: var(--black-color);
+  text-transform: capitalize;
+}
+
+.friend-list {
+  width: 100%;
+}
+
+.friend-item {
+  width: 100%;
+  margin-bottom: 0.8em;
+}
+
+.friend {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1em;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+}
+
+.friend-item__image-container {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: black;
+  margin-right: 1.8em;
+}
+
+.title {
+  font-size: 1.8em;
+  font-weight: 400;
+}
+
+.cta {
+  border: 1px solid var(--sea-green);
+  padding: 0.8em 2em;
+  border-radius: 20px;
+  color: var(--black-color);
+  transition: 450ms all ease-in-out;
+}
+
+.cta:hover {
+  background: var(--sea-green);
+  color: var(--white-color)
+}

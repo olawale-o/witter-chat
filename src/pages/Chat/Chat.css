@@ -2,7 +2,7 @@
   background: var(--white-color);
   display: grid;
   width: 100%;
-  grid-template-columns: 6em 30em auto;
+  grid-template-columns: 30em auto;
   height: 100%;
 }
 

@@ -1,0 +1,7 @@
+.private {
+  background: var(--white-color);
+  display: grid;
+  width: 100%;
+  grid-template-columns: 6em auto;
+  height: 100%;
+}

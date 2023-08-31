@@ -7,7 +7,7 @@ const FriendTabs = () => {
       <ul className="tabs">
         {tabs.map((tab) => (
           <li role={tab.title} key={tab.index} className={`tab-item`}>
-            <Link to={`${tab.link}`}>
+            <Link to={`${tab.link}`} className="tab-link">
               {tab.title}
             </Link>
           </li>
