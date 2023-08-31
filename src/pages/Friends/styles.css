@@ -56,13 +56,20 @@
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background: black;
   margin-right: 1.8em;
+  border: 1px solid var(--sea-green);
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
 }
 
 .title {
   font-size: 1.8em;
   font-weight: 400;
+  text-transform: capitalize;
 }
 
 .cta {

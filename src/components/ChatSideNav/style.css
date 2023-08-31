@@ -2,6 +2,10 @@
   background: var(--sea-green);
   padding-block: 2.5em;
   padding-inline: 1.8em;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
 }
   
 .nav-list {

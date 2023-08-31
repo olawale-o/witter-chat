@@ -22,7 +22,7 @@ export const acceptFriendRequestService = async (body) => {
 };
 
 export const getFriendSuggestionService = async (query) => {
-  const data = await get(`http://localhost:5000/api/v1/friends/suggestions?q=${query}`);
+  const data = await get(`http://localhost:5000/api/v1/users`);
   return data;
 };
 

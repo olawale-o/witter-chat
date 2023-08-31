@@ -15,7 +15,7 @@ import Map from './pages/Map';
 import NewPassword from './pages/Profile/NewPassword';
 import Friends from './pages/Friends';
 import FriendRequest from './pages/Friends/Request';
-import FriendSuggestion from './pages/Friends/Suggestion';
+import FriendSuggestion, { loader as followersLoader } from './pages/Friends/Suggestion';
 import './index.css';
 import PublicRoute, { loader as publicLoader } from './pages/PublicRoute';
 import PrivateRoute, { loader as privateLoader } from './pages/PrivateRoute';
@@ -45,8 +45,8 @@ const router = createBrowserRouter([
             path: 'friends',
             element: <Friends />,
             children: [
-              { index: true, element: <FriendSuggestion /> },
-              { path: 'suggestions', element: <FriendSuggestion /> },
+              { index: true, element: <FriendSuggestion />, loader: followersLoader },
+              { path: 'suggestions', element: <FriendSuggestion />, loader: followersLoader },
               { path: 'request', element: <FriendRequest /> },
             ],
           },

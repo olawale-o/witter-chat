@@ -1,7 +1,8 @@
 .private {
   background: var(--white-color);
   display: grid;
-  width: 100%;
-  grid-template-columns: 6em auto;
+  width: calc(100% - 6em);
+  grid-template-columns: auto;
   height: 100%;
+  margin-left: auto;
 }
