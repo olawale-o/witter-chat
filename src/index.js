@@ -16,9 +16,11 @@ import NewPassword from './pages/Profile/NewPassword';
 import Friends from './pages/Friends';
 import FriendRequest from './pages/Friends/Request';
 import FriendSuggestion, { loader as followersLoader } from './pages/Friends/Suggestion';
-import './index.css';
 import PublicRoute, { loader as publicLoader } from './pages/PublicRoute';
 import PrivateRoute, { loader as privateLoader } from './pages/PrivateRoute';
+import Followers, { loader as requestLoader } from './pages/Friends/Followers';
+import Following, { loader as followingLoader } from './pages/Friends/Following';
+import './index.css';
 
 const router = createBrowserRouter([
   {
@@ -47,7 +49,15 @@ const router = createBrowserRouter([
             children: [
               { index: true, element: <FriendSuggestion />, loader: followersLoader },
               { path: 'suggestions', element: <FriendSuggestion />, loader: followersLoader },
-              { path: 'request', element: <FriendRequest /> },
+              { 
+                path: 'request',
+                element: <FriendRequest />,
+                children: [
+                  { index: true, element: <Followers />, loader: requestLoader },
+                  { path: 'followers', element: <Followers />, loader: requestLoader  },
+                  { path: 'following', element: <Following />, loader: followingLoader }
+                ]
+              },
             ],
           },
         ]
