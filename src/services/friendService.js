@@ -21,8 +21,13 @@ export const acceptFriendRequestService = async (body) => {
   return data;
 };
 
-export const getFriendSuggestionService = async (query) => {
-  const data = await get(`http://localhost:5000/api/v1/users`);
+export const getFriendSuggestionService = async (id) => {
+  const data = await get(`http://localhost:5000/api/v1/users/friends/${id}`);
+  return data;
+};
+
+export const getFriendsList = async (id) => {
+  const data = await get(`http://localhost:5000/api/v1/users/${id}`);
   return data;
 };
 
