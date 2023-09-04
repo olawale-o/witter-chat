@@ -22,7 +22,17 @@ export const acceptFriendRequestService = async (body) => {
 };
 
 export const getFriendSuggestionService = async (id) => {
-  const data = await get(`http://localhost:5000/api/v1/users/friends/${id}`);
+  const data = await get(`http://localhost:5000/api/v1/users/${id}/friends`);
+  return data;
+};
+
+export const getFollowersService = async (id) => {
+  const data = await get(`http://localhost:5000/api/v1/users/${id}/followers`);
+  return data;
+};
+
+export const getFollowingService = async (id) => {
+  const data = await get(`http://localhost:5000/api/v1/users/${id}/following`);
   return data;
 };
 
