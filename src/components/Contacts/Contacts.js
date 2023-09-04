@@ -1,4 +1,5 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { getFriendsList } from "../../services/friendService";
 import './Contact.css';
 
 const Contact = ({
@@ -40,12 +41,33 @@ const Contact = ({
 }
 
 const Contacts = ({ setSelectedUser, onlineUsers, selectedCurrentUser }) => {
+  const [contacts, setContacts] = useState([]);
+  useEffect(() => {
+    getFriendsList(JSON.parse(localStorage.getItem('user')).user._id).then((result) => {
+      setContacts(result.contacts)
+    })
+  }, []);
   return (
     <div className="chats">
       <span className="text-lg text-black">Chats</span>
       <input type="text" placeholder="Search for chats" className="input" />
       <ul className="contact-list">
-        {Object.entries(onlineUsers).map(([k, v]) =>{
+        {
+          contacts.length ? (
+            <>
+              {contacts.map((contact) => (
+                <Contact
+                  key={contact._id}
+                  user={contact}
+                  setSelectedUser={setSelectedUser}
+                  selectedCurrentUser={selectedCurrentUser}
+                />
+              ))}
+            </>
+          ) : 
+          (<span>No contacts for now</span>)
+        }
+        {/* {Object.entries(onlineUsers).map(([k, v]) =>{
           return (
             <Contact
               key={k}
@@ -54,7 +76,7 @@ const Contacts = ({ setSelectedUser, onlineUsers, selectedCurrentUser }) => {
               selectedCurrentUser={selectedCurrentUser}
             />
           )
-        })}
+        })} */}
       </ul>
     </div>
   )

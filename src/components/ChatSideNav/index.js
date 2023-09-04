@@ -1,6 +1,6 @@
 import { useNavigate, Link } from "react-router-dom";
 import { HiOutlineUserGroup } from "react-icons/hi";
-import { FaUserFriends } from 'react-icons/fa';
+import { FaUserFriends, FaUsers } from 'react-icons/fa';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { IoChatbubblesOutline } from 'react-icons/io5';
 import { useSocketContext } from "../../context/socket";
@@ -30,6 +30,13 @@ export default function ChatSideNav() {
         </li>
         <li className="nav-list__item">
           <Link to="/friends">
+            <span className="icon icon--white">
+              <FaUsers fill='white' />
+            </span>
+          </Link>
+        </li>
+        <li className="nav-list__item">
+          <Link to="/friends/request">
             <span className="icon icon--white">
               <FaUserFriends fill='white' />
             </span>
