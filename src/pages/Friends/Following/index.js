@@ -1,17 +1,13 @@
 import { useState, useMemo } from "react";
-import { useLoaderData } from "react-router-dom";
 import { useSocketContext } from "../../../context/socket";
-import { getFollowingService } from "../../../services/friendService";
 
-import { Followers as FollowersComponent } from "../components/Followers";
+import { Following as FollowingComponent } from "../components/Following";
+import { useUserConnectionContext } from "../../../context/userConnection";
 
 const userId = JSON.parse(localStorage.getItem('user')).user?._id;
 
-export async function loader() {
-  return getFollowingService(userId);  
-}
 export default function Following() {
-  const data = useLoaderData();
+  const { followingList: list, unionIds } = useUserConnectionContext();
   const { toggleFollow } = useSocketContext();
   const [followingList, setFollowingList] = useState([]);
   const ids = useMemo(() => followingList, [followingList]);
@@ -27,11 +23,11 @@ export default function Following() {
     }
   };
   return (
-    <FollowersComponent
+    <FollowingComponent
       onToggleFollow={onToggleFollow}
-      followers={data.following}
+      followers={list}
       ids={ids}
-      page="following"
+      unionIds={unionIds}
     /> 
   );
 }

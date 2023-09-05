@@ -1,15 +1,30 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 
-import './styles.css'
+import { getFollowersService, getFollowingService } from '../../services/friendService';
+
+import './styles.css';
+import { UserConnectionProvider } from "../../context/userConnection";
+
+const userId = JSON.parse(localStorage.getItem('user')).user?._id;
+
+export async function loader() {
+  return Promise.all([getFollowersService(userId), getFollowingService(userId)]);
+}
 
 const Friends = () => {
+  const data = useLoaderData();
   return (
-    <div className="friends-container">
-      <div className="friends">
-        <Outlet />
+    <UserConnectionProvider
+      followers={data[0].followers}
+      following={data[1].following}
+    >
+      <div className="friends-container">
+        <div className="friends">
+          <Outlet />
+        </div>
       </div>
-    </div>
+    </UserConnectionProvider>
   );
 };
 
