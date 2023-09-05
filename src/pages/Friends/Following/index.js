@@ -7,26 +7,29 @@ import { useUserConnectionContext } from "../../../context/userConnection";
 const userId = JSON.parse(localStorage.getItem('user')).user?._id;
 
 export default function Following() {
-  const { followingList: list, unionIds } = useUserConnectionContext();
+  const { followingList, unionIds, setFollowingListIds, setUnionIds, followingListIds } = useUserConnectionContext();
   const { toggleFollow } = useSocketContext();
-  const [followingList, setFollowingList] = useState([]);
-  const ids = useMemo(() => followingList, [followingList]);
     
   const onToggleFollow = (user,) => {
-    if (ids.includes(user._id)) {
-      toggleFollow(user, userId, 'unfollow')
-      const newList = followingList.filter((id) => id !== user?._id);
-      setFollowingList(newList);
+    if (followingListIds.includes(user._id)) {
+      toggleFollow(user, userId, 'unfollow');
+      setFollowingListIds((prevState) => {
+        const a = [...prevState].filter((id) => id !== user._id)
+        return a
+      });
+      setUnionIds((prevState) => {
+        const b = [...prevState].filter((id) => id !== user._id)
+        return b
+      })
     } else {
       toggleFollow(user, userId, 'follow',)
-      setFollowingList((prevState) => ([...prevState, user._id]))
+      setFollowingListIds((prevState) => ([...prevState, user._id]))
     }
   };
   return (
     <FollowingComponent
       onToggleFollow={onToggleFollow}
-      followers={list}
-      ids={ids}
+      followers={followingList}
       unionIds={unionIds}
     /> 
   );

@@ -1,4 +1,4 @@
-const Followers = ({ followers, onToggleFollow, ids, page, unionIds = [] }) => {
+const Followers = ({ followers, onToggleFollow, unionIds = [], ids }) => {
   return (
     <ul className="friend-list">
       {
@@ -22,7 +22,6 @@ const Followers = ({ followers, onToggleFollow, ids, page, unionIds = [] }) => {
                 onClick={() => onToggleFollow(user.connection)}
               >
                 {unionIds.includes(user.connection._id) ? 'Following' : 'Follow' }
-                {/* {ids.includes(user.connection?._id) || page === 'following' ? 'Unfollow' : 'Follow'} */}
               </button>
             </div>
           </li>
