@@ -13,13 +13,13 @@ import Register, { action as registerAction } from './pages/Home/Register';
 import Profile, { action as profileAction, loader as profileLoader } from './pages/Profile/Profile';
 import Map from './pages/Map';
 import NewPassword from './pages/Profile/NewPassword';
-import Friends from './pages/Friends';
+import Friends, { loader as connectionLoader } from './pages/Friends';
 import FriendRequest from './pages/Friends/Request';
 import FriendSuggestion, { loader as followersLoader } from './pages/Friends/Suggestion';
 import PublicRoute, { loader as publicLoader } from './pages/PublicRoute';
 import PrivateRoute, { loader as privateLoader } from './pages/PrivateRoute';
-import Followers, { loader as requestLoader } from './pages/Friends/Followers';
-import Following, { loader as followingLoader } from './pages/Friends/Following';
+import Followers from './pages/Friends/Followers';
+import Following from './pages/Friends/Following';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -46,6 +46,7 @@ const router = createBrowserRouter([
           {
             path: 'friends',
             element: <Friends />,
+            loader: connectionLoader,
             children: [
               { index: true, element: <FriendSuggestion />, loader: followersLoader },
               { path: 'suggestions', element: <FriendSuggestion />, loader: followersLoader },
@@ -53,9 +54,9 @@ const router = createBrowserRouter([
                 path: 'request',
                 element: <FriendRequest />,
                 children: [
-                  { index: true, element: <Followers />, loader: requestLoader },
-                  { path: 'followers', element: <Followers />, loader: requestLoader  },
-                  { path: 'following', element: <Following />, loader: followingLoader }
+                  { index: true, element: <Followers /> },
+                  { path: 'followers', element: <Followers /> },
+                  { path: 'following', element: <Following /> }
                 ]
               },
             ],
