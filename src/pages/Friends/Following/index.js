@@ -31,6 +31,7 @@ export default function Following() {
       onToggleFollow={onToggleFollow}
       followers={followingList}
       unionIds={unionIds}
+      followingListIds={followingListIds}
     /> 
   );
 }
