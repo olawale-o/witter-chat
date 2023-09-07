@@ -4,7 +4,7 @@ import { getFriendSuggestionService } from "../../services/friendService";
 import { useSocketContext } from "../../context/socket";
 import { LinkTabs } from "../../components/Tabs";
 
-const userId = JSON.parse(localStorage.getItem('user')).user?._id;
+const userId = JSON.parse(localStorage.getItem('user'))?.user?._id;
 
 export async function loader() {
   return getFriendSuggestionService(userId);  

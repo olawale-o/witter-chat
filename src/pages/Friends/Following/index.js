@@ -4,7 +4,7 @@ import { useSocketContext } from "../../../context/socket";
 import { Following as FollowingComponent } from "../components/Following";
 import { useUserConnectionContext } from "../../../context/userConnection";
 
-const userId = JSON.parse(localStorage.getItem('user')).user?._id;
+const userId = JSON.parse(localStorage.getItem('user'))?.user?._id;
 
 export default function Following() {
   const { followingList, unionIds, setFollowingListIds, setUnionIds, followingListIds } = useUserConnectionContext();
