@@ -4,14 +4,15 @@ import { getFriendSuggestionService } from "../../services/friendService";
 import { useSocketContext } from "../../context/socket";
 import { LinkTabs } from "../../components/Tabs";
 
-const userId = JSON.parse(localStorage.getItem('user'))?.user?._id;
+const tabs = [{ index: 1, title: 'friends', link: '/friends'}, { index: 2, title: 'request', link: '/friends/request'}];
 
 export async function loader() {
+  const userId = JSON.parse(localStorage.getItem('user'))?.user?._id;
   return getFriendSuggestionService(userId);  
 }
 
-const tabs = [{ index: 1, title: 'friends', link: '/friends'}, { index: 2, title: 'request', link: '/friends/request'}];
 const FriendSuggestion = () => {
+  const userId = JSON.parse(localStorage.getItem('user'))?.user?._id;
   const data = useLoaderData();
   const { toggleFollow } = useSocketContext();
   const [followingList, setFollowingList] = useState([]);
