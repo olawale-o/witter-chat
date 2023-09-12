@@ -84,3 +84,30 @@
   background: var(--sea-green);
   color: var(--white-color)
 }
+
+.loading__container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid black;
+  border-top-color: yellow;
+  animation: loader 5s infinite
+}
+
+@keyframes loader {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
