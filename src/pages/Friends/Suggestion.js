@@ -1,8 +1,7 @@
-import { useState, useMemo } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useState, useEffect, useRef} from "react";
 import { getFriendSuggestionService } from "../../services/friendService";
-import { useSocketContext } from "../../context/socket";
 import { LinkTabs } from "../../components/Tabs";
+import { UserSuggestion } from "./components/UserSuggestion";
 
 const tabs = [{ index: 1, title: 'friends', link: '/friends'}, { index: 2, title: 'request', link: '/friends/request'}];
 
@@ -11,57 +10,51 @@ export async function loader() {
   return getFriendSuggestionService(userId);  
 }
 
+const limit = 20;
+
 const FriendSuggestion = () => {
   const userId = JSON.parse(localStorage.getItem('user'))?.user?._id;
-  const data = useLoaderData();
-  const { toggleFollow } = useSocketContext();
+  const [isLoading, setIsLoading] = useState(false);
+  const rootRef = useRef(null);
+  const [skip, setSkip] = useState(0);
+  const [users, setUsers] = useState([]);
   const [followingList, setFollowingList] = useState([]);
 
-  const ids = useMemo(() => followingList, [followingList]);
-  
-  const onToggleFollow = (user,) => {
-    if (ids.includes(user._id)) {
-      toggleFollow(user, userId, 'unfollow')
-      const newList = followingList.filter((id) => id !== user?._id);
-      setFollowingList(newList);
-    } else {
-      toggleFollow(user, userId, 'follow',)
-      setFollowingList((prevState) => ([...prevState, user._id]))
-    }
-  };
+  useEffect(() => {
+    setIsLoading(true);
+    getFriendSuggestionService(userId, limit, skip)
+      .then((result) => {
+        if (skip === 0) {
+          setUsers(result.users)
+        } else {
+          setUsers((prevUsers) => ([...prevUsers, ...result.users]))
+        }
+        setIsLoading(false);
+      })
+      .catch((err) => console.log(err))
+    
+  }, [skip]);
+
   return (
-    <div className="tab-container">
+    <div className="tab-container" ref={rootRef}>
       <LinkTabs tabs={tabs} />
       <div className="tab-view">
-        <ul className="friend-list">
-          {
-            data.users.slice(0, 20).map((user) => (
-              <li className="friend-item" key={user._id}> 
-                <div className="friend">
-                  <div className="left">
-                    <div className="friend-item__image-container">
-                      {
-                        user?.avatar ? (<img className="img" src={user.avatar} alt="avatar" />) : 
-                        (<span>{user.username[0].toUpperCase()}</span>)
-                      }
-                    </div>
-                    <div className="summary">
-                      <span className="title">{user.username}</span>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    className="cta"
-                    onClick={() => onToggleFollow(user)}
-                  >
-                    {ids.includes(user._id) ? 'Unfollow' : 'Follow'}
-                  </button>
-                </div>
-              </li>
-            ))
-          }
-        </ul>
+        <UserSuggestion
+          users={users}
+          isLoading={isLoading}
+          followingList={followingList}
+          onSkip={setSkip}
+          updateFollowingList={setFollowingList}
+          userId={userId}
+        />
       </div>
+      {
+        isLoading && (
+          <div className="loading__container">
+            <div className="loader"/>
+          </div>
+        )
+      }
     </div>
   )  
 };
