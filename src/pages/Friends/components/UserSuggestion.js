@@ -1,7 +1,9 @@
 import { useMemo, useCallback, useRef } from "react";
 import { useSocketContext } from "../../../context/socket";
+import { useUserConnectionContext } from "../../../context/userConnection";
 
-const UserSuggestion = ({ users, followingList, isLoading, onSkip, updateFollowingList, userId }) => {
+const UserSuggestion = ({ users, isLoading, followingList, updateFollowingList, onSkip, userId }) => {
+  const { setFollowingList, setFollowingListIds } = useUserConnectionContext();
   const observer = useRef();
   const { toggleFollow } = useSocketContext()
   const ids = useMemo(() => followingList, [followingList]);
@@ -18,15 +20,18 @@ const UserSuggestion = ({ users, followingList, isLoading, onSkip, updateFollowi
     if (node) observer.current.observe(node)
 
   }, []);
-
   const onToggleFollow = (user,) => {
     if (ids.includes(user._id)) {
       toggleFollow(user, userId, 'unfollow')
       const newList = followingList.filter((id) => id !== user?._id);
+      setFollowingList(newList);
       updateFollowingList(newList);
+      setFollowingListIds((prevState) => ([...prevState, user._id]));
     } else {
       toggleFollow(user, userId, 'follow',)
+      setFollowingList((prevState) => ([...prevState, user]))
       updateFollowingList((prevState) => ([...prevState, user._id]))
+      setFollowingListIds((prevState) => ([...prevState, user._id]))
     }
   };
   return (
