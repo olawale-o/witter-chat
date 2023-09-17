@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { Outlet, useNavigate, useLoaderData } from 'react-router-dom';
+import { useMemo, useState, useEffect} from 'react';
+import { Outlet } from 'react-router-dom';
 import UserProvider from './provider/userProvider';
 
 import './App.css';
 
 const NumberItem = ({ number }) => {
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log('number item mounted')
   }, [])
 
@@ -29,8 +29,8 @@ const NumberList = ({ numbers }) => {
   )
 }
 const Page = ({ numbers }) => {
-  const [counter, setCounter] = React.useState(0)
-  const list = React.useMemo(() => {
+  const [counter, setCounter] = useState(0)
+  const list = useMemo(() => {
     return (
       <NumberList numbers={numbers} />
     );
@@ -45,6 +45,7 @@ const Page = ({ numbers }) => {
     {list}
   </>)
 }
+
 
 export async function loader() {
   return JSON.parse(localStorage.getItem("user"));

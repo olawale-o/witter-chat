@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getFriendsList } from "../../services/friendService";
+import { Link } from "react-router-dom";
+import { getFollowersService } from "../../services/friendService";
 import './Contact.css';
 
 const Contact = ({
@@ -40,11 +41,11 @@ const Contact = ({
   );
 }
 
-const Contacts = ({ setSelectedUser, onlineUsers, selectedCurrentUser }) => {
+const Contacts = ({ setSelectedUser, selectedCurrentUser }) => {
   const [contacts, setContacts] = useState([]);
   useEffect(() => {
-    getFriendsList(JSON.parse(localStorage.getItem('user')).user._id).then((result) => {
-      setContacts(result.contacts)
+    getFollowersService(JSON.parse(localStorage.getItem('user')).user._id).then((result) => {
+      setContacts(result.followers)
     })
   }, []);
   return (
@@ -57,26 +58,16 @@ const Contacts = ({ setSelectedUser, onlineUsers, selectedCurrentUser }) => {
             <>
               {contacts.map((contact) => (
                 <Contact
-                  key={contact._id}
-                  user={contact}
+                  key={contact.connection._id}
+                  user={contact.connection}
                   setSelectedUser={setSelectedUser}
                   selectedCurrentUser={selectedCurrentUser}
                 />
               ))}
             </>
           ) : 
-          (<span>No contacts for now</span>)
+          (<Link to="/friends">Suggestions</Link>)
         }
-        {/* {Object.entries(onlineUsers).map(([k, v]) =>{
-          return (
-            <Contact
-              key={k}
-              user={v}
-              setSelectedUser={setSelectedUser}
-              selectedCurrentUser={selectedCurrentUser}
-            />
-          )
-        })} */}
       </ul>
     </div>
   )

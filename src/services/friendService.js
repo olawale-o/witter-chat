@@ -21,8 +21,8 @@ export const acceptFriendRequestService = async (body) => {
   return data;
 };
 
-export const getFriendSuggestionService = async (id) => {
-  const data = await get(`http://localhost:5000/api/v1/users/${id}/suggestion`);
+export const getFriendSuggestionService = async (id, limit = 20, skip = 0) => {
+  const data = await get(`http://localhost:5000/api/v1/users/${id}/suggestion?limit=${limit}&skip=${skip}`);
   return data;
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useCallback } from "react";
 import ChatSideBarHeader from "./ChatSidebarHeader";
 import Contacts from "../Contacts/Contacts";
 import OnlineContacts from "../Contacts/Online";
@@ -7,12 +7,12 @@ import './ChatSidebar.css';
 
 const ChatSideBar = () => {
   const { socket, user, onlineUsers, setOnlineUsers, selectedUser, onUserSelected } = useSocketContext();
-  const findUser = React.useCallback((userId) => {
+  const findUser = useCallback((userId) => {
     const user = onlineUsers[userId];
     return user
   }, [onlineUsers]);
 
-  const handleConnectionStatus = React.useCallback((userId, status) => {
+  const handleConnectionStatus = useCallback((userId, status) => {
     const connectedUser = findUser(userId);
     if (connectedUser) {
       connectedUser.online = status;
@@ -21,7 +21,7 @@ const ChatSideBar = () => {
 
   },  [setOnlineUsers, findUser, onlineUsers]);
 
-  const onUserConnected = React.useCallback((userId, username) => {
+  const onUserConnected = useCallback((userId, username) => {
     console.log('on user connected');
     if (user.id !== userId) {
         const userExists = findUser(userId);
@@ -38,11 +38,11 @@ const ChatSideBar = () => {
     }
   }, [handleConnectionStatus, findUser, onlineUsers, setOnlineUsers, user.id]);
 
-  const userDisconnected = React.useCallback(({ userId }) => {
+  const userDisconnected = useCallback(({ userId }) => {
     handleConnectionStatus(userId, false)
   }, [handleConnectionStatus]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     socket.on('user connected', ({ userId, username }) => {
       // console.log('user connected', userId, username)
       onUserConnected(userId, username)
