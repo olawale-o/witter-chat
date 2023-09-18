@@ -1,15 +1,16 @@
-.chats {
+.contacts {
   padding-block: 1.6em;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
+  flex: 1;
 }
 
 .contact-list {
   width: 100%;
-  overflow-y: scroll;
-  max-height: calc(30em - 1.6em);
+  overflow-y: auto;
+  height: 100%;
 }
 
 .contact-item {

@@ -9,7 +9,6 @@ import './style.css';
 
 export default function ChatSideNav() {
   const { onDisconnect } = useSocketContext();
-  const navigate = useNavigate();
 
   return (
     <nav className="nav">

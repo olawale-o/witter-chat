@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getFollowersService } from "../../services/friendService";
+import { getContactService } from "../../services/friendService";
 import './Contact.css';
 
 const Contact = ({
@@ -44,12 +44,12 @@ const Contact = ({
 const Contacts = ({ setSelectedUser, selectedCurrentUser }) => {
   const [contacts, setContacts] = useState([]);
   useEffect(() => {
-    getFollowersService(JSON.parse(localStorage.getItem('user')).user._id).then((result) => {
-      setContacts(result.followers)
+    getContactService(JSON.parse(localStorage.getItem('user')).user._id).then((result) => {
+      setContacts(result.followers);
     })
   }, []);
   return (
-    <div className="chats">
+    <div className="contacts">
       <span className="text-lg text-black">Chats</span>
       <input type="text" placeholder="Search for chats" className="input" />
       <ul className="contact-list">

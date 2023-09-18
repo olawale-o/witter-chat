@@ -13,7 +13,6 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  overflow-y: scroll;
 }
   
 .nav-list__item {
