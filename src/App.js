@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect} from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLoaderData, useNavigate } from 'react-router-dom';
 import UserProvider from './provider/userProvider';
 
 import './App.css';
@@ -46,18 +46,18 @@ const Page = ({ numbers }) => {
   </>)
 }
 
-const sessionId = localStorage.getItem('sessionId')
-
 export async function loader() {
   return JSON.parse(localStorage.getItem("user"));
 }
 
 function App({ socket }) {
   const navigate = useNavigate();
+  const data = useLoaderData()
+  
   useEffect(() => {
-    if (sessionId === null) {
+    if (data === null) {
       navigate('/login', { replace: true })
-    } else{
+    } else {
       navigate('/chat', { replace: true })
     }
   }, []);
