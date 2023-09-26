@@ -3,10 +3,6 @@ import {
   useNavigate,
   Form,
   redirect,
-  useOutletContext,
-  useRouteLoaderData,
-  Link,
-  Navigate,
   useLoaderData,
 } from 'react-router-dom';
 import { loginService } from '../../services/authService';
@@ -26,6 +22,7 @@ export async function action({ request }) {
     username: formDataEntries.username,
     password: formDataEntries.password,
   });
+  console.log(data);
   localStorage.setItem('user', JSON.stringify(data));
   return redirect('/login');
 }

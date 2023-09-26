@@ -28,8 +28,6 @@ const ChatSideBar = () => {
         if (userExists) {
           handleConnectionStatus(userId, true);
         } else {
-          console.log('user does not exist');
-          console.log(onlineUsers);
           const newUser = { userId, username, _id: userId, online: true } 
           onlineUsers[userId] = newUser
           newUser.online = true;

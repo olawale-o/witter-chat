@@ -1,6 +1,9 @@
+import { useGlobal } from '../../context/global';
 import './Online.css';
 
-export default function OnlineContacts({users}) {;
+export default function OnlineContacts({users}) {
+  const { followersListIds } = useGlobal();
+  const onlineUsers = Object.entries(users).filter(([_,v]) => v.online === true).filter(([k, v]) => followersListIds.includes(k));
   return (
     <div className="online-contact">
       <div className="online-contact__header">
@@ -8,7 +11,7 @@ export default function OnlineContacts({users}) {;
         <div className="online-contact__count">12</div>
       </div>
       <ul className="online-contact__list">
-        {Object.entries(users).filter(([_,v]) => v.online === true).map(([k, user], i) => (
+        {onlineUsers.map(([k, user], i) => (
           <li key={k} className="online-contact__list-item">
             <div className="online-contact__list-item__img-container">
               {user?.avatar ? (<img

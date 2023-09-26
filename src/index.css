@@ -32,6 +32,10 @@ body {
   height: 100%;
 }
 
+#root {
+  height: 100%;
+}
+
 li {
   list-style: none;
 }

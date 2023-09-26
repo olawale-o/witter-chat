@@ -42,8 +42,8 @@ export const getFriendsList = async (id) => {
 };
 
 export const getContactService = async (id) => {
-  const data = await get(`http://localhost:5000/api/v1/users/${id}`);
-  return data.user;
+  const data = await get(`http://localhost:5000/api/v1/users/${id}/contacts`);
+  return data;
 };
 
 export const getFriendRequestService = async (query) => {

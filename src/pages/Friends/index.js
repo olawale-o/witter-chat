@@ -6,8 +6,6 @@ import { getFollowersService, getFollowingService } from '../../services/friendS
 import './styles.css';
 import { UserConnectionProvider } from "../../context/userConnection";
 
-
-
 export async function loader() {
   const userId = JSON.parse(localStorage.getItem('user'))?.user?._id;;
   return Promise.all([getFollowersService(userId), getFollowingService(userId)]);
