@@ -6,7 +6,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import socket from './socket';
-import App, { loader as appLoader } from './App';
+import App from './App';
 import Chat from './pages/Chat';
 import Home, { action as loginAction, loader as homeLoader } from './pages/Home';
 import Register, { action as registerAction } from './pages/Home/Register';
@@ -16,8 +16,8 @@ import NewPassword from './pages/Profile/NewPassword';
 import Friends, { loader as connectionLoader } from './pages/Friends';
 import FriendRequest from './pages/Friends/Request';
 import FriendSuggestion, { loader as followersLoader } from './pages/Friends/Suggestion';
-import PublicRoute, { loader as publicLoader } from './pages/PublicRoute';
-import PrivateRoute, { loader as privateLoader } from './pages/PrivateRoute';
+import PublicRoute from './pages/PublicRoute';
+import PrivateRoute from './pages/PrivateRoute';
 import Followers from './pages/Friends/Followers';
 import Following from './pages/Friends/Following';
 import {  QueryClient, QueryClientProvider, } from '@tanstack/react-query';
@@ -30,12 +30,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <App socket={socket} />,
     id: "root",
-    loader: appLoader,
     children: [
       // { index: true, element: <Home />, action: loginAction, loader: homeLoader },
       {
         element: <PublicRoute />,
-        loader: publicLoader,
         children: [
           { path: 'register', element: <Register />, action: registerAction, loader: homeLoader },
           { path: 'login', element: <Home />, action: loginAction, loader: homeLoader },
@@ -43,7 +41,6 @@ const router = createBrowserRouter([
       },
       {
         element: <PrivateRoute />,
-        loader: privateLoader,
         children: [
           { path: 'chat', element: <Chat /> },
           {
