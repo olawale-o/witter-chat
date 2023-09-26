@@ -36,7 +36,7 @@ export const getFollowingService = async (id) => {
   return data;
 };
 
-export const getFriendsList = async (id) => {
+export const getUser = async (id) => {
   const data = await get(`http://localhost:5000/api/v1/users/${id}`);
   return data;
 };
