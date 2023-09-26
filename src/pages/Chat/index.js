@@ -1,24 +1,18 @@
-import React from "react";
-import { useLoaderData } from "react-router-dom";
 import ChatSideBar from "../../components/ChatSideBar/ChatSideBar";
-
-import { getFollowersService, getFollowingService } from "../../services/friendService";
 
 import './Chat.css'
 import ParentChat from "../../components/ParentChat";
 import GlobalProvider from "../../context/global";
-
-export async function loader() {
-  const userId = JSON.parse(localStorage.getItem('user'))?.user?._id;;
-  return Promise.all([getFollowersService(userId), getFollowingService(userId)]);
-}
+import { useUserFollowersQuery, useUserFollowingsQuery } from "../../queries/userUserConnectionQuery";
 
 const Chat = () => {
-  const data = useLoaderData();
+  const { data: followers, isLoading: isLoadingFollowers } = useUserFollowersQuery();
+  const { data: followings, isLoading: isLoadingFollowing } = useUserFollowingsQuery();
+  if (isLoadingFollowers || isLoadingFollowing) return <div>Loading connection......</div>
   return (
     <GlobalProvider
-      followers={data[0].followers}
-      following={data[1].following}
+      followers={followers.followers}
+      following={followings.following}
     >
       <div className="chat-container">
         <ChatSideBar />
