@@ -10,10 +10,9 @@ export default function AuthProvider({ children, socket }) {
     socket.auth = { user: { username, _id, name } };
     socket.connect();
   }
+  
   return (
-    <AuthContext.Provider value={{
-      startSocket,
-    }}
+    <AuthContext.Provider value={{startSocket}}
     >
       {children}
     </AuthContext.Provider>

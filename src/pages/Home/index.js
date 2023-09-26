@@ -22,7 +22,6 @@ export async function action({ request }) {
     username: formDataEntries.username,
     password: formDataEntries.password,
   });
-  console.log(data);
   localStorage.setItem('user', JSON.stringify(data));
   return redirect('/login');
 }
@@ -39,7 +38,7 @@ const Home = () => {
 
   React.useEffect(() => {    
     if (data !== null && data.user !== null) {
-      console.log({login: data});
+      console.log(data)
       startSocket(data?.user)
       setUser((prevState) => ({ ...prevState, ...data?.user }));
       navigate('/chat');
