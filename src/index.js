@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import socket from './socket';
 import App, { loader as appLoader } from './App';
-import Chat,  { loader as chatLoader } from './pages/Chat';
+import Chat from './pages/Chat';
 import Home, { action as loginAction, loader as homeLoader } from './pages/Home';
 import Register, { action as registerAction } from './pages/Home/Register';
 import Profile, { action as profileAction, loader as profileLoader } from './pages/Profile/Profile';
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
         element: <PrivateRoute />,
         loader: privateLoader,
         children: [
-          { path: 'chat', element: <Chat />, loader: chatLoader },
+          { path: 'chat', element: <Chat /> },
           {
             path: 'friends',
             element: <Friends />,
