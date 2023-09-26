@@ -20,7 +20,10 @@ import PublicRoute, { loader as publicLoader } from './pages/PublicRoute';
 import PrivateRoute, { loader as privateLoader } from './pages/PrivateRoute';
 import Followers from './pages/Friends/Followers';
 import Following from './pages/Friends/Following';
+import {  QueryClient, QueryClientProvider, } from '@tanstack/react-query';
 import './index.css';
+
+const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
@@ -78,7 +81,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   </React.StrictMode>
 );
 
