@@ -1,4 +1,3 @@
-import { useState, useMemo } from "react";
 import { useSocketContext } from "../../../context/socket";
 
 import { Following as FollowingComponent } from "../components/Following";
