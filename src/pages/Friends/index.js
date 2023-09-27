@@ -1,22 +1,18 @@
 import React from "react";
-import { Outlet, useLoaderData } from "react-router-dom";
-
-import { getFollowersService, getFollowingService } from '../../services/friendService';
+import { Outlet } from "react-router-dom";
 
 import './styles.css';
 import { UserConnectionProvider } from "../../context/userConnection";
-
-export async function loader() {
-  const userId = JSON.parse(localStorage.getItem('user'))?.user?._id;;
-  return Promise.all([getFollowersService(userId), getFollowingService(userId)]);
-}
+import { useUserFollowersQuery, useUserFollowingsQuery } from "../../queries/userUserConnectionQuery";
 
 const Friends = () => {
-  const data = useLoaderData();
+  const { data: followers, isLoading: isLoadingFollowers } = useUserFollowersQuery();
+  const { data: followings, isLoading: isLoadingFollowing } = useUserFollowingsQuery();
+  if (isLoadingFollowers || isLoadingFollowing) return <div>Loading connection......</div>
   return (
     <UserConnectionProvider
-      followers={data[0].followers}
-      following={data[1].following}
+      followers={followers.followers}
+      following={followings.following}
     >
       <div className="friends-container">
         <div className="friends">

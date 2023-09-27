@@ -13,7 +13,7 @@ import Register, { action as registerAction } from './pages/Home/Register';
 import Profile, { action as profileAction, loader as profileLoader } from './pages/Profile/Profile';
 import Map from './pages/Map';
 import NewPassword from './pages/Profile/NewPassword';
-import Friends, { loader as connectionLoader } from './pages/Friends';
+import Friends from './pages/Friends';
 import FriendRequest from './pages/Friends/Request';
 import FriendSuggestion, { loader as followersLoader } from './pages/Friends/Suggestion';
 import PublicRoute from './pages/PublicRoute';
@@ -46,7 +46,6 @@ const router = createBrowserRouter([
           {
             path: 'friends',
             element: <Friends />,
-            loader: connectionLoader,
             children: [
               { index: true, element: <FriendSuggestion />, loader: followersLoader },
               { path: 'suggestions', element: <FriendSuggestion />, loader: followersLoader },
