@@ -4,10 +4,10 @@ import Contacts from "../Contacts/Contacts";
 import OnlineContacts from "../Contacts/Online";
 import { useSocketContext } from "../../context/socket";
 import './ChatSidebar.css';
-import { useGlobal } from "../../context/global";
+import { useUserConnectionContext } from "../../context/userConnection";
 
 const ChatSideBar = () => {
-  const { followersListIds, followingListIds } = useGlobal();
+  const { followersListIds, followingListIds } = useUserConnectionContext()
   const { socket, user, onlineUsers, setOnlineUsers, selectedUser, onUserSelected } = useSocketContext();
   const findUser = useCallback((userId) => {
     const user = onlineUsers[userId];

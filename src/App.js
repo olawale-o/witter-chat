@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect} from 'react';
-import { Outlet, useLoaderData, useNavigate } from 'react-router-dom';
+import { Outlet, useLoaderData, useNavigate, useLocation } from 'react-router-dom';
 import UserProvider from './provider/userProvider';
 
 import './App.css';
@@ -52,15 +52,20 @@ export async function loader() {
 
 function App({ socket }) {
   const navigate = useNavigate();
-  const data = useLoaderData()
+  const data = useLoaderData();
+  const location = useLocation();
   
   useEffect(() => {
     if (data === null) {
-      navigate('/login', { replace: true })
+      navigate('/login', { replace: true });
     } else {
-      navigate('/chat', { replace: true })
+      if (location.pathname !== null) {
+        navigate(location.pathname, { replace: true });
+      } else {
+        navigate('/chat', { replace: true });
+      }
     }
-  }, []);
+  }, [location.pathname]);
   return (
     <UserProvider>
       <div className="App">

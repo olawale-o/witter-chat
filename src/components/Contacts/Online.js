@@ -1,8 +1,8 @@
-import { useGlobal } from '../../context/global';
+import { useUserConnectionContext } from '../../context/userConnection';
 import './Online.css';
 
 export default function OnlineContacts({users}) {
-  // const { followersListIds } = useGlobal();
+  // const { followersListIds } = useUserConnectionContext();
   // check for user followers who is online
   // const onlineUsers = Object.entries(users).filter(([_,v]) => v.online === true).filter(([k, v]) => followersListIds.includes(k));
   

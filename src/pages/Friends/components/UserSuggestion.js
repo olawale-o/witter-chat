@@ -4,8 +4,8 @@ import { useUserConnectionContext } from "../../../context/userConnection";
 
 const UserSuggestion = ({ users, isLoading, followingList, updateFollowingList, onSkip, userId }) => {
   const { setFollowingList, setFollowingListIds } = useUserConnectionContext();
+  const { toggleFollow } = useSocketContext();
   const observer = useRef();
-  const { toggleFollow } = useSocketContext()
   const ids = useMemo(() => followingList, [followingList]);
 
   const lastBookElementRef = useCallback((node) => {
@@ -34,7 +34,7 @@ const UserSuggestion = ({ users, isLoading, followingList, updateFollowingList, 
       setFollowingListIds((prevState) => ([...prevState, user._id]))
     }
   };
-  return (
+  return ( 
     <ul className="friend-list">
     {
       users.map((user, i) => {
