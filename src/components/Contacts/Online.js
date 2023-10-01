@@ -2,8 +2,12 @@ import { useGlobal } from '../../context/global';
 import './Online.css';
 
 export default function OnlineContacts({users}) {
-  const { followersListIds } = useGlobal();
-  const onlineUsers = Object.entries(users).filter(([_,v]) => v.online === true).filter(([k, v]) => followersListIds.includes(k));
+  // const { followersListIds } = useGlobal();
+  // check for user followers who is online
+  // const onlineUsers = Object.entries(users).filter(([_,v]) => v.online === true).filter(([k, v]) => followersListIds.includes(k));
+  
+  // all followers and followings of a user who is online
+  const onlineUsers = Object.entries(users).filter(([_,v]) => v.online === true);
   return (
     <div className="online-contact">
       <div className="online-contact__header">

@@ -8,7 +8,7 @@ export default function ParentChat() {
   return (
     <div className="chat-area">
     {
-      selectedUser._id ? (
+      selectedUser.userId ? (
         <div className="chat-area__content">     
           <nav className="chat-area__nav">
               <div className="chat-area__nav--left">

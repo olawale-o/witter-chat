@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getContactService } from "../../services/friendService";
 import './Contact.css';
 
 const Contact = ({
@@ -27,12 +25,11 @@ const Contact = ({
           <div className="contact-item__right">
             <div className="last-chat">
               <span className="last-chat__username">{user.username}</span>
-              <span className="last-chat__message">{user?.hasMessage}</span>
-              {/* {user?.hasNewMessage && (<div className="new-message" />)} */}
+              {user?.hasNewMessage && <div className="last-chat__message">{user?.hasNewMessage}</div>}
             </div>
             <div className="chat-state">
               <span>16:45</span>
-              <div className={`online-state ${user.online ? 'online' : user.idle ? 'idle' : user.busy ? 'busy' : null}` }/>
+              {/* <div className={`online-state ${user.online ? 'online' : user.idle ? 'idle' : user.busy ? 'busy' : null}` }/> */}
             </div>
           </div>
         </div>
@@ -41,33 +38,23 @@ const Contact = ({
   );
 }
 
-const Contacts = ({ setSelectedUser, selectedCurrentUser }) => {
-  const [contacts, setContacts] = useState([]);
-  useEffect(() => {
-    getContactService(JSON.parse(localStorage.getItem('user')).user._id).then((result) => {
-      setContacts(result.followers);
-    })
-  }, []);
+const Contacts = ({ setSelectedUser, selectedCurrentUser, onlineUsers }) => {
   return (
     <div className="contacts">
       <span className="text-lg text-black">Chats</span>
       <input type="text" placeholder="Search for chats" className="input" />
       <ul className="contact-list">
-        {
-          contacts.length ? (
-            <>
-              {contacts.map((contact) => (
-                <Contact
-                  key={contact.connection._id}
-                  user={contact.connection}
-                  setSelectedUser={setSelectedUser}
-                  selectedCurrentUser={selectedCurrentUser}
-                />
-              ))}
-            </>
-          ) : 
+        {Object.entries(onlineUsers).map(([k, user], i) => (
+          <Contact
+            key={user.userId}
+            user={user}
+            setSelectedUser={setSelectedUser}
+            selectedCurrentUser={selectedCurrentUser}
+            />
+          ))}
+        {/* {
           (<Link to="/friends">Suggestions</Link>)
-        }
+        } */}
       </ul>
     </div>
   )

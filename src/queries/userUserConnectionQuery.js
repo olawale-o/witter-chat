@@ -4,7 +4,6 @@ import { getFollowersService, getFollowingService } from "../services/friendServ
 export const useUserFollowersQuery = (details) => useQuery({
   queryKey: ['user-followers'],
   queryFn: async (credentials = {}) => {
-    console.log(details);
     const data = await getFollowersService(details.user._id);
     return data;
   },

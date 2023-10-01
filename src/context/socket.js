@@ -25,6 +25,10 @@ export default function SocketProvider({ children, socket }) {
   }, [socket]);
   const handleNewMessageStatus = useCallback((userId, status, message) => {
     const user = onlineUsers[userId];
+    console.log({
+      user,
+      userId,
+    })
     if (user) {
       user['hasNewMessage'] = status;
       user['lastMessage'] = message;
@@ -34,8 +38,8 @@ export default function SocketProvider({ children, socket }) {
   }, [onlineUsers, setOnlineUsers]);
 
   const handlePrivateChat = useCallback((message) => {
-    if (selectedCurrentUser.current._id) {
-      if (selectedCurrentUser.current._id === message.from) {
+    if (selectedCurrentUser.current.userId) {
+      if (selectedCurrentUser.current.userId === message.from) {
         const newMessage = {
           userId: message.from,
           text: message.text,
@@ -89,13 +93,13 @@ export default function SocketProvider({ children, socket }) {
         }
       }
     })
-    
     socket.on("users", (data) => {
     // indicate/show users that are online to loggedin user 
       if (data.length > 0) {
         const list = {};
         for (let user of data) {
-          list[`${user._id}`] = user;
+          // list[`${user._id}`] = user;
+          list[`${user.userId}`] = user;
         }
         setOnlineUsers(list);
       }
@@ -141,7 +145,7 @@ export default function SocketProvider({ children, socket }) {
       setSelectedUser(user);
       selectedCurrentUser.current = user;
       await socket.emit('user messages', user);
-      handleNewMessageStatus(user._id, false, '')
+      handleNewMessageStatus(user.userId, false, '')
     }
   };
   const onDisconnect = async () => {

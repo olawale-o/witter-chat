@@ -27,7 +27,7 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
     }
     socket.emit('private message', {
       text: message,
-      to: contact._id
+      to: contact.userId
     });
     setMessages([...messages, newMessage])
     setMessage('');

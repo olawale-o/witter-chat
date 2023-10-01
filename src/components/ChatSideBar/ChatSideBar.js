@@ -1,11 +1,13 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 import ChatSideBarHeader from "./ChatSidebarHeader";
 import Contacts from "../Contacts/Contacts";
 import OnlineContacts from "../Contacts/Online";
 import { useSocketContext } from "../../context/socket";
 import './ChatSidebar.css';
+import { useGlobal } from "../../context/global";
 
 const ChatSideBar = () => {
+  const { followersListIds, followingListIds } = useGlobal();
   const { socket, user, onlineUsers, setOnlineUsers, selectedUser, onUserSelected } = useSocketContext();
   const findUser = useCallback((userId) => {
     const user = onlineUsers[userId];
@@ -28,7 +30,7 @@ const ChatSideBar = () => {
         if (userExists) {
           handleConnectionStatus(userId, true);
         } else {
-          const newUser = { userId, username, _id: userId, online: true } 
+          const newUser = { userId, username, _id: userId, online: true }
           onlineUsers[userId] = newUser
           newUser.online = true;
           setOnlineUsers({ ...onlineUsers });
@@ -40,17 +42,19 @@ const ChatSideBar = () => {
     handleConnectionStatus(userId, false)
   }, [handleConnectionStatus]);
 
+  const followerIds = useMemo(() => followersListIds, [followersListIds]);
+  const followingIds = useMemo(() => followingListIds, [followingListIds]);
   useEffect(() => {
     socket.on('user connected', ({ userId, username }) => {
-      // console.log('user connected', userId, username)
-      onUserConnected(userId, username)
+      if (followerIds.includes(userId) || followingIds.includes(userId)) {
+        onUserConnected(userId, username);
+      }
     })
 
     socket.on("user disconnected", (user) => {
-      // console.log(user, 'disconnected')
       userDisconnected(user)
     })
-  }, [socket, onUserConnected, userDisconnected, onlineUsers])
+  }, [socket, onUserConnected, userDisconnected, onlineUsers, followerIds, followingIds]);
 
   return (
     <div className="chatsidebar">
@@ -63,7 +67,7 @@ const ChatSideBar = () => {
         user={user}
         socket={socket}
         onlineUsers={onlineUsers}
-        setOnlineUsers={setOnlineUsers}
+        // setOnlineUsers={setOnlineUsers}
         selectedCurrentUser={selectedUser}
       />
     </div>

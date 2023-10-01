@@ -12,7 +12,8 @@ const GlobalProvider = ({ children, followers, following }) => {
     <GlobalContext.Provider value={{
       unionIds,
       setUnionIds,
-      followersListIds
+      followersListIds,
+      followingListIds
     }}>
       {children}
     </GlobalContext.Provider>
