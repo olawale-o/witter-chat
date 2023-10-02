@@ -3,10 +3,10 @@ import { useSocketContext } from "../../../context/socket";
 import { useUserConnectionContext } from "../../../context/userConnection";
 
 const UserSuggestion = ({ users, isLoading, followingList, updateFollowingList, onSkip, userId }) => {
-  const { setFollowingList, setFollowingListIds } = useUserConnectionContext();
+  const { setFollowingList, setFollowingListIds, followingListIds } = useUserConnectionContext();
   const { toggleFollow } = useSocketContext();
   const observer = useRef();
-  const ids = useMemo(() => followingList, [followingList]);
+  const ids = useMemo(() => followingListIds, [followingListIds]);
 
   const lastBookElementRef = useCallback((node) => {
     if (isLoading) return;

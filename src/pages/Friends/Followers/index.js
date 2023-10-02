@@ -6,28 +6,41 @@ import { useUserConnectionContext } from "../../../context/userConnection";
 
 export default function Followers() {
   const userId = JSON.parse(localStorage.getItem('user'))?.user?._id;
-  const { followersList, unionIds } = useUserConnectionContext();
+  const { setIntersectionIds, intersectionIds, setFollowingListIds, followingListIds, followersListIds, followersList } = useUserConnectionContext();
   const { toggleFollow } = useSocketContext();
-  const [followers, setFollowers] = useState([]);
-  const ids = useMemo(() => followers, [followers]);
-    
+
+  // users followers each other
+  // current followed selected user 
+  
   const onToggleFollow = (user,) => {
-    if (ids.includes(user._id)) {
-      toggleFollow(user, userId, 'unfollow')
-      const newList = followers.filter((id) => id !== user?._id);
-      setFollowers(newList);
+    if (followingListIds.includes(user._id) && followersListIds.includes(user._id)) {
+      toggleFollow(user, userId, 'unfollow');
+      setFollowingListIds((prevState) => {
+        const a = [...prevState].filter((id) => id !== user._id)
+        return a;
+      });
+      setIntersectionIds((prevState) => {
+        const a = [...prevState].filter((id) => id !== user._id)
+        return a;
+      });
     } else {
-      toggleFollow(user, userId, 'follow',)
-      setFollowers((prevState) => ([...prevState, user._id]))
+      toggleFollow(user, userId, 'follow');
+      setFollowingListIds((prevState) => {
+        const a = [...prevState, user._id];
+        return a
+      });
+      setIntersectionIds((prevState) => {
+        const a = [...prevState, user._id];
+        return a
+      });
     }
   };
   return (
     <FollowersComponent
       onToggleFollow={onToggleFollow}
       followers={followersList}
-      ids={ids}
       page="follower"
-      unionIds = {unionIds}
+      intersectionIds = {intersectionIds}
     /> 
   );
 }

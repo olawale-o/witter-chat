@@ -6,7 +6,6 @@ import { useUserFollowersQuery, useUserFollowingsQuery } from "../../queries/use
 import { UserConnectionProvider } from "../../context/userConnection";
 
 const PrivatePage = ({ socket, }) => {
-  console.log('private page');
   const { user } = useDataContext();
   const { data: followers, isLoading: isLoadingFollowers } = useUserFollowersQuery({ user });
   const { data: followings, isLoading: isLoadingFollowing } = useUserFollowingsQuery({ user });
