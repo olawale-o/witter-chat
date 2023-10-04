@@ -19,7 +19,6 @@ const FriendSuggestion = () => {
   const rootRef = useRef(null);
   const [skip, setSkip] = useState(0);
   const [users, setUsers] = useState([]);
-  // const [followingList, setFollowingList] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -43,9 +42,7 @@ const FriendSuggestion = () => {
         <UserSuggestion
           users={users}
           isLoading={isLoading}
-          // followingList={followingList}
           onSkip={setSkip}
-          // updateFollowingList={setFollowingList}
           currentUser={currentUser}
         />
       </div>
