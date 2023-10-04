@@ -18,7 +18,7 @@ import FriendRequest from './pages/Friends/Request';
 import FriendSuggestion, { loader as followersLoader } from './pages/Friends/Suggestion';
 import PublicRoute from './pages/PublicRoute';
 import PrivateRoute from './pages/PrivateRoute';
-import Followers from './pages/Friends/Followers';
+import FollowersPage from './pages/Friends/Followers';
 import Following from './pages/Friends/Following';
 import {  QueryClient, QueryClientProvider, } from '@tanstack/react-query';
 import './index.css';
@@ -53,8 +53,8 @@ const router = createBrowserRouter([
                 path: 'request',
                 element: <FriendRequest />,
                 children: [
-                  { index: true, element: <Followers /> },
-                  { path: 'followers', element: <Followers /> },
+                  { index: true, element: <FollowersPage /> },
+                  { path: 'followers', element: <FollowersPage /> },
                   { path: 'following', element: <Following /> }
                 ]
               },

@@ -8,7 +8,7 @@ export const useDataContext = () => useContext(DataContext);
 
 export default function DataProvider({ children }) {
   const naviagte = useNavigate();
-  const { data, isLoading, isError } = useUserQuery();
+  const { data, isError } = useUserQuery();
 
   useEffect(() => {
     if (isError) {
@@ -16,17 +16,16 @@ export default function DataProvider({ children }) {
     }
   }, [isError]);
 
-  if (isLoading) {
-    return <div>Loading</div>
+  if (data) {
+    return (
+      <DataContext.Provider
+        value={{
+          user: data?.data,
+        }}
+      >
+        {children}
+      </DataContext.Provider>
+    );
   }
-
-  return (
-    <DataContext.Provider
-      value={{
-        user: data?.data,
-      }}
-    >
-      {children}
-    </DataContext.Provider>
-  );
+  return <div>Loading</div>
 }

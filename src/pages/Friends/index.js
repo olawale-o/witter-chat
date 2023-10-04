@@ -1,12 +1,13 @@
-import { Outlet } from "react-router-dom";
-
+import { Outlet, useOutletContext, } from "react-router-dom";
 import './styles.css';
 
 const Friends = () => {
+  const [socket] = useOutletContext();
+
   return (
     <div className="friends-container">
       <div className="friends">
-        <Outlet />
+        <Outlet context={[socket]} />
       </div>
     </div>
   );

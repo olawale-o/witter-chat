@@ -2,11 +2,11 @@ import { useMemo, useCallback, useRef } from "react";
 import { useSocketContext } from "../../../context/socket";
 import { useUserConnectionContext } from "../../../context/userConnection";
 
-const UserSuggestion = ({ users, isLoading, followingList, updateFollowingList, onSkip, userId }) => {
-  const { setFollowingList, setFollowingListIds, followingListIds } = useUserConnectionContext();
+const UserSuggestion = ({ users, isLoading, followingList, updateFollowingList, onSkip, currentUser }) => {
+  const { setFollowingList, setFollowingListIds, followingListIds, setUnionIds } = useUserConnectionContext();
   const { toggleFollow } = useSocketContext();
   const observer = useRef();
-  const ids = useMemo(() => followingListIds, [followingListIds]);
+  // const ids = useMemo(() => followingListIds, [followingListIds]);
 
   const lastBookElementRef = useCallback((node) => {
     if (isLoading) return;
@@ -21,17 +21,21 @@ const UserSuggestion = ({ users, isLoading, followingList, updateFollowingList, 
 
   }, []);
   const onToggleFollow = (user,) => {
-    if (ids.includes(user._id)) {
-      toggleFollow(user, userId, 'unfollow')
-      const newList = followingList.filter((id) => id !== user?._id);
-      setFollowingList(newList);
-      updateFollowingList(newList);
-      setFollowingListIds((prevState) => ([...prevState, user._id]));
+    if (followingListIds.includes(user._id)) {
+      toggleFollow(user, currentUser, 'unfollow')
+      setFollowingList((prevState) => {
+        const a = [...prevState].filter((user) => user.connection._id !== user._id);
+        return a
+      });
+      setFollowingListIds((prevState) => {
+        const a = [...prevState].filter((id) => id !== user._id);
+        return a
+      });
     } else {
-      toggleFollow(user, userId, 'follow',)
-      setFollowingList((prevState) => ([...prevState, user]))
-      updateFollowingList((prevState) => ([...prevState, user._id]))
-      setFollowingListIds((prevState) => ([...prevState, user._id]))
+      toggleFollow(user, currentUser, 'follow',)
+      setFollowingList((prevState) => ([...prevState, { connection: { ...user } } ]));
+      setFollowingListIds((prevState) => ([...prevState, user._id]));
+      setUnionIds((prevState) => new Set([...prevState, user._id]));
     }
   };
   return ( 
@@ -58,7 +62,7 @@ const UserSuggestion = ({ users, isLoading, followingList, updateFollowingList, 
                   className="cta"
                   onClick={() => onToggleFollow(user)}
                 >
-                  {ids.includes(user._id) ? 'Unfollow' : 'Follow'}
+                  {followingListIds.includes(user._id) ? 'Unfollow' : 'Follow'}
                 </button>
               </div>
             </li>
@@ -83,7 +87,7 @@ const UserSuggestion = ({ users, isLoading, followingList, updateFollowingList, 
                   className="cta"
                   onClick={() => onToggleFollow(user)}
                 >
-                  {ids.includes(user._id) ? 'Unfollow' : 'Follow'}
+                  {followingListIds.includes(user._id) ? 'Unfollow' : 'Follow'}
                 </button>
               </div>
             </li>

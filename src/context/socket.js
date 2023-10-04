@@ -10,7 +10,6 @@ export default function SocketProvider({ children, socket }) {
   const navigate = useNavigate();
   const { user } = useUser();
   const { setUser } = useUserDispatch();
-  const [followedUser, setFollowedUser] = useState([]);
   const [messages, setMessages] = useState([]);
   const [selectedUser, setSelectedUser] = useState({});
   const selectedCurrentUser = useRef({});
@@ -25,10 +24,6 @@ export default function SocketProvider({ children, socket }) {
   }, [socket]);
   const handleNewMessageStatus = useCallback((userId, status, message) => {
     const user = onlineUsers[userId];
-    console.log({
-      user,
-      userId,
-    })
     if (user) {
       user['hasNewMessage'] = status;
       user['lastMessage'] = message;
@@ -106,24 +101,23 @@ export default function SocketProvider({ children, socket }) {
     });
     
     socket.on('private message', (message) => {
-      console.log(message);
       handlePrivateChat(message);
     });
     socket.on('user messages', (messages) => userMessages(messages));
-    socket.on('follow', (user) => {
-      console.log('followed', user);
-    })
-    socket.on('unfollow', (user) => {
-      console.log('unfollowed', user);
-    })
+    // socket.on('follow', (user) => {
+    //   console.log('followed', user);
+    // })
+    // socket.on('unfollow', (user) => {
+    //   console.log('unfollowed', user);
+    // })
     return () => {
       socket.off('connect');
       socket.off('session');
       socket.off('users');
       socket.off('private message');
       socket.off('user messages');
-      socket.off('follow');
-      socket.off('unfollow');
+      // socket.off('follow');
+      // socket.off('unfollow');
     }
   }, [socket,
       checkIfUserExist,
@@ -155,8 +149,8 @@ export default function SocketProvider({ children, socket }) {
     navigate('/', { replace: true });
   }
 
-  const toggleFollow = async (user, followerId, action) => {
-    await socket.emit(action, user, followerId);
+  const toggleFollow = async (user, currentUser, action) => {
+    await socket.emit(action, user, currentUser);
   }
   return (
     <SocketContext.Provider value={{
@@ -171,7 +165,6 @@ export default function SocketProvider({ children, socket }) {
       onUserSelected,
       onDisconnect,
       toggleFollow,
-      followedUser,
     }}
     >
       {children}

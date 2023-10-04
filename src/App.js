@@ -59,7 +59,7 @@ function App({ socket }) {
     if (data === null) {
       navigate('/login', { replace: true });
     } else {
-      if (location.pathname !== null) {
+      if (location.pathname !== '/') {
         navigate(location.pathname, { replace: true });
       } else {
         navigate('/chat', { replace: true });

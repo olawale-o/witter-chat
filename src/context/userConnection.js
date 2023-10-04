@@ -16,7 +16,6 @@ export const UserConnectionProvider = ({ children, followers, following }) => {
   
   const [unionIds, setUnionIds] = useState(new Set([...followersListIds, ...followingListIds]));
   const [intersectionIds, setIntersectionIds] = useState(() => followersListIds.filter((id) => followingListIds.includes(id)));
-  
   return (
     <UserConnectionContext.Provider value={{
       followersList,

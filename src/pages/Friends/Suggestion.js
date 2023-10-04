@@ -14,11 +14,12 @@ const limit = 20;
 
 const FriendSuggestion = () => {
   const userId = JSON.parse(localStorage.getItem('user'))?.user?._id;
+  const currentUser = JSON.parse(localStorage.getItem('user'))?.user;
   const [isLoading, setIsLoading] = useState(false);
   const rootRef = useRef(null);
   const [skip, setSkip] = useState(0);
   const [users, setUsers] = useState([]);
-  const [followingList, setFollowingList] = useState([]);
+  // const [followingList, setFollowingList] = useState([]);
 
   useEffect(() => {
     setIsLoading(true);
@@ -42,10 +43,10 @@ const FriendSuggestion = () => {
         <UserSuggestion
           users={users}
           isLoading={isLoading}
-          followingList={followingList}
+          // followingList={followingList}
           onSkip={setSkip}
-          updateFollowingList={setFollowingList}
-          userId={userId}
+          // updateFollowingList={setFollowingList}
+          currentUser={currentUser}
         />
       </div>
       {
