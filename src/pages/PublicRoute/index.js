@@ -1,11 +1,11 @@
 import { Outlet, useOutletContext, } from "react-router-dom";
-import AuthProvider from "../../context/auth";
 
 export default function PublicRoute() {
   const [socket] = useOutletContext();
-  return (
-    <AuthProvider socket={socket}>
-      <Outlet />
-    </AuthProvider>
-  );
+  const startSocket = (user) => {
+    const { username, _id, name } = user;
+    socket.auth = { user: { username, _id, name } };
+    socket.connect();
+  }
+  return (<Outlet context={[startSocket]} />);
 }

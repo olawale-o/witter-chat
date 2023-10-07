@@ -4,6 +4,7 @@ import {
   Form,
   redirect,
   useLoaderData,
+  useOutletContext,
 } from 'react-router-dom';
 import { registerService } from '../../services/authService';
 import './style.css';
@@ -27,7 +28,8 @@ export async function action({ request }) {
 }
 
 const Register = () => {
-  const { startSocket } = useAuthContext();
+  // const { startSocket } = useAuthContext();
+  const [startSocket] = useOutletContext();
   const data = useLoaderData();
   const navigate = useNavigate();
   const [formValues, setFormValues] = React.useState({

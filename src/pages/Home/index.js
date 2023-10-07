@@ -1,14 +1,14 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import {
   useNavigate,
   Form,
   redirect,
   useLoaderData,
+  useOutletContext,
 } from 'react-router-dom';
 import { loginService } from '../../services/authService';
 import { useUserDispatch } from '../../hooks/useUser';
 
-import { useAuthContext } from '../../context/auth';
 import './style.css';
 
 export async function loader() {
@@ -27,18 +27,17 @@ export async function action({ request }) {
 }
 
 const Home = () => {
-  const { startSocket } = useAuthContext();
+  const [startSocket] = useOutletContext();
   const { setUser } = useUserDispatch();
   const data = useLoaderData();
   const navigate = useNavigate();
-  const [formValues, setFormValues] = React.useState({
+  const [formValues, setFormValues] = useState({
     username: '',
     password: '',
   });
 
-  React.useEffect(() => {    
+  useEffect(() => {    
     if (data !== null && data.user !== null) {
-      console.log(data)
       startSocket(data?.user)
       setUser((prevState) => ({ ...prevState, ...data?.user }));
       navigate('/chat');
