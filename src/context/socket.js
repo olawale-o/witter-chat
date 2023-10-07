@@ -15,6 +15,7 @@ export default function SocketProvider({ children, socket }) {
   const selectedCurrentUser = useRef({});
   const [onlineUsers, setOnlineUsers] = useState({});
   const lastMessageRef = useRef(null);
+
   const checkIfUserExist = useCallback(() => {
     const sessionId = localStorage.getItem('sessionId');
     if (sessionId) {
@@ -23,10 +24,10 @@ export default function SocketProvider({ children, socket }) {
     }
   }, [socket]);
   const handleNewMessageStatus = useCallback((userId, status, message) => {
-    const user = onlineUsers[userId];
-    if (user) {
-      user['hasNewMessage'] = status;
-      user['lastMessage'] = message;
+    const foundUser = onlineUsers[userId];
+    if (foundUser) {
+      foundUser['hasNewMessage'] = status;
+      foundUser['lastMessage'] = message;
       setOnlineUsers({...onlineUsers});
     }
     
@@ -104,20 +105,13 @@ export default function SocketProvider({ children, socket }) {
       handlePrivateChat(message);
     });
     socket.on('user messages', (messages) => userMessages(messages));
-    // socket.on('follow', (user) => {
-    //   console.log('followed', user);
-    // })
-    // socket.on('unfollow', (user) => {
-    //   console.log('unfollowed', user);
-    // })
+
     return () => {
       socket.off('connect');
       socket.off('session');
       socket.off('users');
       socket.off('private message');
       socket.off('user messages');
-      // socket.off('follow');
-      // socket.off('unfollow');
     }
   }, [socket,
       checkIfUserExist,
