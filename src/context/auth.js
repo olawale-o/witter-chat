@@ -4,16 +4,9 @@ const AuthContext = createContext({});
 
 export const useAuthContext = () => useContext(AuthContext);
 
-export default function AuthProvider({ children, socket }) {
-  const startSocket = (user) => {
-    const { username, _id, name } = user;
-    socket.auth = { user: { username, _id, name } };
-    socket.connect();
-  }
-  
+export default function AuthProvider({ children }) {  
   return (
-    <AuthContext.Provider value={{startSocket}}
-    >
+    <AuthContext.Provider value={{}}>
       {children}
     </AuthContext.Provider>
   );

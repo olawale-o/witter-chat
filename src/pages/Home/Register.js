@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom';
 import { registerService } from '../../services/authService';
 import './style.css';
-import { useAuthContext } from '../../context/auth';
 
 export async function loader() {
   return JSON.parse(localStorage.getItem("user"));
@@ -28,7 +27,6 @@ export async function action({ request }) {
 }
 
 const Register = () => {
-  // const { startSocket } = useAuthContext();
   const [startSocket] = useOutletContext();
   const data = useLoaderData();
   const navigate = useNavigate();
