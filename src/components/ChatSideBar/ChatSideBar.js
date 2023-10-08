@@ -41,12 +41,9 @@ const ChatSideBar = () => {
   const userDisconnected = useCallback(({ userId }) => {
     handleConnectionStatus(userId, false)
   }, [handleConnectionStatus]);
-
-  const followerIds = useMemo(() => followersListIds, [followersListIds]);
-  const followingIds = useMemo(() => followingListIds, [followingListIds]);
   useEffect(() => {
     socket.on('user connected', ({ userId, username }) => {
-      if (followerIds.includes(userId) || followingIds.includes(userId)) {
+      if (followersListIds.includes(userId) || followingListIds.includes(userId)) {
         onUserConnected(userId, username);
       }
     })
@@ -54,7 +51,7 @@ const ChatSideBar = () => {
     socket.on("user disconnected", (user) => {
       userDisconnected(user)
     })
-  }, [socket, onUserConnected, userDisconnected, onlineUsers, followerIds, followingIds]);
+  }, [socket, onUserConnected, userDisconnected, onlineUsers]);
 
   return (
     <div className="chatsidebar">

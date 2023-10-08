@@ -10,8 +10,8 @@ import ChatSideNav from "../../components/ChatSideNav";
 
 const PrivatePageLayout = ({ socket, }) => {
   const { user } = useDataContext();
-  const { data: followers, isLoading: isLoadingFollowers } = useUserFollowersQuery({ user });
-  const { data: followings, isLoading: isLoadingFollowing } = useUserFollowingsQuery({ user });
+  const { data: followers, } = useUserFollowersQuery({ user });
+  const { data: followings} = useUserFollowingsQuery({ user });
   if (followers && followings) {
     return (
       <UserConnectionProvider

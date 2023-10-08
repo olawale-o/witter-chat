@@ -4,7 +4,6 @@ import './ChatSidebarHeader.css';
 
 export default function ChatSideBarHeader({ user }) {
     if (!user) return null
-    console.log(user);
     return (
       <div className="chat-sidebar__header">
         <Link to="/profile">

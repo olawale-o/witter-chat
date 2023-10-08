@@ -6,8 +6,8 @@ export const useUserConnectionContext = () => useContext(UserConnectionContext);
 
 
 export const UserConnectionProvider = ({ children, followers, following }) => {
-  const getUserFollowingIds = () => following.map((following) => following.followeeId);
-  const getUserFollowerIds = () => followers.map((follower) => follower.followerId);
+  const getUserFollowingIds = () => following.map((following) => following._id);
+  const getUserFollowerIds = () => followers.map((follower) => follower._id);
   
   const [followersList, setFollowersList] = useState(followers);
   const [followersListIds, setFollowersListIds] = useState(() => getUserFollowerIds());
@@ -16,6 +16,7 @@ export const UserConnectionProvider = ({ children, followers, following }) => {
   
   const [unionIds, setUnionIds] = useState(new Set([...followersListIds, ...followingListIds]));
   const [intersectionIds, setIntersectionIds] = useState(() => followersListIds.filter((id) => followingListIds.includes(id)));
+  
   return (
     <UserConnectionContext.Provider value={{
       followersList,

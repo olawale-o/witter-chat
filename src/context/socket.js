@@ -35,7 +35,7 @@ export default function SocketProvider({ children, socket }) {
     await socket.disconnect();
     localStorage.removeItem('sessionId')
     localStorage.removeItem('user');
-    navigate('/', { replace: true });
+    navigate('/login', { replace: true });
   }
 
   const toggleFollow = async (user, currentUser, action) => {

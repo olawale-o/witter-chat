@@ -10,7 +10,6 @@ const PrivatePage = ({ children, socket }) => {
     setFollowersListIds,
     followingListIds,
   } = useUserConnectionContext();
-
   useEffect(() => {
     socket.on('follow', ({ follower }) => {
       setFollowersListIds((prevState) => ([...prevState, follower._id]));
