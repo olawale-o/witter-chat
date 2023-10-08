@@ -12,20 +12,22 @@ const PrivatePageLayout = ({ socket, }) => {
   const { user } = useDataContext();
   const { data: followers, isLoading: isLoadingFollowers } = useUserFollowersQuery({ user });
   const { data: followings, isLoading: isLoadingFollowing } = useUserFollowingsQuery({ user });
-  if (isLoadingFollowers || isLoadingFollowing) return <div>Loading connections for......</div>
-  return (
-    <UserConnectionProvider
-      followers={followers.followers}
-      following={followings.following}
-    >
-      <div className="private">
-        <PrivatePage socket={socket}>
-          <ChatSideNav />
-          <Outlet context={[socket]} />
-        </PrivatePage>
-      </div>
-    </UserConnectionProvider>
-  );
+  if (followers && followings) {
+    return (
+      <UserConnectionProvider
+        followers={followers.followers}
+        following={followings.following}
+      >
+        <div className="private">
+          <PrivatePage socket={socket}>
+            <ChatSideNav />
+            <Outlet context={[socket]} />
+          </PrivatePage>
+        </div>
+      </UserConnectionProvider>
+    );
+  }
+  return <div>Loading connections for......</div>
 };
 
 export { PrivatePageLayout };

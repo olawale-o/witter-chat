@@ -21,7 +21,7 @@ const Following = ({ followers, onToggleFollow, followingListIds }) => {
                 className="cta"
                 onClick={() => onToggleFollow(user.connection)}
               >
-                {followingListIds.includes(user.followeeId) ? "Unfollow" : "Follow back"}
+                {followingListIds.includes(user.connection._id) ? "Unfollow" : "Follow back"}
               </button>
             </div>
           </li>
