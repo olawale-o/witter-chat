@@ -4,6 +4,7 @@ import './ChatSidebarHeader.css';
 
 export default function ChatSideBarHeader({ user }) {
     if (!user) return null
+    console.log(user);
     return (
       <div className="chat-sidebar__header">
         <Link to="/profile">
@@ -13,11 +14,13 @@ export default function ChatSideBarHeader({ user }) {
         </Link>
         <div className="chat-sidebar__detail">
           <div className="chat-sidebar__detail-img">
-            {user?.avatar && (<img
+            {user?.avatar ? (<img
               src={user.avatar}
               alt="avatar"
               className="chat-sidebar__detail__img"
               />
+            ): (
+              <span className="placeholder">{user.username[0]}</span>
             )}
           </div>
           <span className="chat-sidebar__detail__name">{user.username}</span>

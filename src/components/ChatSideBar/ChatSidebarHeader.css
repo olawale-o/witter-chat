@@ -17,13 +17,20 @@
   width: 4em;
   height: 4em;
   border-radius: 50%;
-  background-color: var(--black-color);
+  border: 1px solid var(--black-color);
+  /* background-color: var(--black-color); */
+  display: grid;
+  place-items: center;
 }
 
 .chat-sidebar__detail__img {
   width: 100%;
   height: 100%;
   border-radius: inherit;
+}
+
+.placeholder {
+  font-size: 1.8em;
 }
 
 .chat-sidebar__detail__name {

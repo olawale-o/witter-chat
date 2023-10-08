@@ -11,7 +11,7 @@ export default function Profile() {
         <div className="profile__details">
           <div className="profile__avatar">
             {selectedUser?.avatar ? (<img src={selectedUser.avatar} className="avatar"  alt="avatar"  />)
-            : (<span>selectedUser.username[0].toUpperCase()</span>)
+            : (<span>{selectedUser.username[0].toUpperCase()}</span>)
             }
           </div>
           <span className="text-lg text-black">{selectedUser.username}</span>
