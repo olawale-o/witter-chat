@@ -1,4 +1,4 @@
-const Followers = ({ followers, onToggleFollow, intersectionIds = [], ids }) => {
+const Followers = ({ followers, onToggleFollow, intersectionIds = [] }) => {
   return (
     <ul className="friend-list">
       {

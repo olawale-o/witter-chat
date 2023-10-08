@@ -4,7 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import './style.css';
 import SocketProvider from "../../context/socket";
 import DataProvider from "../../context/data";
-import { PrivatePage } from "./Page";
+import { PrivatePageLayout } from "./Layout";
 
 export default function PrivateRoute() {
   const [socket] = useOutletContext();
@@ -12,7 +12,7 @@ export default function PrivateRoute() {
   return (
     <SocketProvider socket={socket}>
       <DataProvider>
-        <PrivatePage socket={socket} />
+        <PrivatePageLayout socket={socket} />
       </DataProvider>
       </SocketProvider>
   );

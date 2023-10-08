@@ -5,9 +5,8 @@ import { useUserConnectionContext } from "../../../context/userConnection";
 
 
 export default function Following() {
-  const userId = JSON.parse(localStorage.getItem('user'))?.user?._id;
   const currentUser = JSON.parse(localStorage.getItem('user'))?.user;
-  const { followingList, unionIds, setFollowingListIds, followingListIds, followersListIds } = useUserConnectionContext();
+  const { followingList, setFollowingListIds, followingListIds, followersListIds } = useUserConnectionContext();
   const { toggleFollow, onlineUsers, setOnlineUsers} = useSocketContext();
   const onToggleFollow = (user,) => {
     // both user follows each other
@@ -42,7 +41,6 @@ export default function Following() {
     <FollowingComponent
       onToggleFollow={onToggleFollow}
       followers={followingList}
-      unionIds={unionIds}
       followingListIds={followingListIds}
     /> 
   );

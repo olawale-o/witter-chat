@@ -4,14 +4,12 @@ import { Followers as FollowersComponent } from "../components/Followers";
 import { useUserConnectionContext } from "../../../context/userConnection";
 
 export default function FollowersPage() {
-  const userId = JSON.parse(localStorage.getItem('user'))?.user?._id;
   const currentUser = JSON.parse(localStorage.getItem('user'))?.user;
   const { setIntersectionIds, intersectionIds, setFollowingListIds, followingListIds, followersListIds, followersList } = useUserConnectionContext();
   const { toggleFollow } = useSocketContext();
-  // users followers each other
-  // current followed selected user
   
   const onToggleFollow = (user,) => {
+    // users followers each other
     if (followingListIds.includes(user._id) && followersListIds.includes(user._id)) {
       toggleFollow(user, currentUser, 'unfollow');
       setFollowingListIds((prevState) => {
@@ -39,7 +37,6 @@ export default function FollowersPage() {
     <FollowersComponent
       onToggleFollow={onToggleFollow}
       followers={followersList}
-      page="follower"
       intersectionIds = {intersectionIds}
     /> 
   );

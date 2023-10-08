@@ -6,7 +6,7 @@ import { useDataContext } from "../../context/data";
 import { useUserFollowersQuery, useUserFollowingsQuery } from "../../queries/userUserConnectionQuery";
 import { UserConnectionProvider, useUserConnectionContext } from "../../context/userConnection";
 
-const PrivatePageLayout = ({ children, socket }) => {
+const PrivatePage = ({ children, socket }) => {
   const {
     setIntersectionIds,
     setUnionIds,
@@ -52,24 +52,6 @@ const PrivatePageLayout = ({ children, socket }) => {
   return children
 }
 
-const PrivatePage = ({ socket, }) => {
-  const { user } = useDataContext();
-  const { data: followers, isLoading: isLoadingFollowers } = useUserFollowersQuery({ user });
-  const { data: followings, isLoading: isLoadingFollowing } = useUserFollowingsQuery({ user });
-  if (isLoadingFollowers || isLoadingFollowing) return <div>Loading connections for......</div>
-  return (
-    <UserConnectionProvider
-      followers={followers.followers}
-      following={followings.following}
-    >
-      <div className="private">
-        <PrivatePageLayout socket={socket}>
-          <ChatSideNav />
-          <Outlet context={[socket]} />
-        </PrivatePageLayout>
-      </div>
-    </UserConnectionProvider>
-  );
-};
+
 
 export { PrivatePage };
