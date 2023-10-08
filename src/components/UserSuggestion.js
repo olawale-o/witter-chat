@@ -1,6 +1,6 @@
 import { useCallback, useRef } from "react";
-import { useSocketContext } from "../../../context/socket";
-import { useUserConnectionContext } from "../../../context/userConnection";
+import { useSocketContext } from "../context/socket";
+import { useUserConnectionContext } from "../context/userConnection";
 
 const UserSuggestion = ({ users, isLoading, onSkip, currentUser }) => {
   const { setFollowingList, setFollowingListIds, followingListIds, setUnionIds } = useUserConnectionContext();

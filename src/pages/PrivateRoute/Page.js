@@ -1,10 +1,5 @@
 import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
-
-import ChatSideNav from "../../components/ChatSideNav";
-import { useDataContext } from "../../context/data";
-import { useUserFollowersQuery, useUserFollowingsQuery } from "../../queries/userUserConnectionQuery";
-import { UserConnectionProvider, useUserConnectionContext } from "../../context/userConnection";
+import { useUserConnectionContext } from "../../context/userConnection";
 
 const PrivatePage = ({ children, socket }) => {
   const {

@@ -1,6 +1,6 @@
 import { useSocketContext } from "../../../context/socket";
 
-import { Following as FollowingComponent } from "../components/Following";
+import { Following as FollowingComponent } from "../../../components/Following";
 import { useUserConnectionContext } from "../../../context/userConnection";
 
 

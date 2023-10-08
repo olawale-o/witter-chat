@@ -1,6 +1,8 @@
 import { useSocketContext } from "../../../context/socket";
 
-import { Followers as FollowersComponent } from "../components/Followers";
+// import { Followers as FollowersComponent } from "@/components";
+
+import { Followers as FollowersComponent } from "../../../components";
 import { useUserConnectionContext } from "../../../context/userConnection";
 
 export default function FollowersPage() {

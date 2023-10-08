@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef} from "react";
 import { getFriendSuggestionService } from "../../services/friendService";
 import { LinkTabs } from "../../components/Tabs";
-import { UserSuggestion } from "./components/UserSuggestion";
+import { UserSuggestion } from "../../components/UserSuggestion";
 
 const tabs = [{ index: 1, title: 'friends', link: '/friends'}, { index: 2, title: 'request', link: '/friends/request'}];
 
