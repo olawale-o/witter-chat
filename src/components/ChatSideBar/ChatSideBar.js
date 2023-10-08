@@ -24,7 +24,6 @@ const ChatSideBar = () => {
   },  [setOnlineUsers, findUser, onlineUsers]);
 
   const onUserConnected = useCallback((userId, username) => {
-    console.log('on user connected');
     if (user.id !== userId) {
         const userExists = findUser(userId);
         if (userExists) {

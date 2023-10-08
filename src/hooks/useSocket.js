@@ -67,11 +67,12 @@ const useSocket  = (socket) => {
     socket.on('connect', () => console.log('connected'));
     socket.on('disconnect', () => console.log('disconnected'));
     checkIfUserExist();
-    socket.on('session', async({ sessionId, userId, username }) => {
+    socket.on('session', async({ sessionId, userId, username, avatar }) => {
+      console.log('session')
       if (sessionId && userId && username) {
         socket.auth = { sessionId: sessionId };
         localStorage.setItem('sessionId', sessionId);
-        setUser({ sessionId, id: userId, username, userId, avatar: user.avatar })
+        setUser({ sessionId, id: userId, username, userId, avatar })
       }
     });
         
