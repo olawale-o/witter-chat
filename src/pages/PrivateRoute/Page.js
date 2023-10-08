@@ -14,7 +14,7 @@ const PrivatePage = ({ children, socket }) => {
   useEffect(() => {
     socket.on('follow', ({ follower }) => {
       setFollowersListIds((prevState) => ([...prevState, follower._id]));
-      setFollowersList((prevState) => ([...prevState, { connection: { ...follower } } ]));
+      setFollowersList((prevState) => ([...prevState, {  ...follower } ]));
       if (followingListIds.includes(follower._id)) {
         setIntersectionIds((prevState) => ([...prevState, follower._id]));
       } else {
@@ -34,7 +34,7 @@ const PrivatePage = ({ children, socket }) => {
         return a
       });
       setFollowersList((prevState) => {
-        const a = [...prevState].filter((user) => user.connection._id !== follower._id);
+        const a = [...prevState].filter((user) => user._id !== follower._id);
         return a
       });
     });
