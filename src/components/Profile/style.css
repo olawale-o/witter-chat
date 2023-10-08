@@ -27,6 +27,12 @@
   margin-bottom: 1em;
 }
 
+.avatar {
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+}
+
 .shared-files, 
 .shared-links {
   padding-block: 1.8em;
