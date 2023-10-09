@@ -17,6 +17,7 @@ export default function SocketProvider({ children, socket }) {
     selectedCurrentUser,
     handleNewMessageStatus,
   } = useSocket(socket);
+  
   const [selectedUser, setSelectedUser] = useState({});
   const lastMessageRef = useRef(null);
 

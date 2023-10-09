@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { BiPaperclip, BiSend } from 'react-icons/bi';
 
@@ -6,7 +6,7 @@ import './style.css';
 
 const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
   let timeout  = setTimeout(function(){}, 0);
-  const [message, setMessage] = React.useState('');
+  const [message, setMessage] = useState('');
   const handleTyping = () => {
     clearTimeout(timeout);
     socket.emit('typing', `${JSON.parse(localStorage.getItem('user')).user.username} is typing`);
@@ -20,14 +20,16 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
     const newMessage = {
       userId: user._id,
       username: user.username,
-      text: message,
+      message,
       id: user._id,
-      to: contact._id,
+      to: contact.userId,
       from: user._id,
+      type: 'text'
     }
     socket.emit('private message', {
-      text: message,
-      to: contact.userId
+      message,
+      to: contact.userId,
+      type: 'text'
     });
     setMessages([...messages, newMessage])
     setMessage('');

@@ -33,19 +33,20 @@ const useSocket  = (socket) => {
       if (selectedCurrentUser.current.userId === message.from) {
         const newMessage = {
           userId: message.from,
-          text: message.text,
+          message: message.message,
           username: message.username,
           id: message.from,
           from: message.from,
-          to: message.to
+          to: message.to,
+          type: 'text'
         }
         setMessages([...messages, newMessage]);
         // handleNewMessageStatus(message.from, false)
       } else {
-        handleNewMessageStatus(message.from, true, message.text)
+        handleNewMessageStatus(message.from, true, message.message)
       }
     } else {
-      handleNewMessageStatus(message.from, true, message.text)
+      handleNewMessageStatus(message.from, true, message.message)
     }
   }, [handleNewMessageStatus, messages, selectedCurrentUser]);
 
@@ -57,9 +58,9 @@ const useSocket  = (socket) => {
     }
   }, [onlineUsers]);
 
-  const userMessages = useCallback(({ messages }) => {
+  const userMessages = useCallback(({ messages, username, userId }) => {
     const chatMessages = [];
-    messages.forEach(({ text, from, to, username }) => chatMessages.push({ to, from, text, username }))
+    messages.forEach(({ message, from, to, type }) => chatMessages.push({ to, from, message, username, type, userId }))
     setMessages([...chatMessages])
   }, []);
 
@@ -68,7 +69,6 @@ const useSocket  = (socket) => {
     socket.on('disconnect', () => console.log('disconnected'));
     checkIfUserExist();
     socket.on('session', async({ sessionId, userId, username, avatar }) => {
-      console.log('session')
       if (sessionId && userId && username) {
         socket.auth = { sessionId: sessionId };
         localStorage.setItem('sessionId', sessionId);

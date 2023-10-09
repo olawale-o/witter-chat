@@ -13,7 +13,7 @@ const ChatMessage = ({
               <div className="message-area">
                 <div className="chat-message-content">
                   <span className="chat-profile-name">You</span>
-                  <p className="chat-message text-sm">{message.text}</p>
+                  <p className="chat-message text-sm">{message.message}</p>
                 </div>
                 <div className="chat-message-timestamp">
                   <span className="timestamp text-sm">16:45</span>
@@ -28,7 +28,7 @@ const ChatMessage = ({
                 <div className="message-area">
                   <div className="chat-message-content">
                     <span className="chat-profile-name">{message.username}</span>
-                    <p className="chat-message text-sm">{message.text}</p>
+                    <p className="chat-message text-sm">{message.message}</p>
                   </div>
                 <div className="chat-message-timestamp">
                   <span className="timestamp text-sm">16:45</span>
