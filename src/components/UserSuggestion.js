@@ -19,22 +19,22 @@ const UserSuggestion = ({ users, isLoading, onSkip, currentUser }) => {
     if (node) observer.current.observe(node)
 
   }, []);
-  const onToggleFollow = (user,) => {
-    if (followingListIds.includes(user._id)) {
-      toggleFollow(user, currentUser, 'unfollow')
+  const onToggleFollow = (u,) => {
+    if (followingListIds.includes(u._id)) {
+      toggleFollow(u, currentUser, 'unfollow')
       setFollowingList((prevState) => {
-        const a = [...prevState].filter((user) => user.connection._id !== user._id);
+        const a = [...prevState].filter((user) => user._id !== u._id);
         return a
       });
       setFollowingListIds((prevState) => {
-        const a = [...prevState].filter((id) => id !== user._id);
+        const a = [...prevState].filter((id) => id !== u._id);
         return a
       });
     } else {
-      toggleFollow(user, currentUser, 'follow',)
-      setFollowingList((prevState) => ([...prevState, { connection: { ...user } } ]));
-      setFollowingListIds((prevState) => ([...prevState, user._id]));
-      setUnionIds((prevState) => new Set([...prevState, user._id]));
+      toggleFollow(u, currentUser, 'follow',)
+      setFollowingList((prevState) => ([...prevState, { ...u } ]));
+      setFollowingListIds((prevState) => ([...prevState, u._id]));
+      setUnionIds((prevState) => new Set([...prevState, u._id]));
     }
   };
   return ( 
