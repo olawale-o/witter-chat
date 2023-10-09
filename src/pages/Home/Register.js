@@ -1,4 +1,4 @@
-import React from 'react';
+import {  useState, useEffect } from 'react';
 import {
   useNavigate,
   Form,
@@ -30,14 +30,14 @@ const Register = () => {
   const [startSocket] = useOutletContext();
   const data = useLoaderData();
   const navigate = useNavigate();
-  const [formValues, setFormValues] = React.useState({
+  const [formValues, setFormValues] = useState({
     username: '',
     password: '',
     email: '',
     fullname: '',
   });
 
-  React.useEffect(() => {    
+  useEffect(() => {    
     if (data !== null && data.user !== null) {
       startSocket(data?.user);
       navigate('/chat');
@@ -92,7 +92,7 @@ const Register = () => {
         <input
           required=""
           name="fullname"
-          id="password"
+          id="fullName"
           type="text"
           value={formValues.fullname}
           onChange={onFormChange}
