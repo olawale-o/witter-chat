@@ -15,7 +15,7 @@ export async function loader() {
 }
 
 const Home = () => {
-  const [startSocket] = useOutletContext()
+  const [startSocket] = useOutletContext();
   const { setUser } = useUserDispatch();
   const data = useLoaderData();
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ const Home = () => {
     if (data !== null && data?.user !== null) {
       navigate('/chat');
     }
-  }, [data, navigate]);
+  }, []);
 
   const onFormChange = (e) => {
     setFormValues({ ...formValues, [e.target.name]: e.target.value });

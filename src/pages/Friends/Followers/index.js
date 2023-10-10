@@ -7,7 +7,15 @@ import { useUserConnectionContext } from "../../../context/userConnection";
 
 export default function FollowersPage() {
   const currentUser = JSON.parse(localStorage.getItem('user'))?.user;
-  const { setIntersectionIds, intersectionIds, setFollowingListIds, followingListIds, followersListIds, followersList } = useUserConnectionContext();
+  const {
+    setIntersectionIds,
+    intersectionIds,
+    setFollowingListIds,
+    followingListIds,
+    followersListIds,
+    followersList,
+    setFollowingList
+  } = useUserConnectionContext();
   const { toggleFollow } = useSocketContext();
   
   const onToggleFollow = (user,) => {
@@ -18,6 +26,10 @@ export default function FollowersPage() {
         const a = [...prevState].filter((id) => id !== user._id)
         return a;
       });
+      setFollowingList((prevState) => {
+        const a = [...prevState].filter((u) => u._id !== user._id)
+        return a;
+      });
       setIntersectionIds((prevState) => {
         const a = [...prevState].filter((id) => id !== user._id)
         return a;
@@ -26,6 +38,10 @@ export default function FollowersPage() {
       toggleFollow(user, currentUser, 'follow');
       setFollowingListIds((prevState) => {
         const a = [...prevState, user._id];
+        return a
+      });
+      setFollowingList((prevState) => {
+        const a = [...prevState, user];
         return a
       });
       setIntersectionIds((prevState) => {
