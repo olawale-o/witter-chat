@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import {
   useNavigate,
-  Form,
-  redirect,
   useLoaderData,
   useOutletContext,
+  Link,
 } from 'react-router-dom';
 import { loginService } from '../../services/authService';
 import { useUserDispatch } from '../../hooks/useUser';
@@ -83,6 +82,7 @@ const Home = () => {
             <input value="Login" type="submit" />
           </div>
         </form>
+        <span>Don't have an account? {'  '} <Link to="/register">Register</Link></span>
       </div>
     </div>
   )

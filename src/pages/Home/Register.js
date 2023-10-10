@@ -1,8 +1,7 @@
 import {  useState, useEffect } from 'react';
 import {
   useNavigate,
-  Form,
-  redirect,
+  Link,
   useLoaderData,
   useOutletContext,
 } from 'react-router-dom';
@@ -107,6 +106,7 @@ const Register = () => {
         <input value="Create" type="submit" />
       </div>
     </form>
+    <span>Already have an account? {'  '} <Link to="/register">Log in</Link></span>
   </div>
   );
 }
