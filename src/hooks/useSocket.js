@@ -115,7 +115,6 @@ const useSocket  = (socket) => {
     userMessages,
     handlePrivateChat,
     user.username,
-    user.username,
     handleProfileUpdate,
     setUser,
     user.avatar,

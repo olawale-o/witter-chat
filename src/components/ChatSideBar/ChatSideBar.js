@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useMemo } from "react";
+import { useEffect, useCallback } from "react";
 import ChatSideBarHeader from "./ChatSidebarHeader";
 import Contacts from "../Contacts/Contacts";
 import OnlineContacts from "../Contacts/Online";
@@ -63,7 +63,6 @@ const ChatSideBar = () => {
         user={user}
         socket={socket}
         onlineUsers={onlineUsers}
-        // setOnlineUsers={setOnlineUsers}
         selectedCurrentUser={selectedUser}
       />
     </div>
