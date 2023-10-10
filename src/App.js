@@ -56,7 +56,7 @@ function App({ socket }) {
   const location = useLocation();
   
   useEffect(() => {
-    if (data === null) {
+    if (data === undefined) {
       navigate('/login', { replace: true });
     } else {
       if (location.pathname !== '/') {
@@ -65,7 +65,7 @@ function App({ socket }) {
         navigate('/chat', { replace: true });
       }
     }
-  }, [location.pathname]);
+  }, []);
   return (
     <UserProvider>
       <div className="App">

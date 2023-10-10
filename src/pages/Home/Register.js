@@ -38,7 +38,7 @@ const Register = () => {
   });
 
   useEffect(() => {    
-    if (data !== null && data.user !== null) {
+    if (data !== undefined && data.user !== null) {
       startSocket(data?.user);
       navigate('/chat');
     }

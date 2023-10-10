@@ -31,7 +31,7 @@ const router = createBrowserRouter([
     element: <App socket={socket} />,
     id: "root",
     children: [
-      // { index: true, element: <Home />, action: loginAction, loader: homeLoader },
+      { index: true, element: <Home />, action: loginAction, loader: homeLoader },
       {
         element: <PublicRoute />,
         children: [
