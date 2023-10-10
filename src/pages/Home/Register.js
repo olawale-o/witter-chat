@@ -8,26 +8,15 @@ import {
 } from 'react-router-dom';
 import { registerService } from '../../services/authService';
 import './style.css';
+import { useUserDispatch } from '../../hooks/useUser';
 
 export async function loader() {
   return JSON.parse(localStorage.getItem("user"));
 }
 
-export async function action({ request }) {
-  const formData = await request.formData();
-  const formDataEntries = Object.fromEntries(formData);
-  const data = await registerService({
-    username: formDataEntries.username,
-    password: formDataEntries.password,
-    email: formDataEntries.email,
-    name: formDataEntries.fullname,
-  });
-  localStorage.setItem('user', JSON.stringify(data));
-  return redirect('/register');
-}
-
 const Register = () => {
   const [startSocket] = useOutletContext();
+  const { setUser } = useUserDispatch();
   const data = useLoaderData();
   const navigate = useNavigate();
   const [formValues, setFormValues] = useState({
@@ -37,9 +26,24 @@ const Register = () => {
     fullname: '',
   });
 
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const data = await registerService({
+      username: formValues.username,
+      password: formValues.password,
+      email: formValues.email,
+      name: formValues.fullname,
+    });
+    if (data && data?.user) {
+      localStorage.setItem('user', JSON.stringify(data));
+      startSocket(data.user);
+      setUser((prevState) => ({ ...prevState, ...data?.user }));
+      navigate('/chat');
+    }
+  };
+
   useEffect(() => {    
-    if (data !== undefined && data.user !== null) {
-      startSocket(data?.user);
+    if (data !== null && data.user !== null) {
       navigate('/chat');
     }
   }, [data, navigate]);
@@ -50,7 +54,7 @@ const Register = () => {
 
   return (
     <div className="home">
-    <Form method="post">
+    <form onSubmit={onSubmit}>
       <div className="form-group">
         <label htmlFor="username">Username:</label>
         <input
@@ -102,7 +106,7 @@ const Register = () => {
       <div className="form-group">
         <input value="Create" type="submit" />
       </div>
-    </Form>
+    </form>
   </div>
   );
 }

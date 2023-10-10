@@ -8,8 +8,8 @@ import {
 import socket from './socket';
 import App from './App';
 import Chat from './pages/Chat';
-import Home, { action as loginAction, loader as homeLoader } from './pages/Home';
-import Register, { action as registerAction } from './pages/Home/Register';
+import Home, { loader as homeLoader } from './pages/Home';
+import Register from './pages/Home/Register';
 import Profile, { action as profileAction, loader as profileLoader } from './pages/Profile/Profile';
 import Map from './pages/Map';
 import NewPassword from './pages/Profile/NewPassword';
@@ -31,12 +31,12 @@ const router = createBrowserRouter([
     element: <App socket={socket} />,
     id: "root",
     children: [
-      { index: true, element: <Home />, action: loginAction, loader: homeLoader },
+      { index: true, element: <Home />, loader: homeLoader },
       {
         element: <PublicRoute />,
         children: [
-          { path: 'register', element: <Register />, action: registerAction, loader: homeLoader },
-          { path: 'login', element: <Home />, action: loginAction, loader: homeLoader },
+          { path: 'register', element: <Register />, loader: homeLoader },
+          { path: 'login', element: <Home />, loader: homeLoader },
         ]
       },
       {

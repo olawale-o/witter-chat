@@ -13,9 +13,7 @@
 
 - Authenticated users can only chat with each other
 - You can follow and unfollow a user
-- The online status of loggedin users is indicated
-- User can update there profile while the update is reflected immediately
-- New messages status from other users when when other user user is in view
+- The online status of users followers or followings is indicated
 
 # Getting started
 ## To get a local copy of this repository kindly follow the steps below.

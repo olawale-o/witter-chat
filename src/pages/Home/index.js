@@ -15,19 +15,8 @@ export async function loader() {
   return JSON.parse(localStorage.getItem("user"));
 }
 
-export async function action({ request }) {
-  const formData = await request.formData();
-  const formDataEntries = Object.fromEntries(formData);
-  const data = await loginService({
-    username: formDataEntries.username,
-    password: formDataEntries.password,
-  });
-  localStorage.setItem('user', JSON.stringify(data));
-  return redirect('/login');
-}
-
 const Home = () => {
-  const [startSocket] = useOutletContext();
+  const [startSocket] = useOutletContext()
   const { setUser } = useUserDispatch();
   const data = useLoaderData();
   const navigate = useNavigate();
@@ -36,10 +25,21 @@ const Home = () => {
     password: '',
   });
 
-  useEffect(() => {    
-    if (data !== null && data.user !== null) {
-      startSocket(data?.user)
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const data = await loginService({
+      username: formValues.username,
+      password: formValues.password,
+    });
+    if (data && data?.user) {
+      localStorage.setItem('user', JSON.stringify(data));
+      startSocket(data.user);
       setUser((prevState) => ({ ...prevState, ...data?.user }));
+      navigate('/chat');
+    }
+  };
+  useEffect(() => {    
+    if (data !== null && data?.user !== null) {
       navigate('/chat');
     }
   }, [data, navigate]);
@@ -54,7 +54,7 @@ const Home = () => {
         <div className="card-header">
           <div className="log">Login</div>
         </div>
-        <Form method="post">
+        <form onSubmit={onSubmit}>
           <div className="form-group">
             <label htmlFor="username">Username:</label>
             <input
@@ -82,7 +82,7 @@ const Home = () => {
           <div className="form-group">
             <input value="Login" type="submit" />
           </div>
-        </Form>
+        </form>
       </div>
     </div>
   )

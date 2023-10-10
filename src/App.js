@@ -56,14 +56,10 @@ function App({ socket }) {
   const location = useLocation();
   
   useEffect(() => {
-    if (data === undefined) {
-      navigate('/login', { replace: true });
+    if (data !== undefined && location.pathname !== '/') {
+      navigate('/chat', { replace: true });
     } else {
-      if (location.pathname !== '/') {
-        navigate(location.pathname, { replace: true });
-      } else {
-        navigate('/chat', { replace: true });
-      }
+      navigate(location.pathname);
     }
   }, []);
   return (

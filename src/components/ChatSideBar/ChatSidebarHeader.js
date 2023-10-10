@@ -6,11 +6,11 @@ export default function ChatSideBarHeader({ user }) {
     if (!user) return null
     return (
       <div className="chat-sidebar__header">
-        <Link to="/profile">
+        {/* <Link to="/profile"> */}
           <span className="icon">
             <BiChevronLeftSquare />
           </span>
-        </Link>
+        {/* </Link> */}
         <div className="chat-sidebar__detail">
           <div className="chat-sidebar__detail-img">
             {user?.avatar ? (<img
@@ -25,11 +25,11 @@ export default function ChatSideBarHeader({ user }) {
           <span className="chat-sidebar__detail__name">{user.username}</span>
           <span className="text-sm text-gray">My account</span>
         </div>
-        <Link to="/friends">
+        {/* <Link to="/friends"> */}
           <span className="icon">
             <BiCog />
           </span>
-        </Link>
+        {/* </Link> */}
       </div>
     );
   };
