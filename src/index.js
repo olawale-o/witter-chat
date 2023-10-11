@@ -10,9 +10,6 @@ import App from './App';
 import Chat from './pages/Chat';
 import Home, { loader as homeLoader } from './pages/Home';
 import Register from './pages/Home/Register';
-import Profile, { action as profileAction, loader as profileLoader } from './pages/Profile/Profile';
-import Map from './pages/Map';
-import NewPassword from './pages/Profile/NewPassword';
 import Friends from './pages/Friends';
 import FriendRequest from './pages/Friends/Request';
 import FriendSuggestion, { loader as followersLoader } from './pages/Friends/Suggestion';
@@ -22,6 +19,7 @@ import FollowersPage from './pages/Friends/Followers';
 import Following from './pages/Friends/Following';
 import {  QueryClient, QueryClientProvider, } from '@tanstack/react-query';
 import './index.css';
+import { Index } from './pages/Index';
 
 const queryClient = new QueryClient()
 
@@ -31,6 +29,7 @@ const router = createBrowserRouter([
     element: <App socket={socket} />,
     id: "root",
     children: [
+      { index: true, element: <Index /> },
       {
         element: <PublicRoute />,
         children: [
@@ -61,14 +60,6 @@ const router = createBrowserRouter([
           },
         ]
       },
-      { 
-        path: 'profile',
-        children: [
-          { index: true, element: <Profile />, action: profileAction, loader: profileLoader },
-          { path: 'password', element: <NewPassword />, action: profileAction, loader: profileLoader },
-        ],
-      },
-      { path: 'map', element: <Map /> },
     ]
   },
 ]);

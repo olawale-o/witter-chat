@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect} from 'react';
-import { Outlet, useLoaderData, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, useLoaderData, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import UserProvider from './provider/userProvider';
 
 import './App.css';
@@ -47,16 +47,7 @@ const Page = ({ numbers }) => {
 }
 
 function App({ socket }) {
-  const sessionId = localStorage.getItem("sessionId");
-  const navigate = useNavigate();
-  
-  useEffect(() => {
-    if (sessionId) {
-      navigate('/chat', { replace: true });
-    } else {
-      navigate('/login', { replace: true });
-    }
-  }, [sessionId, navigate]);
+
   return (
     <UserProvider>
       <div className="App">
