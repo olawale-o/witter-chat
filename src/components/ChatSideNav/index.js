@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import { FaUserFriends, FaUsers } from 'react-icons/fa';
 import { AiOutlineLogout } from 'react-icons/ai';
@@ -14,7 +14,7 @@ export default function ChatSideNav() {
     <nav className="nav">
       <ul className="nav-list">
         <li className="nav-list__item">
-          <Link to={"/"}>
+          <Link to="/">
             <span className="icon icon--white">
               <HiOutlineUserGroup fill='white' />
             </span>

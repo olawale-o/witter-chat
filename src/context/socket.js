@@ -33,9 +33,9 @@ export default function SocketProvider({ children, socket }) {
     }
   };
   const onDisconnect = async () => {
-    await socket.disconnect();
     localStorage.removeItem('sessionId')
     localStorage.removeItem('user');
+    await socket.disconnect();
     navigate('/login', { replace: true });
   }
 

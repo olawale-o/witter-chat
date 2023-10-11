@@ -46,22 +46,17 @@ const Page = ({ numbers }) => {
   </>)
 }
 
-export async function loader() {
-  return JSON.parse(localStorage.getItem("user"));
-}
-
 function App({ socket }) {
+  const sessionId = localStorage.getItem("sessionId");
   const navigate = useNavigate();
-  const data = useLoaderData();
-  const location = useLocation();
   
   useEffect(() => {
-    if (data !== undefined && location.pathname !== '/') {
+    if (sessionId) {
       navigate('/chat', { replace: true });
     } else {
-      navigate(location.pathname);
+      navigate('/login', { replace: true });
     }
-  }, []);
+  }, [sessionId, navigate]);
   return (
     <UserProvider>
       <div className="App">

@@ -3,7 +3,9 @@ import { BiCog, BiChevronLeftSquare } from "react-icons/bi";
 import './ChatSidebarHeader.css';
 
 export default function ChatSideBarHeader({ user }) {
-    if (!user) return null
+    if (!user) {
+      return null;
+    }
     return (
       <div className="chat-sidebar__header">
         {/* <Link to="/profile"> */}
@@ -19,10 +21,10 @@ export default function ChatSideBarHeader({ user }) {
               className="chat-sidebar__detail__img"
               />
             ): (
-              <span className="placeholder">{user.username[0]}</span>
+              <span className="placeholder">{user?.username[0]}</span>
             )}
           </div>
-          <span className="chat-sidebar__detail__name">{user.username}</span>
+          <span className="chat-sidebar__detail__name">{user?.username}</span>
           <span className="text-sm text-gray">My account</span>
         </div>
         {/* <Link to="/friends"> */}
