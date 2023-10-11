@@ -8,7 +8,7 @@ import {
 import { registerService } from '../../../services/authService';
 import { useUserDispatch } from '../../../hooks/useUser';
 
-import '../style.module.css';
+import '../style.css';
 import { useForm } from '../../../hooks/useForm';
 
 export async function loader() {
