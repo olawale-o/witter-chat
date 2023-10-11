@@ -1,31 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   useNavigate,
   useLoaderData,
   useOutletContext,
   Link,
 } from 'react-router-dom';
-import { loginService } from '../../services/authService';
-import { useUserDispatch } from '../../hooks/useUser';
+import { loginService } from '../../../services/authService';
+import { useUserDispatch } from '../../../hooks/useUser';
 
-import './style.css';
+import '../style.module.css';
+import { useForm } from '../../../hooks/useForm';
 
 export async function loader() {
   return JSON.parse(localStorage.getItem("user"));
 }
 
-const Home = () => {
+const Login = () => {
   const [startSocket] = useOutletContext();
   const { setUser } = useUserDispatch();
   const data = useLoaderData();
   const navigate = useNavigate();
-  const [formValues, setFormValues] = useState({
-    username: '',
-    password: '',
-  });
+  const { isSubmitting, register, handleSubmit } = useForm({ defaultValues: { username: '', password: '' } });
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (formValues) => {
     const data = await loginService({
       username: formValues.username,
       password: formValues.password,
@@ -43,49 +40,56 @@ const Home = () => {
     }
   }, []);
 
-  const onFormChange = (e) => {
-    setFormValues({ ...formValues, [e.target.name]: e.target.value });
-  };
-
   return (
-    <div className="home">
-      <div className="login-card">
+    <div className="container flex">
+      <div className="form-card center">
         <div className="card-header">
           <div className="log">Login</div>
         </div>
-        <form onSubmit={onSubmit}>
-          <div className="form-group">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="form-field">
             <label htmlFor="username">Username:</label>
             <input
               required=""
               name="username"
               id="username"
               type="text"
-              value={formValues.username}
-              onChange={onFormChange}
-              className="auth-input"
+              className="input"
+              placeholder="Email or username"
+              {...register("username")}
             />
           </div>
-          <div className="form-group">
+          <div className="form-field">
             <label htmlFor="password">Password:</label>
             <input
               required=""
               name="password"
               id="password"
               type="password"
-              value={formValues.password}
-              onChange={onFormChange}
-              className="auth-input"
+              className="input"
+              placeholder="******"
+              {...register("password")}
             />
           </div>
-          <div className="form-group">
-            <input value="Login" type="submit" />
+          <div className="form-field">
+            <button
+              type="submit"
+              className="submit"
+              aria-disabled={isSubmitting}
+            >
+              Log in
+            </button>
           </div>
         </form>
-        <span>Don't have an account? {'  '} <Link to="/register">Register</Link></span>
+        <div className="form-card--footer">
+          <span className="form-card__text">
+            Don't have an account? {' '}
+          </span>
+          <Link className="form-card__text-link" to="/register">Create</Link>
+        </div>
       </div>
     </div>
   )
 }
 
-export default Home;
+export default Login;

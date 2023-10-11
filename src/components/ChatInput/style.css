@@ -20,10 +20,10 @@
   
 .chat-input {
   outline: none;
-  border: none;
-  border-bottom: 1px solid var(--sea-salt);
+  border: 1px solid var(--sea-green);
   flex-grow: 1;
   padding-block: 1em;
   word-spacing: 3px;
   letter-spacing: 2px;
+  border-radius: 5px;
 }

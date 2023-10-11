@@ -102,10 +102,6 @@ button {
 
 .input {
   width: 100%;
-  padding: 1em;
-  outline: none;
-  border: none;
-  background: none;
 }
 
 .input--bg-grey {

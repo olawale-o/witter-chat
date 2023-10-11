@@ -82,3 +82,16 @@
   border-radius: 50%;
   background: green;
 }
+
+.input {
+  height: 40px;
+  background: #fff;
+  padding-inline: 20px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  transition: 500ms;
+}
+
+.input:focus {
+  outline-color: var(--sea-green);
+}
