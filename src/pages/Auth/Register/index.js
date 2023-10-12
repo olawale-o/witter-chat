@@ -10,6 +10,7 @@ import { useUserDispatch } from '../../../hooks/useUser';
 
 import '../style.css';
 import { useForm } from '../../../hooks/useForm';
+import { SignUpSchema } from '../validations';
 
 export async function loader() {
   return JSON.parse(localStorage.getItem("user"));
@@ -23,14 +24,16 @@ const Register = () => {
   const {
     isSubmitting,
     register,
-    handleSubmit
+    handleSubmit,
+    errors,
   } = useForm({
     defaultValues: {
       username: '',
       password: '',
       email: '',
       fullname: '',
-    }
+    },
+    schema: SignUpSchema
   });
 
   const onSubmit = async (formValues) => {
@@ -62,24 +65,24 @@ const Register = () => {
             <div className="form-field">
               <label htmlFor="username">Username:</label>
               <input
-                required=""
                 name="username"
                 id="username"
                 type="text"
                 className="input"
                 {...register("username")}
               />
+              {errors.username && <span className="error-text">{errors.username["message"]}</span>}
             </div>
             <div className="form-field">
               <label htmlFor="fullname">Full name:</label>
               <input
-                required=""
                 name="fullname"
                 id="fullName"
                 type="text"
                 className="input"
                 {...register("fullname")}
               />
+              {errors.fullname && <span className="error-text">{errors.fullname["message"]}</span>}
             </div>
           </div>
           <div className="form-field">
@@ -92,6 +95,7 @@ const Register = () => {
               className="input"
               {...register("email")}
             />
+            {errors.email && <span className="error-text">{errors.email["message"]}</span>}
           </div>
           <div className="form-field">
             <label htmlFor="password">Password:</label>
@@ -103,6 +107,7 @@ const Register = () => {
               className="input"
               {...register("password")}
             />
+            {errors.password && <span className="error-text">{errors.password["message"]}</span>}
           </div>
           <div className="form-field">
             <button className="submit" type="submit" aria-disabled={isSubmitting}>Create</button>

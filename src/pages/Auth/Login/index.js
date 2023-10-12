@@ -5,11 +5,13 @@ import {
   useOutletContext,
   Link,
 } from 'react-router-dom';
+import { Controller } from 'react-hook-form';
 import { loginService } from '../../../services/authService';
 import { useUserDispatch } from '../../../hooks/useUser';
 
 import '../style.css';
 import { useForm } from '../../../hooks/useForm';
+import { LoginSchema } from '../validations';
 
 export async function loader() {
   return JSON.parse(localStorage.getItem("user"));
@@ -20,7 +22,17 @@ const Login = () => {
   const { setUser } = useUserDispatch();
   const data = useLoaderData();
   const navigate = useNavigate();
-  const { isSubmitting, register, handleSubmit } = useForm({ defaultValues: { username: '', password: '' } });
+  const {
+    isSubmitting,
+    register,
+    handleSubmit,
+    control,
+    errors,
+    trigger
+  } = useForm({
+    defaultValues: { username: '', password: '' },
+    schema: LoginSchema
+  });
 
   const onSubmit = async (formValues) => {
     const data = await loginService({
@@ -49,7 +61,7 @@ const Login = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-field">
             <label htmlFor="username">Username:</label>
-            <input
+            {/* <input
               required=""
               name="username"
               id="username"
@@ -57,12 +69,30 @@ const Login = () => {
               className="input"
               placeholder="Email or username"
               {...register("username")}
+            /> */}
+            <Controller
+              control={control}
+              name="username"
+              rules={{
+                required: true
+              }}
+              render={({ field: { onChange, value, } }) => (
+                <input
+                  id="username"
+                  type="text"
+                  className="input"
+                  placeholder="Email or username"
+                  onChange={onChange}
+                  onBlur={() => trigger("username")}
+                  value={value}
+                />
+              )}
             />
+            {errors.username && <span className="error-text">{errors.username["message"]}</span>}
           </div>
           <div className="form-field">
             <label htmlFor="password">Password:</label>
             <input
-              required=""
               name="password"
               id="password"
               type="password"
@@ -70,6 +100,7 @@ const Login = () => {
               placeholder="******"
               {...register("password")}
             />
+            {errors.password && <span className="error-text">{errors.password["message"]}</span>}
           </div>
           <div className="form-field">
             <button

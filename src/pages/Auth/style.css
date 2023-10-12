@@ -95,3 +95,8 @@ label {
   font-size: 12px;
   color: var(--sea-green)
 }
+
+.error-text {
+  color: red;
+  font-size: 12px;
+}

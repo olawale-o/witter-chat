@@ -1,15 +1,18 @@
 import { useForm as useHookForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-
-const useForm = ({ defaultValues }) => {
+const useForm = ({ defaultValues, schema }) => {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting }
+    control,
+    trigger,
+    formState: { isSubmitting, errors }
   } = useHookForm({
-    defaultValues
+    defaultValues,
+    resolver: zodResolver(schema)
   });
-  return { register, handleSubmit, isSubmitting };
+  return { register, handleSubmit, control, isSubmitting, errors, trigger };
 };
 
 export { useForm };
