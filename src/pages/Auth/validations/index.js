@@ -2,7 +2,7 @@
 import { z } from 'zod';
 
 const LoginSchema = z.object({
-  username: z.union([z.string(), z.string().email()]),
+  username: z.union([z.string().min(2), z.string().email()]),
   password: z
     .string()
     .min(6,)
