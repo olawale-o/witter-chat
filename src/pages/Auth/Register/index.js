@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   useNavigate,
   Link,
@@ -21,6 +21,7 @@ const Register = () => {
   const { setUser } = useUserDispatch();
   const data = useLoaderData();
   const navigate = useNavigate();
+  const [error, setError] = useState();
   const {
     isSubmitting,
     register,
@@ -37,17 +38,21 @@ const Register = () => {
   });
 
   const onSubmit = async (formValues) => {
-    const data = await registerService({
-      username: formValues.username,
-      password: formValues.password,
-      email: formValues.email,
-      name: formValues.fullname,
-    });
-    if (data && data?.user) {
-      localStorage.setItem('user', JSON.stringify(data));
-      startSocket(data.user);
-      setUser((prevState) => ({ ...prevState, ...data?.user }));
-      navigate('/chat');
+    try {
+      const data = await registerService({
+        username: formValues.username,
+        password: formValues.password,
+        email: formValues.email,
+        name: formValues.fullname,
+      });
+      if (data && data?.user) {
+        localStorage.setItem('user', JSON.stringify(data));
+        startSocket(data.user);
+        setUser((prevState) => ({ ...prevState, ...data?.user }));
+        navigate('/chat');
+      }
+    } catch(e) {
+      setError(e.message);
     }
   };
 
@@ -60,6 +65,7 @@ const Register = () => {
   return (
     <div className="container flex">
       <div className="form-card center">
+        <span className="error-text">{error}</span>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-group space-between">
             <div className="form-field">
@@ -88,7 +94,6 @@ const Register = () => {
           <div className="form-field">
             <label htmlFor="email">Email:</label>
             <input
-              required=""
               name="email"
               id="email"
               type="email"
@@ -100,7 +105,6 @@ const Register = () => {
           <div className="form-field">
             <label htmlFor="password">Password:</label>
             <input
-              required=""
               name="password"
               id="password"
               type="password"
@@ -110,7 +114,11 @@ const Register = () => {
             {errors.password && <span className="error-text">{errors.password["message"]}</span>}
           </div>
           <div className="form-field">
-            <button className="submit" type="submit" aria-disabled={isSubmitting}>Create</button>
+            <button className="submit" type="submit" aria-disabled={isSubmitting}>
+              {
+                isSubmitting ? (<svg className="svg" viewBox="25 25 50 50"><circle r="20" cy="50" cx="50"></circle></svg>) : 'Create'
+              }
+            </button>
           </div>
         </form>
         <div className="form-card--footer">

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   useNavigate,
   useLoaderData,
@@ -22,6 +22,7 @@ const Login = () => {
   const { setUser } = useUserDispatch();
   const data = useLoaderData();
   const navigate = useNavigate();
+  const [error, setError] = useState();
   const {
     isSubmitting,
     register,
@@ -35,15 +36,19 @@ const Login = () => {
   });
 
   const onSubmit = async (formValues) => {
-    const data = await loginService({
-      username: formValues.username,
-      password: formValues.password,
-    });
-    if (data && data?.user) {
-      localStorage.setItem('user', JSON.stringify(data));
-      startSocket(data.user);
-      setUser((prevState) => ({ ...prevState, ...data?.user }));
-      navigate('/chat');
+    try {
+      const data = await loginService({
+        username: formValues.username,
+        password: formValues.password,
+      });
+      if (data && data?.user) {
+        localStorage.setItem('user', JSON.stringify(data));
+        startSocket(data.user);
+        setUser((prevState) => ({ ...prevState, ...data?.user }));
+        navigate('/chat');
+      }
+    } catch(e) {
+      setError(e.message);
     }
   };
   useEffect(() => {    
@@ -58,18 +63,10 @@ const Login = () => {
         <div className="card-header">
           <div className="log">Login</div>
         </div>
+        <span className="error-text">{error}</span>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-field">
             <label htmlFor="username">Username:</label>
-            {/* <input
-              required=""
-              name="username"
-              id="username"
-              type="text"
-              className="input"
-              placeholder="Email or username"
-              {...register("username")}
-            /> */}
             <Controller
               control={control}
               name="username"
@@ -108,7 +105,9 @@ const Login = () => {
               className="submit"
               aria-disabled={isSubmitting}
             >
-              Log in
+              {
+                isSubmitting ? (<svg className="svg" viewBox="25 25 50 50"><circle r="20" cy="50" cx="50"></circle></svg>) : 'Log in'
+              }
             </button>
           </div>
         </form>
