@@ -59,63 +59,65 @@ const Login = () => {
 
   return (
     <div className="container flex">
-      <div className="form-card center">
-        <div className="card-header">
-          <div className="log">Login</div>
-        </div>
-        <span className="error-text">{error}</span>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-field">
-            <label htmlFor="username">Username:</label>
-            <Controller
-              control={control}
-              name="username"
-              rules={{
-                required: true
-              }}
-              render={({ field: { onChange, value, } }) => (
-                <input
-                  id="username"
-                  type="text"
-                  className="input"
-                  placeholder="Email or username"
-                  onChange={onChange}
-                  onBlur={() => trigger("username")}
-                  value={value}
-                />
-              )}
-            />
-            {errors.username && <span className="error-text">{errors.username["message"]}</span>}
+      <div className="content flex center">
+        <div className="form-card center">
+          <div className="card-header">
+            <div className="log">Login</div>
           </div>
-          <div className="form-field">
-            <label htmlFor="password">Password:</label>
-            <input
-              name="password"
-              id="password"
-              type="password"
-              className="input"
-              placeholder="******"
-              {...register("password")}
-            />
-            {errors.password && <span className="error-text">{errors.password["message"]}</span>}
+          <span className="error-text">{error}</span>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-field">
+              <label htmlFor="username">Username:</label>
+              <Controller
+                control={control}
+                name="username"
+                rules={{
+                  required: true
+                }}
+                render={({ field: { onChange, value, } }) => (
+                  <input
+                    id="username"
+                    type="text"
+                    className="input"
+                    placeholder="Email or username"
+                    onChange={onChange}
+                    onBlur={() => trigger("username")}
+                    value={value}
+                  />
+                )}
+              />
+              {errors.username && <span className="error-text">{errors.username["message"]}</span>}
+            </div>
+            <div className="form-field">
+              <label htmlFor="password">Password:</label>
+              <input
+                name="password"
+                id="password"
+                type="password"
+                className="input"
+                placeholder="******"
+                {...register("password")}
+              />
+              {errors.password && <span className="error-text">{errors.password["message"]}</span>}
+            </div>
+            <div className="form-field">
+              <button
+                type="submit"
+                className="submit"
+                aria-disabled={isSubmitting}
+              >
+                {
+                  isSubmitting ? (<svg className="svg" viewBox="25 25 50 50"><circle r="20" cy="50" cx="50"></circle></svg>) : 'Log in'
+                }
+              </button>
+            </div>
+          </form>
+          <div className="form-card--footer">
+            <span className="form-card__text">
+              Don't have an account? {' '}
+            </span>
+            <Link className="form-card__text-link" to="/register">Create</Link>
           </div>
-          <div className="form-field">
-            <button
-              type="submit"
-              className="submit"
-              aria-disabled={isSubmitting}
-            >
-              {
-                isSubmitting ? (<svg className="svg" viewBox="25 25 50 50"><circle r="20" cy="50" cx="50"></circle></svg>) : 'Log in'
-              }
-            </button>
-          </div>
-        </form>
-        <div className="form-card--footer">
-          <span className="form-card__text">
-            Don't have an account? {' '}
-          </span>
-          <Link className="form-card__text-link" to="/register">Create</Link>
         </div>
       </div>
     </div>

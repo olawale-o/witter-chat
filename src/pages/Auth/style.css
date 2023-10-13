@@ -1,6 +1,10 @@
 .container {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   justify-content: center;
+}
+
+.content {
+  min-height: 640px;
 }
 
 .flex {

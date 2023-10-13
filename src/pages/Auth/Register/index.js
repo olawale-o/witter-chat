@@ -64,68 +64,70 @@ const Register = () => {
 
   return (
     <div className="container flex">
-      <div className="form-card center">
-        <span className="error-text">{error}</span>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="form-group space-between">
-            <div className="form-field">
-              <label htmlFor="username">Username:</label>
-              <input
-                name="username"
-                id="username"
-                type="text"
-                className="input"
-                {...register("username")}
-              />
-              {errors.username && <span className="error-text">{errors.username["message"]}</span>}
+      <div className="content flex center">
+        <div className="form-card center">
+          <span className="error-text">{error}</span>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-group space-between">
+              <div className="form-field">
+                <label htmlFor="username">Username:</label>
+                <input
+                  name="username"
+                  id="username"
+                  type="text"
+                  className="input"
+                  {...register("username")}
+                />
+                {errors.username && <span className="error-text">{errors.username["message"]}</span>}
+              </div>
+              <div className="form-field">
+                <label htmlFor="fullname">Full name:</label>
+                <input
+                  name="fullname"
+                  id="fullName"
+                  type="text"
+                  className="input"
+                  {...register("fullname")}
+                />
+                {errors.fullname && <span className="error-text">{errors.fullname["message"]}</span>}
+              </div>
             </div>
             <div className="form-field">
-              <label htmlFor="fullname">Full name:</label>
+              <label htmlFor="email">Email:</label>
               <input
-                name="fullname"
-                id="fullName"
-                type="text"
+                name="email"
+                id="email"
+                type="email"
                 className="input"
-                {...register("fullname")}
+                {...register("email")}
               />
-              {errors.fullname && <span className="error-text">{errors.fullname["message"]}</span>}
+              {errors.email && <span className="error-text">{errors.email["message"]}</span>}
             </div>
+            <div className="form-field">
+              <label htmlFor="password">Password:</label>
+              <input
+                name="password"
+                id="password"
+                type="password"
+                className="input"
+                {...register("password")}
+              />
+              {errors.password && <span className="error-text">{errors.password["message"]}</span>}
+            </div>
+            <div className="form-field">
+              <button className="submit" type="submit" aria-disabled={isSubmitting}>
+                {
+                  isSubmitting ? (<svg className="svg" viewBox="25 25 50 50"><circle r="20" cy="50" cx="50"></circle></svg>) : 'Create'
+                }
+              </button>
+            </div>
+          </form>
+          <div className="form-card--footer">
+            <span className="form-card__text">
+              Already have an account? {'  '}
+            </span> 
+              <Link className="form-card__text-link"  to="/login">Log in</Link>
           </div>
-          <div className="form-field">
-            <label htmlFor="email">Email:</label>
-            <input
-              name="email"
-              id="email"
-              type="email"
-              className="input"
-              {...register("email")}
-            />
-            {errors.email && <span className="error-text">{errors.email["message"]}</span>}
-          </div>
-          <div className="form-field">
-            <label htmlFor="password">Password:</label>
-            <input
-              name="password"
-              id="password"
-              type="password"
-              className="input"
-              {...register("password")}
-            />
-            {errors.password && <span className="error-text">{errors.password["message"]}</span>}
-          </div>
-          <div className="form-field">
-            <button className="submit" type="submit" aria-disabled={isSubmitting}>
-              {
-                isSubmitting ? (<svg className="svg" viewBox="25 25 50 50"><circle r="20" cy="50" cx="50"></circle></svg>) : 'Create'
-              }
-            </button>
-          </div>
-        </form>
-        <div className="form-card--footer">
-          <span className="form-card__text">
-            Already have an account? {'  '}
-           </span> 
-            <Link className="form-card__text-link"  to="/login">Log in</Link>
         </div>
       </div>
     </div>
