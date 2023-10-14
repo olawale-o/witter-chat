@@ -1,6 +1,10 @@
 .online-contact {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: stretch;
+  flex-grow: 1;
   padding-block: 1.6em;
-  margin-bottom: 1.8em;
 }
 
 .online-contact__header {
@@ -11,8 +15,8 @@
 }
 
 .online-contact__count {
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   border-radius: 5px;
   background: #eaeaea;
   color: var(--black-color);

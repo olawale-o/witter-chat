@@ -3,14 +3,15 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1.8em;
   font-size: 1.8em;
+  padding-bottom: 2em;
 }
 
 .chat-sidebar__detail {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 1em;
 }
 
 .chat-sidebar__detail-img {
@@ -18,9 +19,9 @@
   height: 4em;
   border-radius: 50%;
   border: 1px solid var(--black-color);
-  /* background-color: var(--black-color); */
   display: grid;
   place-items: center;
+  margin-bottom: 0.8em;
 }
 
 .chat-sidebar__detail__img {

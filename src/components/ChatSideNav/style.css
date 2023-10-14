@@ -2,10 +2,11 @@
   background: var(--sea-green);
   padding-block: 2.5em;
   padding-inline: 1.8em;
-  position: fixed;
+  position: sticky;
   top: 0;
-  bottom: 0;
-  left: 0;
+  flex-grow: 1;
+  flex-shrink: 0;
+  height: 100vh;
 }
   
 .nav-list {

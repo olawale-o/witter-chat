@@ -54,10 +54,10 @@ const ChatSideBar = () => {
 
   return (
     <div className="chatsidebar">
-      <ChatSideBarHeader user={user} />
-      <div className="divider" />
-      <OnlineContacts users={onlineUsers} />
-      <div className="divider" />
+      <div className="top">
+        <ChatSideBarHeader user={user} />
+        <OnlineContacts users={onlineUsers} />
+      </div>
       <Contacts
         setSelectedUser={onUserSelected}
         user={user}

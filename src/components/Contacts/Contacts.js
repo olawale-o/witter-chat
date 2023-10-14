@@ -41,8 +41,10 @@ const Contact = ({
 const Contacts = ({ setSelectedUser, selectedCurrentUser, onlineUsers }) => {
   return (
     <div className="contacts">
-      <span className="text-lg text-black">Chats</span>
-      <input type="text" placeholder="Search for chats" className="input" />
+      <div className="contacts-top">
+        <span className="text-lg text-black">Chats</span>
+        <input type="text" placeholder="Search for chats" className="input" />
+      </div>
       <ul className="contact-list">
         {Object.entries(onlineUsers).map(([k, user], i) => (
           <Contact
