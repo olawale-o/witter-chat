@@ -1,5 +1,5 @@
 import './style.css';
-
+import Logo from "../../assets/logo.png";
 
 const Message = ({ message, isFromMe = true}) => {
   return (
@@ -8,7 +8,11 @@ const Message = ({ message, isFromMe = true}) => {
       <div className="message-area">
         <div className="chat-message-content">
           <span className="chat-profile-name">You</span>
-          <p className="chat-message text-sm">{message.message}</p>
+          {
+            message.type === "text" ? (<p className="chat-message text-sm">{message.message}</p>)
+            : message.type === "image" && message.message === undefined ? <img src={Logo}  alt="preview" />
+            : <img src={message.message}  alt="preview" />
+          }
         </div>
         <div className="chat-message-timestamp">
           <span className="timestamp text-sm">16:45</span>

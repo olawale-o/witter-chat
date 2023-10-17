@@ -1,6 +1,7 @@
 .chat-message-container {
   max-width: 40%;
   margin-bottom: 1.4em;
+  height: auto;
 }
   
 .chat-sender {
@@ -13,6 +14,7 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 0.5em;
+  height: auto;
 }
   
 .chat-message-content {
@@ -20,6 +22,12 @@
   border-radius: 8px;
   background: var(--white-color);
   padding: 8px;
+  height: auto;
+}
+
+.chat-message-content img {
+  width: 100%;
+  height: 200px;
 }
   
 .chat-sender .message-area .chat-message-content {
