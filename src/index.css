@@ -165,3 +165,7 @@ button {
   width: 20%;
   padding: 18px;
 }
+
+.bg-green {
+  background: var(--sea-green);
+}
