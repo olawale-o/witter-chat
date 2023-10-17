@@ -1,8 +1,8 @@
-import React from 'react';
+import { useEffect, useState, useRef } from 'react';
+import './ChatArea.css';
 
 import ChatBody from '../ChatBody';
-import ChatInput from '../ChatInput'
-import './ChatArea.css';
+import ChatInput from '../ChatInput';
 
 const ChatArea = ({
   socket,
@@ -11,14 +11,14 @@ const ChatArea = ({
   selectedUser,
 }) => {
   const userData = JSON.parse(localStorage.getItem('user'))?.user;
-  const lastMessageRef = React.useRef(null);
-  const [typingStatus, setTypingStatus] = React.useState('');
+  const lastMessageRef = useRef(null);
+  const [typingStatus, setTypingStatus] = useState('');
 
-  React.useEffect(() => {
+  useEffect(() => {
     lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     socket.on('typingResponse' , (data) => setTypingStatus(data));
     socket.on('doneTypingResponse' , (data) => setTypingStatus(data));
   }, [socket]);
