@@ -13,7 +13,8 @@
 
 - Authenticated users can only chat with each other
 - You can follow and unfollow a user
-- The online status of users followers or followings is indicated
+- The online status of user's followers or followings is indicated
+- Allow users to share image in chat
 
 # Getting started
 ## To get a local copy of this repository kindly follow the steps below.
