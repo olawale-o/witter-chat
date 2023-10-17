@@ -38,7 +38,7 @@ const useSocket  = (socket) => {
           id: message.from,
           from: message.from,
           to: message.to,
-          type: 'text'
+          type: message.type
         }
         setMessages([...messages, newMessage]);
         // handleNewMessageStatus(message.from, false)
