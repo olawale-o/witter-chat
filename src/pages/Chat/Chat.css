@@ -32,25 +32,6 @@
   align-items: flex-end;
 }
 
-.btn {
-  outline: none;
-  background: var(--sea-salt);
-  border: none;
-  height: 100%;
-  cursor: pointer;
-}
-
-.btn__square {
-  width: 30px;
-  height: 30px;
-  border-radius: 5px;
-}
-
-.btn--green {
-  color: var(--white-color);
-  background: var(--sea-green);
-}
-
 .chat-area__nav--right {
   padding-inline: 2.5em;
   flex-basis: 30em;

@@ -1,10 +1,10 @@
 import { useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 import { BiPaperclip, BiSend } from 'react-icons/bi';
 
 import './style.css';
-import { ImageModal } from '../ChatArea/ImageModal';
-import { createPortal } from 'react-dom';
+import { Modal } from '../Modal';
 
 const CLOUD_NAME = process.env.REACT_CLOUDINARY_CLOUD_NAME;
 const API_KEY = process.env.REACT_CLOUDINARY_API_KEY;
@@ -96,7 +96,12 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
   return (
     <div className="chat-input-container">
       {showModal && createPortal(
-        <ImageModal src={preview} action={uploadFile} />, document.getElementById("root"))
+        (<Modal>
+          <div className="image-placeholder">
+          <img className="modal-image" src={preview} alt="preview" />
+        </div>
+        <button type="button" className="btn modal-btn w--100 bg-green" onClick={uploadFile}>Send</button>
+        </Modal>), document.getElementById("root"))
       }
       <div className="chat-input-content">
         <div className="user-icon" />
