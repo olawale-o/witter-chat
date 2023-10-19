@@ -27,7 +27,7 @@ const Message = ({ message, isFromMe = true}) => {
           <Item item={message} />
         </div>
         <div className="chat-message-timestamp">
-          <span className="timestamp text-sm">16:45</span>
+          <span className="text-sm timestamp">16:45</span>
           <div className="online-state online small-circle" />
         </div>
       </div>
