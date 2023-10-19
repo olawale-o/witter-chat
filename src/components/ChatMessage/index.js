@@ -10,8 +10,18 @@ const Message = ({ message, isFromMe = true}) => {
           <span className="chat-profile-name">You</span>
           {
             message.type === "text" ? (<p className="chat-message text-sm">{message.message}</p>)
-            : message.type === "image" && message.message === undefined ? <img src={Logo}  alt="preview" />
-            : <img src={message.message}  alt="preview" />
+            : message.type === "image" && message.message === undefined ? (
+              <div className="image-chat">
+                <img src={Logo}  alt="preview" />
+                {message.caption && <p className="text-md">{message.caption}</p>}
+              </div>
+            )
+            : (
+              <div className="image-chat">
+                <img src={message.message}  alt="preview" />
+                {message.caption && <p className="text-md">{message.caption}</p>}
+              </div>
+            )
           }
         </div>
         <div className="chat-message-timestamp">

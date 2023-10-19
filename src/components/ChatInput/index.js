@@ -2,17 +2,19 @@ import { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import { BiPaperclip, BiSend } from 'react-icons/bi';
+import { AiOutlineClose } from 'react-icons/ai';
 
 import './style.css';
 import { Modal } from '../Modal';
 
-const CLOUD_NAME = process.env.REACT_CLOUDINARY_CLOUD_NAME;
-const API_KEY = process.env.REACT_CLOUDINARY_API_KEY;
+const CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
+const API_KEY = process.env.REACT_APP_CLOUDINARY_API_KEY;
 
 const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
   const fileRef = useRef();
   let timeout  = setTimeout(function(){}, 0);
   const [message, setMessage] = useState('');
+  const [caption, setCaption] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [preview, setPreview] = useState();
 
@@ -42,7 +44,7 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
     formData.append("file", file);
     formData.append("api_key", API_KEY);
     formData.append("folder", "chats");
-    formData.append("upload_preset", process.env.REACT_CLOUDINARY_UPLOAD_PRESET);
+    formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
 
     fetch(url, {
       method: "POST",
@@ -57,6 +59,7 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
         userId: user._id,
         username: user.username,
         message: response.secure_url,
+        caption: caption ?? null,
         id: user._id,
         to: contact.userId,
         from: user._id,
@@ -65,7 +68,8 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
       socket.emit('private message', {
         message: response.secure_url,
         to: contact.userId,
-        type: 'image'
+        type: 'image',
+        caption: caption ?? null,
       });
       setMessages([...messages, newMessage])
       setMessage('');
@@ -93,14 +97,31 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
     setMessages([...messages, newMessage])
     setMessage('');
   }
+
+  const onClose = () => {
+    setShowModal(false);
+    setPreview(null);
+  };
   return (
     <div className="chat-input-container">
       {showModal && createPortal(
         (<Modal>
-          <div className="image-placeholder">
-          <img className="modal-image" src={preview} alt="preview" />
-        </div>
-        <button type="button" className="btn modal-btn w--100 bg-green" onClick={uploadFile}>Send</button>
+          <div className="flex flex-col space-between image-modal">
+            <div className="close">
+              <button
+                onClick={onClose}
+              >
+                <AiOutlineClose />
+              </button>
+            </div>
+            <div className="image-placeholder">
+              <img className="modal-image" src={preview} alt="preview" />
+            </div>
+            <div className="flex space-between">
+              <input type="text" name="caption" onChange={(e) => setCaption(e.target.value)} placeholder="Caption" />
+              <button type="button" className="btn btn__default btn--green" onClick={uploadFile}>Send</button>
+            </div>
+          </div>
         </Modal>), document.getElementById("root"))
       }
       <div className="chat-input-content">

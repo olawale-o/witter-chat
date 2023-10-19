@@ -19,13 +19,11 @@
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   padding: 2em;
 }
   
 .image-placeholder {
-  flex-basis: 80%;
+  height: 80%;
 }
   
 .modal-image {
@@ -35,5 +33,5 @@
 }
   
 .modal-btn {
-  flex-basis: 10%;
+  height: 10%;
 }

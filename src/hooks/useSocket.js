@@ -38,7 +38,8 @@ const useSocket  = (socket) => {
           id: message.from,
           from: message.from,
           to: message.to,
-          type: message.type
+          type: message.type,
+          caption: message.caption
         }
         setMessages([...messages, newMessage]);
         // handleNewMessageStatus(message.from, false)
@@ -60,7 +61,7 @@ const useSocket  = (socket) => {
 
   const userMessages = useCallback(({ messages, username, userId }) => {
     const chatMessages = [];
-    messages.forEach(({ message, from, to, type }) => chatMessages.push({ to, from, message, username, type, userId }))
+    messages.forEach(({ message, from, to, type, caption }) => chatMessages.push({ to, from, message, username, type, userId, caption }))
     setMessages([...chatMessages])
   }, []);
 
