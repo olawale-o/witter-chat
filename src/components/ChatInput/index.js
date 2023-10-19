@@ -125,7 +125,9 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
         </Modal>), document.getElementById("root"))
       }
       <div className="chat-input-content">
-        <div className="user-icon" />
+        <div className="user-icon">
+          <img src={contact.avatar} alt="avatar" />
+        </div>
         <input
           type="text"
           className="chat-input"
