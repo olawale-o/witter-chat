@@ -1,11 +1,12 @@
+import './style.css';
 import { useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 import { BiPaperclip, BiSend } from 'react-icons/bi';
 import { AiOutlineClose } from 'react-icons/ai';
 
-import './style.css';
 import { Modal } from '../Modal';
+import { uploadService } from '../../services/uploadService';
 
 const CLOUD_NAME = process.env.REACT_APP_CLOUDINARY_CLOUD_NAME;
 const API_KEY = process.env.REACT_APP_CLOUDINARY_API_KEY;
@@ -16,6 +17,7 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
   const [message, setMessage] = useState('');
   const [caption, setCaption] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState();
 
   const handleTyping = () => {
@@ -31,12 +33,12 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
   };
 
   const onChange = (e) => {
-    setPreview(URL.createObjectURL(fileRef.current.files[0]));
+    setPreview(URL.createObjectURL(e.target.files[0]));
     setShowModal(true);
   };
 
   const uploadFile = () => {
-    const url = "https://api.cloudinary.com/v1_1/" + CLOUD_NAME + "/auto/upload";
+    setLoading(true);
     const file = fileRef.current.files[0];
 
     const formData = new FormData();
@@ -45,15 +47,7 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
     formData.append("api_key", API_KEY);
     formData.append("folder", "chats");
     formData.append("upload_preset", process.env.REACT_APP_CLOUDINARY_UPLOAD_PRESET);
-
-    fetch(url, {
-      method: "POST",
-      body: formData
-    })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
+    uploadService(formData).then((data) => {
       const response = data;
       const newMessage = {
         userId: user._id,
@@ -75,7 +69,10 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
       setMessage('');
       setPreview(null);
       setShowModal((prevState) => !prevState);
-    }).catch((err) => console.log(err));
+      setLoading(false);
+    }).catch((err) => {
+      setLoading(false);
+    });
   };
   
   const handleSubmit = async (e) => {
@@ -119,7 +116,9 @@ const ChatInput = ({ socket, contact, messages, setMessages, user }) => {
             </div>
             <div className="flex space-between">
               <input type="text" name="caption" onChange={(e) => setCaption(e.target.value)} placeholder="Caption" />
-              <button type="button" className="btn btn__default btn--green" onClick={uploadFile}>Send</button>
+              <button type="button" className="btn btn__square clip btn--green" onClick={uploadFile}>
+                {loading ? <svg className="svg" viewBox="25 25 50 50"><circle r="20" cy="50" cx="50"></circle></svg>: <BiSend />}
+              </button>
             </div>
           </div>
         </Modal>), document.getElementById("root"))
